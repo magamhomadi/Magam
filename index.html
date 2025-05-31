@@ -1,11 +1,88 @@
-<html>
-	<body>
- <center><h1>
-<br>	<br> <hr><br>
-magam homadi </h1><br> <hr>
-		</body>
-	
-	
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المعجم للبرمجيات</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            display: flex; /* استخدام فليكس بوكس لتوسيط المحتوى */
+            justify-content: center; /* توسيط أفقي */
+            align-items: center; /* توسيط عمودي */
+            min-height: 100vh; /* جعل الجسم يأخذ ارتفاع الشاشة بالكامل */
+            margin: 0;
+            background-color: #f0f2f5; /* لون خلفية خفيف */
+            color: #333;
+            text-align: center; /* توسيط النصوص داخل العناصر */
+        }
 
+        .container {
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 90%; /* عرض أقصى للحاوية، يتكيف مع الشاشات الصغيرة */
+            width: 500px; /* عرض افتراضي على الشاشات الكبيرة */
+            box-sizing: border-box; /* لضمان حساب الحشو والحدود ضمن العرض */
+        }
 
+        h1 {
+            color: #0056b3; /* لون أزرق جذاب للعنوان */
+            margin-bottom: 30px;
+            font-size: 2.5em; /* حجم خط كبير للعنوان */
+        }
+
+        .button-group {
+            display: flex; /* لجعل الأزرار في صف واحد */
+            flex-direction: column; /* الأزرار تكون فوق بعضها افتراضياً (للموبايل) */
+            gap: 15px; /* مسافة بين الأزرار */
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #007bff; /* لون أزرق أساسي للأزرار */
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-decoration: none; /* إزالة خط الروابط */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* تأثيرات عند التحويم */
+            flex-grow: 1; /* لتمدد الأزرار وتغطية المساحة المتاحة */
+            display: flex; /* لجعل محتوى الزر (النص) يتوسط */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px); /* تأثير رفع بسيط عند التحويم */
+        }
+
+        /* استعلام الوسائط للشاشات الأكبر من 600 بكسل (أجهزة لوحية وأكبر) */
+        @media (min-width: 600px) {
+            .button-group {
+                flex-direction: row; /* الأزرار تكون بجانب بعضها البعض */
+                justify-content: space-around; /* توزيع الأزرار بالتساوي */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>المعجم للبرمجيات</h1>
+        <div class="button-group">
+            <a href="#" class="button">خدماتنا</a>
+            <a href="#" class="button">أعمالنا</a>
+            <a href="#" class="button">تواصل معنا</a>
+        </div>
+    </div>
+
+</body>
 </html>
