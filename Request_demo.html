@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب نسخة تجريبية لبرنامج مبيعات دكان</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* التنسيقات الأساسية والثابتة (لجميع الشاشات) */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            line-height: 1.7;
+            background-color: #f0f2f5;
+            color: #333;
+            text-align: right;
+            direction: rtl;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 10px 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            width: 600px; /* عرض مناسب لصفحة نموذج */
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #0056b3;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            text-align: center;
+        }
+
+        p {
+            margin-bottom: 25px;
+            font-size: 1.05em;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+            font-size: 1.0em;
+        }
+
+        input[type="text"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1.0em;
+            font-family: 'Tajawal', sans-serif; /* لضمان أن الخط يظهر بشكل صحيح في حقول الإدخال */
+            background-color: #f9f9f9;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+        .whatsapp-button {
+            background-color: #25D366; /* لون واتساب الأخضر */
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            display: block; /* لجعل الزر يأخذ عرض الحاوية */
+            width: 100%; /* تأكيد عرض الزر */
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 30px;
+        }
+
+        .whatsapp-button:hover {
+            background-color: #1DA851;
+            transform: translateY(-2px);
+        }
+
+        /* تنسيقات شريط التنقل العلوي */
+        .top-navbar {
+            background-color: #0056b3;
+            padding: 15px 0;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 30px; /* مسافة بين شريط التنقل والمحتوى */
+        }
+
+        .top-navbar ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-navbar ul li {
+            margin: 0 15px;
+        }
+
+        .top-navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .top-navbar ul li a:hover {
+            background-color: #004085;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 0 0 12px 12px;
+            font-size: 0.95em;
+        }
+
+        /* استعلامات الوسائط (Media Queries) للتجاوب */
+        @media (max-width: 767px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 25px 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            p {
+                font-size: 0.95em;
+            }
+            label, input[type="text"], input[type="tel"], .whatsapp-button {
+                font-size: 0.95em;
+                padding: 10px;
+            }
+            .top-navbar ul li {
+                margin: 0 8px;
+            }
+            .top-navbar ul li a {
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="top-navbar">
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="water_project_management.html">إدارة مشاريع المياه</a></li>
+              
+            </ul>
+        </nav>
+
+        <h1>اطلب نسختك التجريبية من برنامج مبيعات دكان</h1>
+        <p>املأ البيانات أدناه وسنتواصل معك عبر واتساب لتزويدك بالنسخة التجريبية وشرح مميزات البرنامج.</p>
+
+        <form id="requestForm">
+            <div class="form-group">
+                <label for="fullName">الاسم الكامل:</label>
+                <input type="text" id="fullName" name="fullName" required placeholder="أدخل اسمك الكريم">
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">رقم الهاتف (مع رمز الدولة إذا كنت خارج اليمن):</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" required placeholder="مثال: 775715662 أو +967775715662">
+            </div>
+            <button type="submit" class="whatsapp-button">
+                إرسال الطلب عبر الواتساب
+            </button>
+        </form>
+
+        <footer class="footer">
+            <p>&copy; 2024 المعجم للبرمجيات. جميع الحقوق محفوظة.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('requestForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // منع الإرسال الافتراضي للنموذج
+
+            const fullName = document.getElementById('fullName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+
+            // رقم الهاتف الخاص بك مع رمز الدولة إذا لزم الأمر
+            const myPhoneNumber = '967775715662'; // رقمك 775715662 مع رمز اليمن +967
+
+            // الرسالة التي ستظهر في واتساب
+            const message = `مرحباً! أود طلب نسخة تجريبية من برنامج مبيعات دكان.
+اسمي: ${fullName}
+رقم هاتفي: ${phoneNumber}
+الرجاء التواصل معي.`;
+
+            // تشفير الرسالة لعنوان URL
+            const encodedMessage = encodeURIComponent(message);
+
+            // إنشاء رابط واتساب
+            const whatsappUrl = `https://wa.me/${myPhoneNumber}?text=${encodedMessage}`;
+
+            // فتح رابط واتساب في نافذة جديدة
+            window.open(whatsappUrl, '_blank');
+
+            // يمكنك إضافة رسالة تأكيد للمستخدم هنا إذا أردت
+            alert('تم تجهيز رسالة الواتساب. يرجى الضغط على إرسال في تطبيق الواتساب لإتمام الطلب.');
+
+            // (اختياري) يمكنك تفريغ الحقول بعد الإرسال
+            // document.getElementById('fullName').value = '';
+            // document.getElementById('phoneNumber').value = '';
+        });
+    </script>
+
+</body>
+</html>
