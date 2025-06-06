@@ -1,0 +1,405 @@
+تحديدًا! لعرض بيانات حقيقية لحالة الرياح، سنحتاج إلى استخدام **واجهة برمجة تطبيقات (API) لخدمات الطقس**.
+
+أشهر خدمة مجانية (مع خطط مدفوعة للاستخدام الأكبر) هي **OpenWeatherMap**. سأستخدمها كمثال.
+
+**الخطوات الأساسية التي يجب عليك القيام بها أولاً:**
+
+1.  **الحصول على مفتاح API من OpenWeatherMap:**
+    * اذهب إلى [https://openweathermap.org/api](https://openweathermap.org/api)
+    * سجل حسابًا جديدًا (مجاني).
+    * بعد التسجيل، ستجد مفتاح API الخاص بك في قسم "API keys" في ملفك الشخصي.
+    * **ملاحظة هامة:** قد يستغرق تفعيل مفتاح API الجديد بضع دقائق إلى بضع ساعات قبل أن يبدأ العمل.
+
+2.  **تحديد المدينة/الموقع:**
+    * في اليمن، يمكنك اختيار مدينة رئيسية مثل **صنعاء** أو **عدن**. للحصول على بيانات أكثر دقة، ستحتاج إلى تحديد **خط الطول وخط العرض** للموقع.
+    * كمثال، سأستخدم إحداثيات صنعاء الافتراضية (يمكنك تعديلها لاحقًا): `lat=15.3694` و `lon=44.1910`.
+
+---
+
+الآن، إليك الكود المحدّث لصفحة حالة الرياح، والذي سيقوم بجلب البيانات الحقيقية من OpenWeatherMap API وعرضها.
+
+**ملاحظة هامة جدًا:**
+
+* **استبدل `YOUR_API_KEY_HERE` بمفتاح API الفعلي الخاص بك الذي حصلت عليه من OpenWeatherMap.**
+* سأقوم بعرض البيانات لليوم الحالي وستة أيام قادمة (المجموع 7 أيام).
+
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حالة الرياح في اليمن - بيانات حقيقية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* التنسيقات الأساسية والثابتة (لجميع الشاشات) */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            line-height: 1.7;
+            background-color: #f0f2f5;
+            color: #333;
+            text-align: right;
+            direction: rtl;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 10px 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            width: 800px; /* عرض مناسب لجدول البيانات */
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        h1, h2 {
+            color: #0056b3;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-top: 30px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            text-align: center;
+        }
+
+        .wind-data-area {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fcfcfc;
+            min-height: 200px; /* لتجنب الانهيار قبل تحميل البيانات */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .wind-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 1.0em;
+            display: none; /* إخفاء الجدول حتى يتم تحميل البيانات */
+        }
+
+        .wind-table.visible {
+            display: table;
+        }
+
+        .wind-table th,
+        .wind-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .wind-table th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        .wind-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .wind-table tr:hover {
+            background-color: #e9e9e9;
+        }
+
+        .loading-message {
+            font-size: 1.2em;
+            color: #007bff;
+            text-align: center;
+        }
+
+        .error-message {
+            font-size: 1.2em;
+            color: #dc3545;
+            text-align: center;
+        }
+
+        /* تنسيقات شريط التنقل العلوي */
+        .top-navbar {
+            background-color: #0056b3;
+            padding: 15px 0;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 30px;
+        }
+
+        .top-navbar ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-navbar ul li {
+            margin: 0 15px;
+        }
+
+        .top-navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .top-navbar ul li a:hover {
+            background-color: #004085;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 0 0 12px 12px;
+            font-size: 0.95em;
+        }
+
+        /* استعلامات الوسائط (Media Queries) للتجاوب */
+        @media (max-width: 767px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 25px 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            p {
+                font-size: 0.95em;
+            }
+            .wind-table th,
+            .wind-table td {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+            .top-navbar ul li {
+                margin: 0 8px;
+            }
+            .top-navbar ul li a {
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="top-navbar">
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="docan.html">برنامج دكان</a></li>
+                <li><a href="game.html">لعبة تخمين الرقم</a></li>
+                <li><a href="memory_game.html">لعبة الذاكرة</a></li>
+                <li><a href="#">حالة الرياح</a></li>
+            </ul>
+        </nav>
+
+        <header>
+            <h1>حالة الرياح في صنعاء على مدار الأسبوع (بيانات حقيقية)</h1>
+            <p>نقدم لكم أحدث توقعات سرعة واتجاه الرياح للأيام القادمة.</p>
+        </header>
+
+        <section class="wind-data-area">
+            <div id="loading" class="loading-message">جاري تحميل بيانات الرياح...</div>
+            <div id="error" class="error-message" style="display:none;">حدث خطأ أثناء تحميل البيانات. يرجى المحاولة لاحقًا.</div>
+
+            <table class="wind-table" id="windTable">
+                <thead>
+                    <tr>
+                        <th>اليوم</th>
+                        <th>التاريخ</th>
+                        <th>سرعة الرياح (كم/ساعة)</th>
+                        <th>اتجاه الرياح</th>
+                        <th>ملاحظات</th>
+                    </tr>
+                </thead>
+                <tbody id="windTableBody">
+                    </tbody>
+            </table>
+            <p style="margin-top: 20px; font-size: 0.9em; color: #777;">* البيانات مقدمة من OpenWeatherMap وقد تختلف دقتها.</p>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2024 المعجم للبرمجيات. جميع الحقوق محفوظة.</p>
+        </footer>
+    </div>
+
+    <script>
+        // ** هام جداً: استبدل YOUR_API_KEY_HERE بمفتاح API الخاص بك **
+        const API_KEY = 'YOUR_API_KEY_HERE';
+        const LATITUDE = '15.3694'; // خط عرض صنعاء
+        const LONGITUDE = '44.1910'; // خط طول صنعاء
+        const EXCLUDE_PARTS = 'current,minutely,hourly,alerts'; // استبعاد أجزاء لا نحتاجها لتقليل حجم الاستجابة
+
+        const windTableBody = document.getElementById('windTableBody');
+        const windTable = document.getElementById('windTable');
+        const loadingMessage = document.getElementById('loading');
+        const errorMessage = document.getElementById('error');
+
+        // دالة لتحويل سرعة الرياح من متر/ثانية (الوحدة الافتراضية لـ OpenWeatherMap) إلى كم/ساعة
+        function convertMpsToKmH(mps) {
+            return (mps * 3.6).toFixed(1); // تقريب لرقم عشري واحد
+        }
+
+        // دالة لتحويل درجة اتجاه الرياح إلى اتجاه نصي
+        function getWindDirection(deg) {
+            if (deg > 337.5 || deg <= 22.5) return 'شمالية';
+            if (deg > 22.5 && deg <= 67.5) return 'شمالية شرقية';
+            if (deg > 67.5 && deg <= 112.5) return 'شرقية';
+            if (deg > 112.5 && deg <= 157.5) return 'جنوبية شرقية';
+            if (deg > 157.5 && deg <= 202.5) return 'جنوبية';
+            if (deg > 202.5 && deg <= 247.5) return 'جنوبية غربية';
+            if (deg > 247.5 && deg <= 292.5) return 'غربية';
+            if (deg > 292.5 && deg <= 337.5) return 'شمالية غربية';
+            return 'غير معروف';
+        }
+
+        // دالة لجلب وعرض بيانات الرياح
+        async function fetchWeatherData() {
+            loadingMessage.style.display = 'block'; // إظهار رسالة التحميل
+            errorMessage.style.display = 'none'; // إخفاء رسالة الخطأ
+            windTable.classList.remove('visible'); // إخفاء الجدول
+
+            try {
+                // استخدام API One Call 3.0 للحصول على التوقعات اليومية
+                const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${LATITUDE}&lon=${LONGITUDE}&exclude=${EXCLUDE_PARTS}&appid=${API_KEY}&units=metric&lang=ar`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log("Weather data:", data); // لتصحيح الأخطاء: اطبع البيانات في الكونسول
+
+                windTableBody.innerHTML = ''; // مسح أي بيانات سابقة
+
+                // عرض بيانات 7 أيام (اليوم الحالي + 6 أيام قادمة)
+                for (let i = 0; i < Math.min(data.daily.length, 7); i++) {
+                    const dayData = data.daily[i];
+                    const date = new Date(dayData.dt * 1000); // تحويل الطابع الزمني إلى تاريخ
+                    const options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' };
+                    const formattedDate = date.toLocaleDateString('ar-EG', options); // تنسيق التاريخ بالعربية
+
+                    const windSpeed = convertMpsToKmH(dayData.wind_speed);
+                    const windDirection = getWindDirection(dayData.wind_deg);
+
+                    let notes = '';
+                    if (dayData.wind_speed > 25) {
+                        notes = 'رياح قوية';
+                    } else if (dayData.wind_speed > 15) {
+                        notes = 'رياح نشطة';
+                    } else if (dayData.wind_speed < 5) {
+                        notes = 'رياح خفيفة جداً';
+                    } else {
+                        notes = 'رياح معتدلة';
+                    }
+
+                    const row = `
+                        <tr>
+                            <td>${new Date(dayData.dt * 1000).toLocaleDateString('ar-EG', { weekday: 'long' })}</td>
+                            <td>${new Date(dayData.dt * 1000).toLocaleDateString('ar-EG', { day: 'numeric', month: 'numeric', year: 'numeric' })}</td>
+                            <td>${windSpeed}</td>
+                            <td>${windDirection}</td>
+                            <td>${notes}</td>
+                        </tr>
+                    `;
+                    windTableBody.innerHTML += row;
+                }
+
+                loadingMessage.style.display = 'none'; // إخفاء رسالة التحميل
+                windTable.classList.add('visible'); // إظهار الجدول
+            } catch (error) {
+                console.error('Failed to fetch weather data:', error);
+                loadingMessage.style.display = 'none'; // إخفاء رسالة التحميل
+                errorMessage.style.display = 'block'; // إظهار رسالة الخطأ
+            }
+        }
+
+        // جلب البيانات عند تحميل الصفحة
+        window.onload = fetchWeatherData;
+    </script>
+
+</body>
+</html>
+```
+
+---
+
+### أهم التغييرات والميزات الجديدة:
+
+1.  **جلب البيانات الحقيقية بواسطة JavaScript:**
+    * تم إضافة كتلة `script` جديدة في نهاية `body`.
+    * **`API_KEY`**: هذا هو المكان الذي **يجب عليك وضع مفتاح API الخاص بك**.
+    * **`LATITUDE` و `LONGITUDE`**: تم تعيينهما لخط الطول وخط العرض الافتراضيين لمدينة صنعاء. يمكنك تغييرهما إلى أي إحداثيات أخرى في اليمن.
+    * **`fetchWeatherData()`**: هذه الدالة هي المسؤولة عن:
+        * إجراء طلب (fetch) إلى OpenWeatherMap API.
+        * التحقق من استجابة API.
+        * تحليل بيانات JSON المسترجعة.
+        * تحديث محتوى `tbody` في الجدول (`windTableBody`) بصفوف جديدة تحتوي على البيانات الحقيقية.
+    * **`convertMpsToKmH()`**: دالة مساعدة لتحويل سرعة الرياح من متر/ثانية (الوحدة الافتراضية لـ OpenWeatherMap) إلى كيلومتر/ساعة، وهي وحدة أكثر شيوعًا في المنطقة العربية.
+    * **`getWindDirection()`**: دالة مساعدة لتحويل درجة اتجاه الرياح (من 0 إلى 360) إلى اتجاه نصي (شمالية، جنوبية، إلخ).
+    * **`window.onload = fetchWeatherData;`**: لضمان أن الدالة يتم تشغيلها تلقائيًا بمجرد تحميل الصفحة.
+
+2.  **حالة التحميل والخطأ:**
+    * تم إضافة `div` لرسالة "جاري التحميل..." (`loading-message`).
+    * تم إضافة `div` لرسالة "حدث خطأ..." (`error-message`).
+    * يتم التحكم في ظهور هذه الرسائل والجدول باستخدام JavaScript:
+        * تظهر رسالة التحميل عند بدء جلب البيانات.
+        * يُخفى الجدول ورسالة التحميل وتظهر رسالة الخطأ في حالة فشل الجلب.
+        * يظهر الجدول وتُخفى رسالة التحميل عند نجاح جلب البيانات.
+    * الجدول مخفي افتراضيًا (`display: none;`) ويصبح مرئيًا (`display: table;`) بعد تحميل البيانات بنجاح.
+
+3.  **تحديث العنوان والوصف:**
+    * تم تحديث `<h1>` ليذكر "صنعاء" و "بيانات حقيقية".
+    * تم تحديث `p` لتوضيح أن البيانات حقيقية ولكنها تتطلب ربطًا بـ API (للتذكير في الكود).
+
+---
+
+### خطوات حاسمة بعد لصق الكود:
+
+1.  **احصل على مفتاح API الخاص بك من OpenWeatherMap.**
+2.  **استبدل `YOUR_API_KEY_HERE` في الكود بمفتاح API الفعلي الخاص بك.**
+3.  **احفظ الملف** باسم `wind_status.html` (أو ما شابه).
+4.  **افتح الملف في متصفح الويب.**
+
+**تأكد من أن مفتاح API الخاص بك قد تم تفعيله بشكل كامل. إذا رأيت رسالة "حدث خطأ أثناء تحميل البيانات"، فغالبًا ما يكون السبب هو أن مفتاح API لم يتم تفعيله بعد أو أن هناك مشكلة في الاتصال بالإنترنت أو تجاوز الحد الأقصى للاستخدام المجاني.** يمكنك فحص `console` المتصفح (بالضغط على F12 ثم التوجه إلى Console) لمعرفة تفاصيل الخطأ.
+
+أتمنى أن تكون هذه الصفحة مفيدة لك!
+الاقتباسات: [[1]](https://github.com/DamianRozpedowski/CSCI-355-Internet-Web-Technologies), [[2]](https://github.com/PROShivamPatidar/wheatherApplication), [[3]](https://github.com/MagedAhmad/jobs-kwadr)
