@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حالة الرياح في اليمن - بيانات حقيقية</title>
+    <title>حالة الرياح في اليمن - بيانات حقيقية (مجاني)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
@@ -199,15 +199,15 @@
             <ul>
                 <li><a href="index.html">الرئيسية</a></li>
                 <li><a href="docan.html">برنامج دكان</a></li>
-                <li><a href="Game1.html">لعبة تخمين الرقم</a></li>
+                <li><a href="game.html">لعبة تخمين الرقم</a></li>
                 <li><a href="memory_game.html">لعبة الذاكرة</a></li>
                 <li><a href="#">حالة الرياح</a></li>
             </ul>
         </nav>
 
         <header>
-            <h1>حالة الرياح في اللحية على مدار الأسبوع (بيانات حقيقية)</h1>
-            <p>نقدم لكم أحدث توقعات سرعة واتجاه الرياح للأيام القادمة.</p>
+            <h1>حالة الرياح في صنعاء على مدار 5 أيام (بيانات حقيقية)</h1>
+            <p>نقدم لكم أحدث توقعات سرعة واتجاه الرياح للأيام الخمسة القادمة.</p>
         </header>
 
         <section class="wind-data-area">
@@ -227,7 +227,7 @@
                 <tbody id="windTableBody">
                     </tbody>
             </table>
-            <p style="margin-top: 20px; font-size: 0.9em; color: #777;">* البيانات مقدمة من OpenWeatherMap وقد تختلف دقتها.</p>
+            <p style="margin-top: 20px; font-size: 0.9em; color: #777;">* البيانات مقدمة من OpenWeatherMap (توقعات كل 3 ساعات لمدة 5 أيام).</p>
         </section>
 
         <footer class="footer">
@@ -237,10 +237,9 @@
 
     <script>
         // ** هام جداً: استبدل YOUR_API_KEY_HERE بمفتاح API الخاص بك **
-        const API_KEY = 'fd1a8a7b5c8707851061476323e408d3';
+        const API_KEY = 'fd1a8a7b5c8707851061476323e408d3'; // تم وضع المفتاح الخاص بك
         const LATITUDE = '15.3694'; // خط عرض صنعاء
         const LONGITUDE = '44.1910'; // خط طول صنعاء
-        const EXCLUDE_PARTS = 'current,minutely,hourly,alerts'; // استبعاد أجزاء لا نحتاجها لتقليل حجم الاستجابة
 
         const windTableBody = document.getElementById('windTableBody');
         const windTable = document.getElementById('windTable');
@@ -272,35 +271,48 @@
             windTable.classList.remove('visible'); // إخفاء الجدول
 
             try {
-                // استخدام API One Call 3.0 للحصول على التوقعات اليومية
-                const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${LATITUDE}&lon=${LONGITUDE}&exclude=${EXCLUDE_PARTS}&appid=${API_KEY}&units=metric&lang=ar`);
+                // استخدام API التوقع اليومي المجاني (5 أيام / 3 ساعات)
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${LATITUDE}&lon=${LONGITUDE}&appid=${API_KEY}&units=metric&lang=ar`);
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
                 const data = await response.json();
-                console.log("Weather data:", data); // لتصحيح الأخطاء: اطبع البيانات في الكونسول
+                console.log("Weather data (5-day forecast):", data); // لتصحيح الأخطاء: اطبع البيانات في الكونسول
 
                 windTableBody.innerHTML = ''; // مسح أي بيانات سابقة
 
-                // عرض بيانات 7 أيام (اليوم الحالي + 6 أيام قادمة)
-                for (let i = 0; i < Math.min(data.daily.length, 7); i++) {
-                    const dayData = data.daily[i];
-                    const date = new Date(dayData.dt * 1000); // تحويل الطابع الزمني إلى تاريخ
-                    const options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' };
-                    const formattedDate = date.toLocaleDateString('ar-EG', options); // تنسيق التاريخ بالعربية
+                const dailyForecasts = {}; // لتخزين بيانات كل يوم
 
-                    const windSpeed = convertMpsToKmH(dayData.wind_speed);
-                    const windDirection = getWindDirection(dayData.wind_deg);
+                // تجميع البيانات اليومية (أخذ أول قراءة لكل يوم)
+                data.list.forEach(item => {
+                    const date = new Date(item.dt * 1000);
+                    const dateKey = date.toISOString().split('T')[0]; // YYYY-MM-DD
+                    if (!dailyForecasts[dateKey]) {
+                        dailyForecasts[dateKey] = item; // نأخذ أول قراءة لليوم
+                    }
+                });
+
+                let daysCount = 0;
+                for (const dateKey in dailyForecasts) {
+                    if (daysCount >= 7) break; // عرض ما لا يزيد عن 7 أيام (حتى لو الـ API يعطي 5 أيام)
+                    const dayData = dailyForecasts[dateKey];
+                    const date = new Date(dayData.dt * 1000);
+                    const options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' };
+                    const formattedDate = date.toLocaleDateString('ar-EG', options);
+
+                    // بيانات الرياح تكون تحت خاصية 'wind'
+                    const windSpeed = convertMpsToKmH(dayData.wind.speed);
+                    const windDirection = getWindDirection(dayData.wind.deg);
 
                     let notes = '';
-                    if (dayData.wind_speed > 25) {
-                        notes = 'رياح قوية';
-                    } else if (dayData.wind_speed > 15) {
+                    if (dayData.wind.speed > 25) {
+                        notes = 'رياح قوية جداً';
+                    } else if (dayData.wind.speed > 15) {
                         notes = 'رياح نشطة';
-                    } else if (dayData.wind_speed < 5) {
-                        notes = 'رياح خفيفة جداً';
+                    } else if (dayData.wind.speed < 5) {
+                        notes = 'رياح خفيفة';
                     } else {
                         notes = 'رياح معتدلة';
                     }
@@ -315,6 +327,7 @@
                         </tr>
                     `;
                     windTableBody.innerHTML += row;
+                    daysCount++;
                 }
 
                 loadingMessage.style.display = 'none'; // إخفاء رسالة التحميل
@@ -323,6 +336,7 @@
                 console.error('Failed to fetch weather data:', error);
                 loadingMessage.style.display = 'none'; // إخفاء رسالة التحميل
                 errorMessage.style.display = 'block'; // إظهار رسالة الخطأ
+                errorMessage.textContent = `حدث خطأ أثناء تحميل البيانات: ${error.message}. يرجى المحاولة لاحقًا.`;
             }
         }
 
@@ -332,3 +346,5 @@
 
 </body>
 </html>
+
+
