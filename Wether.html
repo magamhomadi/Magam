@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حالة الرياح في اليمن - بيانات حقيقية (مجاني)</title>
+    <title>حالة الرياح - موقعك الحالي</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
@@ -190,6 +191,40 @@
                 padding: 6px 10px;
             }
         }
+
+        .search-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-area input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: 'Tajawal', sans-serif;
+            width: 250px;
+        }
+
+        .search-area button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 1em;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-area button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -206,13 +241,18 @@
         </nav>
 
         <header>
-            <h1>حالة الرياح في صنعاء على مدار 5 أيام (بيانات حقيقية)</h1>
-            <p>نقدم لكم أحدث توقعات سرعة واتجاه الرياح للأيام الخمسة القادمة.</p>
+            <h1 id="mainTitle">حالة الرياح (بيانات حقيقية)</h1>
+            <p>نقدم لكم أحدث توقعات سرعة واتجاه الرياح لموقعك الحالي أو لأي مدينة.</p>
         </header>
 
         <section class="wind-data-area">
+            <div class="search-area">
+                <input type="text" id="cityInput" placeholder="أدخل اسم المدينة (مثال: Sanaa, YE)">
+                <button onclick="searchCity()">بحث عن مدينة</button>
+            </div>
+
             <div id="loading" class="loading-message">جاري تحميل بيانات الرياح...</div>
-            <div id="error" class="error-message" style="display:none;">حدث خطأ أثناء تحميل البيانات. يرجى المحاولة لاحقًا.</div>
+            <div id="error" class="error-message" style="display:none;"></div>
 
             <table class="wind-table" id="windTable">
                 <thead>
@@ -236,73 +276,84 @@
     </div>
 
     <script>
-        // ** هام جداً: استبدل YOUR_API_KEY_HERE بمفتاح API الخاص بك **
-        const API_KEY = 'fd1a8a7b5c8707851061476323e408d3'; // تم وضع المفتاح الخاص بك
-        const LATITUDE = '15.3694'; // خط عرض صنعاء
-        const LONGITUDE = '44.1910'; // خط طول صنعاء
-
+        const API_KEY = 'fd1a8a7b5c8707851061476323e408d3'; // مفتاح API الخاص بك
+        
+        // العناصر الهامة في DOM
         const windTableBody = document.getElementById('windTableBody');
         const windTable = document.getElementById('windTable');
         const loadingMessage = document.getElementById('loading');
         const errorMessage = document.getElementById('error');
+        const mainTitle = document.getElementById('mainTitle'); 
 
-        // دالة لتحويل سرعة الرياح من متر/ثانية (الوحدة الافتراضية لـ OpenWeatherMap) إلى كم/ساعة
+        // دالة لتحويل سرعة الرياح من متر/ثانية إلى كم/ساعة
         function convertMpsToKmH(mps) {
-            return (mps * 3.6).toFixed(1); // تقريب لرقم عشري واحد
+            return (mps * 3.6).toFixed(1);
         }
 
         // دالة لتحويل درجة اتجاه الرياح إلى اتجاه نصي
         function getWindDirection(deg) {
-            if (deg > 337.5 || deg <= 22.5) return 'شمالية';
-            if (deg > 22.5 && deg <= 67.5) return 'شمالية شرقية';
-            if (deg > 67.5 && deg <= 112.5) return 'شرقية';
-            if (deg > 112.5 && deg <= 157.5) return 'جنوبية شرقية';
-            if (deg > 157.5 && deg <= 202.5) return 'جنوبية';
-            if (deg > 202.5 && deg <= 247.5) return 'جنوبية غربية';
-            if (deg > 247.5 && deg <= 292.5) return 'غربية';
-            if (deg > 292.5 && deg <= 337.5) return 'شمالية غربية';
+            if (deg >= 337.5 || deg < 22.5) return 'شمالية';
+            if (deg >= 22.5 && deg < 67.5) return 'شمالية شرقية';
+            if (deg >= 67.5 && deg < 112.5) return 'شرقية';
+            if (deg >= 112.5 && deg < 157.5) return 'جنوبية شرقية';
+            if (deg >= 157.5 && deg < 202.5) return 'جنوبية';
+            if (deg >= 202.5 && deg < 247.5) return 'جنوبية غربية';
+            if (deg >= 247.5 && deg < 292.5) return 'غربية';
+            if (deg >= 292.5 && deg < 337.5) return 'شمالية غربية';
             return 'غير معروف';
         }
 
-        // دالة لجلب وعرض بيانات الرياح
-        async function fetchWeatherData() {
-            loadingMessage.style.display = 'block'; // إظهار رسالة التحميل
-            errorMessage.style.display = 'none'; // إخفاء رسالة الخطأ
-            windTable.classList.remove('visible'); // إخفاء الجدول
+        // دالة عرض رسالة الخطأ
+        function showError(message) {
+            loadingMessage.style.display = 'none';
+            windTable.classList.remove('visible');
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = `حدث خطأ: ${message}`;
+        }
+
+        // دالة جلب وعرض بيانات الرياح الفعلية
+        async function fetchWeatherData(latitude, longitude, locationName = null) {
+            loadingMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+            windTable.classList.remove('visible');
+            windTableBody.innerHTML = ''; 
 
             try {
-                // استخدام API التوقع اليومي المجاني (5 أيام / 3 ساعات)
-                const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${LATITUDE}&lon=${LONGITUDE}&appid=${API_KEY}&units=metric&lang=ar`);
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric&lang=ar`);
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
                 const data = await response.json();
-                console.log("Weather data (5-day forecast):", data); // لتصحيح الأخطاء: اطبع البيانات في الكونسول
+                console.log("Weather data (5-day forecast):", data);
 
-                windTableBody.innerHTML = ''; // مسح أي بيانات سابقة
+                // تحديث العنوان بناءً على اسم الموقع (إذا كان متوفرًا)
+                if (locationName) {
+                    mainTitle.textContent = `حالة الرياح في ${locationName} (بيانات حقيقية)`;
+                } else if (data.city && data.city.name) {
+                    mainTitle.textContent = `حالة الرياح في ${data.city.name} (بيانات حقيقية)`;
+                } else {
+                    mainTitle.textContent = `حالة الرياح (بيانات حقيقية)`;
+                }
 
-                const dailyForecasts = {}; // لتخزين بيانات كل يوم
-
-                // تجميع البيانات اليومية (أخذ أول قراءة لكل يوم)
+                const dailyForecasts = {}; 
                 data.list.forEach(item => {
                     const date = new Date(item.dt * 1000);
-                    const dateKey = date.toISOString().split('T')[0]; // YYYY-MM-DD
+                    const dateKey = date.toISOString().split('T')[0]; 
                     if (!dailyForecasts[dateKey]) {
-                        dailyForecasts[dateKey] = item; // نأخذ أول قراءة لليوم
+                        dailyForecasts[dateKey] = item; 
                     }
                 });
 
                 let daysCount = 0;
                 for (const dateKey in dailyForecasts) {
-                    if (daysCount >= 7) break; // عرض ما لا يزيد عن 7 أيام (حتى لو الـ API يعطي 5 أيام)
+                    if (daysCount >= 7) break; 
                     const dayData = dailyForecasts[dateKey];
                     const date = new Date(dayData.dt * 1000);
-                    const options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' };
-                    const formattedDate = date.toLocaleDateString('ar-EG', options);
+                    const formattedWeekday = date.toLocaleDateString('ar-EG', { weekday: 'long' });
+                    const formattedDate = date.toLocaleDateString('ar-EG', { day: 'numeric', month: 'numeric', year: 'numeric' });
 
-                    // بيانات الرياح تكون تحت خاصية 'wind'
                     const windSpeed = convertMpsToKmH(dayData.wind.speed);
                     const windDirection = getWindDirection(dayData.wind.deg);
 
@@ -319,8 +370,8 @@
 
                     const row = `
                         <tr>
-                            <td>${new Date(dayData.dt * 1000).toLocaleDateString('ar-EG', { weekday: 'long' })}</td>
-                            <td>${new Date(dayData.dt * 1000).toLocaleDateString('ar-EG', { day: 'numeric', month: 'numeric', year: 'numeric' })}</td>
+                            <td>${formattedWeekday}</td>
+                            <td>${formattedDate}</td>
                             <td>${windSpeed}</td>
                             <td>${windDirection}</td>
                             <td>${notes}</td>
@@ -330,21 +381,102 @@
                     daysCount++;
                 }
 
-                loadingMessage.style.display = 'none'; // إخفاء رسالة التحميل
-                windTable.classList.add('visible'); // إظهار الجدول
+                loadingMessage.style.display = 'none';
+                windTable.classList.add('visible');
             } catch (error) {
                 console.error('Failed to fetch weather data:', error);
-                loadingMessage.style.display = 'none'; // إخفاء رسالة التحميل
-                errorMessage.style.display = 'block'; // إظهار رسالة الخطأ
-                errorMessage.textContent = `حدث خطأ أثناء تحميل البيانات: ${error.message}. يرجى المحاولة لاحقًا.`;
+                showError('فشل في جلب بيانات الطقس. تأكد من اسم المدينة أو جرب لاحقًا.');
             }
         }
 
-        // جلب البيانات عند تحميل الصفحة
-        window.onload = fetchWeatherData;
+        // دالة البحث عن المدينة يدوياً
+        async function searchCity() {
+            const cityInput = document.getElementById('cityInput').value.trim();
+            if (!cityInput) {
+                showError('الرجاء إدخال اسم المدينة.');
+                return;
+            }
+
+            loadingMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+            windTable.classList.remove('visible');
+            windTableBody.innerHTML = '';
+
+            try {
+                const geocodingResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(cityInput)}&limit=1&appid=${API_KEY}`);
+                
+                if (!geocodingResponse.ok) {
+                    throw new Error(`Geocoding HTTP error! status: ${geocodingResponse.status}`);
+                }
+
+                const geoData = await geocodingResponse.json();
+                console.log("Geocoding data:", geoData);
+
+                if (geoData.length > 0) {
+                    const { lat, lon, name } = geoData[0];
+                    fetchWeatherData(lat, lon, name); // جلب بيانات الطقس بالإحداثيات واسم المدينة
+                } else {
+                    showError('لم يتم العثور على المدينة. الرجاء التحقق من الاسم.');
+                }
+            } catch (error) {
+                console.error('Failed to fetch geocoding data:', error);
+                showError('فشل في البحث عن المدينة. تأكد من اتصالك بالإنترنت.');
+            }
+        }
+
+        // دالة تحديد الموقع تلقائياً عند تحميل الصفحة
+        function getDeviceLocationAndFetch() {
+            if (navigator.geolocation) {
+                loadingMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+                windTable.classList.remove('visible');
+                windTableBody.innerHTML = '';
+                mainTitle.textContent = 'حالة الرياح في موقعك الحالي (جاري التحديد...)';
+
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const { latitude, longitude } = position.coords;
+                        // يمكننا استخدام Geocoding API العكسي للحصول على اسم المدينة من الإحداثيات
+                        fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                let locationName = 'موقعك الحالي';
+                                if (data && data.length > 0 && data[0].name) {
+                                    locationName = data[0].name;
+                                    if (data[0].country) { // إضافة اسم البلد إذا كان متوفرًا
+                                        locationName += `, ${data[0].country}`;
+                                    }
+                                }
+                                fetchWeatherData(latitude, longitude, locationName);
+                            })
+                            .catch(error => {
+                                console.error('Reverse Geocoding error:', error);
+                                fetchWeatherData(latitude, longitude, 'موقعك الحالي'); // استمر في جلب البيانات حتى لو فشل تحديد الاسم
+                            });
+                    },
+                    error => {
+                        console.error('Geolocation error:', error);
+                        let msg = 'تعذر الحصول على موقعك. الرجاء التأكد من تمكين خدمات الموقع والسماح للمتصفح بالوصول إليه.';
+                        if (error.code === error.PERMISSION_DENIED) {
+                            msg = 'تم رفض الوصول إلى موقعك. الرجاء السماح للمتصفح بالوصول إلى موقعك من إعدادات المتصفح أو الجهاز.';
+                        } else if (error.code === error.POSITION_UNAVAILABLE) {
+                            msg = 'معلومات الموقع غير متوفرة.';
+                        } else if (error.code === error.TIMEOUT) {
+                            msg = 'انتهى وقت محاولة الحصول على الموقع.';
+                        }
+                        showError(msg + " يمكنك البحث عن مدينة يدوياً.");
+                        mainTitle.textContent = 'حالة الرياح (بيانات حقيقية)'; // العودة للعنوان الافتراضي
+                    }
+                );
+            } else {
+                showError('متصفحك لا يدعم تحديد الموقع الجغرافي. الرجاء البحث عن مدينة يدوياً.');
+                mainTitle.textContent = 'حالة الرياح (بيانات حقيقية)'; // العودة للعنوان الافتراضي
+            }
+        }
+
+        // عند تحميل الصفحة، حاول تحديد الموقع الجغرافي للجهاز تلقائياً
+        window.onload = getDeviceLocationAndFetch;
     </script>
 
 </body>
 </html>
-
-
