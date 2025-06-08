@@ -4,12 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حالة الرياح - موقعك الحالي</title>
+    <title>حالة الرياح - اكتشف المناخ في اليمن!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* التنسيقات الأساسية والثابتة (لجميع الشاشات) */
+        /* Base Reset & Variables */
+        :root {
+            --primary-color: #007bff; /* أزرق أساسي */
+            --primary-dark: #0056b3;  /* أزرق داكن للهوفر */
+            --secondary-color: #6c757d; /* رمادي ثانوي */
+            --text-color: #333;       /* لون النص الأساسي */
+            --light-bg: #f8f9fa;      /* خلفية فاتحة */
+            --dark-bg: #212529;       /* خلفية داكنة للفوتر */
+            --border-color: #e9ecef;  /* لون الحدود */
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08); /* ظل خفيف */
+            --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.15); /* ظل متوسط */
+            --success-color: #28a745; /* أخضر للنجاح */
+            --error-color: #dc3545;   /* أحمر للخطأ */
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -18,223 +32,291 @@
 
         body {
             font-family: 'Tajawal', sans-serif;
-            line-height: 1.7;
-            background-color: #f0f2f5;
-            color: #333;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f0f4f8, #e0e7ee); /* تدرج خلفية ناعم */
+            color: var(--text-color);
             text-align: right;
             direction: rtl;
             padding: 20px;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column; /* لتوسيط المحتوى عمودياً */
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
         }
 
         .container {
             background-color: #fff;
-            padding: 10px 10px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            max-width: 100%;
-            width: 800px; /* عرض مناسب لجدول البيانات */
-            margin: 0 auto;
-            box-sizing: border-box;
-        }
-
-        h1, h2 {
-            color: #0056b3;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2.2em;
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            font-size: 1.8em;
-            margin-top: 30px;
-        }
-
-        p {
-            margin-bottom: 15px;
-            font-size: 1.05em;
-            text-align: center;
-        }
-
-        .wind-data-area {
-            margin-top: 30px;
-            padding: 20px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            background-color: #fcfcfc;
-            min-height: 200px; /* لتجنب الانهيار قبل تحميل البيانات */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .wind-table {
+            padding: 30px;
+            border-radius: 15px; /* حواف أكثر استدارة */
+            box-shadow: var(--shadow-medium); /* ظل أكثر بروزاً */
+            max-width: 900px;
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 1.0em;
-            display: none; /* إخفاء الجدول حتى يتم تحميل البيانات */
+            margin: 20px auto;
+            position: relative; /* لتحديد موقع عناصر الأخطاء/التحميل */
         }
 
-        .wind-table.visible {
-            display: table;
-        }
-
-        .wind-table th,
-        .wind-table td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .wind-table th {
-            background-color: #007bff;
-            color: white;
-            font-weight: bold;
-        }
-
-        .wind-table tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .wind-table tr:hover {
-            background-color: #e9e9e9;
-        }
-
-        .loading-message {
-            font-size: 1.2em;
-            color: #007bff;
-            text-align: center;
-        }
-
-        .error-message {
-            font-size: 1.2em;
-            color: #dc3545;
-            text-align: center;
-        }
-
-        /* تنسيقات شريط التنقل العلوي */
+        /* Top Navbar */
         .top-navbar {
-            background-color: #0056b3;
-            padding: 15px 0;
+            background: var(--primary-dark); /* لون داكن لشريط التنقل */
+            padding: 18px 0;
             text-align: center;
             border-radius: 12px 12px 0 0;
-            margin-bottom: 30px;
+            margin: -30px -30px 30px -30px; /* تمديد الشريط ليغطي الحواف العلوية للكونتينر */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .top-navbar ul {
             list-style: none;
             display: flex;
             justify-content: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        .top-navbar ul li {
-            margin: 0 15px;
+            flex-wrap: wrap; /* للسماح بالالتفاف على الشاشات الصغيرة */
+            gap: 20px; /* مسافة بين العناصر */
         }
 
         .top-navbar ul li a {
             color: #fff;
             text-decoration: none;
-            font-weight: bold;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            font-weight: 500; /* خط متوسط */
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            white-space: nowrap; /* منع انقسام النص */
         }
 
         .top-navbar ul li a:hover {
-            background-color: #004085;
+            background-color: var(--primary-color); /* لون الهوفر */
+            transform: translateY(-2px); /* تأثير بسيط عند التحويم */
         }
 
+        /* Header */
+        header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 700; /* خط سميك للعنوان */
+            letter-spacing: 0.5px; /* تباعد بسيط بين الحروف */
+        }
+
+        header p {
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Search Area */
+        .search-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+            gap: 15px; /* مسافة أكبر بين العناصر */
+            flex-wrap: wrap;
+        }
+
+        .search-area input[type="text"] {
+            padding: 12px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px; /* حواف أكثر استدارة */
+            font-size: 1.05em;
+            font-family: 'Tajawal', sans-serif;
+            width: 300px; /* عرض ثابت */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .search-area input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* ظل تركيز أزرق */
+        }
+
+        .search-area button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            font-size: 1.05em;
+            font-weight: 500;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .search-area button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Data Display Area */
+        .wind-data-area {
+            margin-top: 30px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background-color: var(--light-bg);
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-message, .error-message {
+            font-size: 1.3em;
+            font-weight: 500;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out; /* تأثير ظهور لطيف */
+        }
+
+        .loading-message {
+            color: var(--primary-color);
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+
+        .error-message {
+            color: var(--error-color);
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+
+        /* Table */
+        .wind-table {
+            width: 100%;
+            border-collapse: separate; /* لتطبيق border-radius على الخلايا */
+            border-spacing: 0;
+            margin-top: 20px;
+            font-size: 0.95em;
+            box-shadow: var(--shadow-light); /* ظل خفيف للجدول */
+            border-radius: 10px;
+            overflow: hidden; /* لإخفاء الحواف الزائدة */
+        }
+
+        .wind-table.visible {
+            display: table;
+            animation: fadeIn 0.7s ease-out;
+        }
+
+        .wind-table th,
+        .wind-table td {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            text-align: center;
+        }
+
+        .wind-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase; /* حروف كبيرة */
+            letter-spacing: 0.5px;
+        }
+
+        .wind-table tbody tr:nth-child(even) {
+            background-color: #f2f6fa; /* لون أفتح للصفوف الزوجية */
+        }
+
+        .wind-table tbody tr:hover {
+            background-color: #e6f0fa; /* لون هوفر خفيف */
+            transform: scale(1.01); /* تكبير بسيط عند التحويم */
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1; /* لجعل الصف يظهر فوق الآخرين عند التكبير */
+        }
+        
         .footer {
             text-align: center;
-            padding: 25px;
+            padding: 30px;
             margin-top: 40px;
-            background-color: #333;
-            color: #fff;
-            border-radius: 0 0 12px 12px;
-            font-size: 0.95em;
+            background-color: var(--dark-bg);
+            color: #f8f9fa;
+            border-radius: 0 0 15px 15px;
+            font-size: 0.9em;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* استعلامات الوسائط (Media Queries) للتجاوب */
+        .explore-prompt {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.2em;
+            color: var(--primary-dark);
+            font-weight: 500;
+            background-color: rgba(0, 123, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px dashed var(--primary-color);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Media Queries for Responsiveness */
         @media (max-width: 767px) {
             body {
                 padding: 10px;
             }
             .container {
-                padding: 25px 15px;
+                padding: 15px;
+                margin: 10px auto;
+            }
+            .top-navbar {
+                margin: -15px -15px 20px -15px;
+                padding: 12px 0;
+                border-radius: 10px 10px 0 0;
+            }
+            .top-navbar ul {
+                gap: 10px;
+            }
+            .top-navbar ul li a {
+                padding: 8px 12px;
+                font-size: 0.9em;
             }
             h1 {
-                font-size: 1.8em;
+                font-size: 2em;
             }
-            p {
-                font-size: 0.95em;
+            header p {
+                font-size: 1em;
+            }
+            .search-area {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .search-area input[type="text"] {
+                width: 90%;
+            }
+            .search-area button {
+                width: 90%;
             }
             .wind-table th,
             .wind-table td {
-                padding: 8px;
-                font-size: 0.9em;
+                padding: 10px;
+                font-size: 0.85em;
             }
-            .top-navbar ul li {
-                margin: 0 8px;
+            .loading-message, .error-message {
+                font-size: 1em;
+                padding: 15px;
             }
-            .top-navbar ul li a {
-                padding: 6px 10px;
+            .explore-prompt {
+                font-size: 1em;
+                padding: 15px;
             }
-        }
-
-        .search-area {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .search-area input[type="text"] {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 1em;
-            font-family: 'Tajawal', sans-serif;
-            width: 250px;
-        }
-
-        .search-area button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            font-size: 1em;
-            font-family: 'Tajawal', sans-serif;
-            transition: background-color 0.3s ease;
-        }
-
-        .search-area button:hover {
-            background-color: #0056b3;
+            .footer {
+                padding: 20px;
+                border-radius: 0 0 10px 10px;
+            }
         }
     </style>
-   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TK2P19XK0V"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-TK2P19XK0V');
-</script>
 </head>
 <body>
 
@@ -250,8 +332,8 @@
         </nav>
 
         <header>
-            <h1 id="mainTitle">حالة الرياح (بيانات حقيقية)</h1>
-            <p>نقدم لكم أحدث توقعات سرعة واتجاه الرياح لموقعك الحالي أو لأي مدينة.</p>
+            <h1 id="mainTitle">حالة الرياح في موقعك (بيانات حقيقية)</h1>
+            <p>اكتشف توقعات سرعة واتجاه الرياح لموقعك الحالي أو لأي مدينة تختارها، لمساعدتك في تخطيط يومك.</p>
         </header>
 
         <section class="wind-data-area">
@@ -276,21 +358,12 @@
                 <tbody id="windTableBody">
                     </tbody>
             </table>
-            <p style="margin-top: 20px; font-size: 0.9em; color: #777;">* البيانات مقدمة من OpenWeatherMap (توقعات كل 3 ساعات لمدة 5 أيام).</p>
-     
-//_____________ 
-
-<div id="_MI_8117d182006143d496917e6cf11f01e6"><a href="https://ar.meteotrend.com/">النشرة الجوية</a></div> <script type='text/javascript'>(function(d,w,t,k){function l(){if(typeof(w._MIOB_)=='undefined'){w._MIOB_={};}var m=w._MIOB_[t]=k;var s=d.createElement('script');m.p=('https:'==d.location.protocol?'https:':'http:');s.type='text/javascript';s.async=true;s.src=m.p+'//info.meteotrend.com/mt/'+m.t+'.js';d.body.appendChild(s);}if(d.readyState=='complete')l();else{if(w.attachEvent)w.attachEvent('onload',l);else w.addEventListener('load',l,false);}})(document,window,'8117d182006143d496917e6cf11f01e6',{t:'full5d',css:['{p}//info.meteotrend.com/mt/{t}.css','{p}//info.meteotrend.com/cs/a42307cffb83482e0c96c4dcb0035b0135080238.css'],source:'meteotrend'});</script>
-
-
-
-//__________
-
-
-
-
-
-   </section>
+            <p style="margin-top: 20px; font-size: 0.9em; color: var(--secondary-color);">* البيانات مقدمة من OpenWeatherMap (توقعات كل 3 ساعات لمدة 5 أيام).</p>
+        </section>
+        
+        <div class="explore-prompt">
+            <p>استكشف المزيد من برامجنا وألعابنا الممتعة! انقر على الروابط في الأعلى.</p>
+        </div>
 
         <footer class="footer">
             <p>&copy; 2024 المعجم للبرمجيات. جميع الحقوق محفوظة.</p>
@@ -352,12 +425,16 @@
 
                 // تحديث العنوان بناءً على اسم الموقع (إذا كان متوفرًا)
                 if (locationName) {
-                    mainTitle.textContent = `حالة الرياح في ${locationName} (بيانات حقيقية)`;
+                    mainTitle.textContent = `حالة الرياح في ${locationName}`;
                 } else if (data.city && data.city.name) {
-                    mainTitle.textContent = `حالة الرياح في ${data.city.name} (بيانات حقيقية)`;
+                    mainTitle.textContent = `حالة الرياح في ${data.city.name}`;
                 } else {
-                    mainTitle.textContent = `حالة الرياح (بيانات حقيقية)`;
+                    mainTitle.textContent = `حالة الرياح`;
                 }
+
+                // إضافة ملاحظة صغيرة على العنوان لتوضيح مصدر البيانات
+                mainTitle.innerHTML += ' <span style="font-size: 0.5em; color: #666; vertical-align: middle;">(بيانات حقيقية)</span>';
+
 
                 const dailyForecasts = {}; 
                 data.list.forEach(item => {
@@ -436,7 +513,7 @@
 
                 if (geoData.length > 0) {
                     const { lat, lon, name } = geoData[0];
-                    fetchWeatherData(lat, lon, name); // جلب بيانات الطقس بالإحداثيات واسم المدينة
+                    fetchWeatherData(lat, lon, name); 
                 } else {
                     showError('لم يتم العثور على المدينة. الرجاء التحقق من الاسم.');
                 }
@@ -458,14 +535,13 @@
                 navigator.geolocation.getCurrentPosition(
                     position => {
                         const { latitude, longitude } = position.coords;
-                        // يمكننا استخدام Geocoding API العكسي للحصول على اسم المدينة من الإحداثيات
                         fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}`)
                             .then(response => response.json())
                             .then(data => {
                                 let locationName = 'موقعك الحالي';
                                 if (data && data.length > 0 && data[0].name) {
                                     locationName = data[0].name;
-                                    if (data[0].country) { // إضافة اسم البلد إذا كان متوفرًا
+                                    if (data[0].country) { 
                                         locationName += `, ${data[0].country}`;
                                     }
                                 }
@@ -473,7 +549,7 @@
                             })
                             .catch(error => {
                                 console.error('Reverse Geocoding error:', error);
-                                fetchWeatherData(latitude, longitude, 'موقعك الحالي'); // استمر في جلب البيانات حتى لو فشل تحديد الاسم
+                                fetchWeatherData(latitude, longitude, 'موقعك الحالي');
                             });
                     },
                     error => {
@@ -487,12 +563,12 @@
                             msg = 'انتهى وقت محاولة الحصول على الموقع.';
                         }
                         showError(msg + " يمكنك البحث عن مدينة يدوياً.");
-                        mainTitle.textContent = 'حالة الرياح (بيانات حقيقية)'; // العودة للعنوان الافتراضي
+                        mainTitle.textContent = 'حالة الرياح (بيانات حقيقية)'; 
                     }
                 );
             } else {
                 showError('متصفحك لا يدعم تحديد الموقع الجغرافي. الرجاء البحث عن مدينة يدوياً.');
-                mainTitle.textContent = 'حالة الرياح (بيانات حقيقية)'; // العودة للعنوان الافتراضي
+                mainTitle.textContent = 'حالة الرياح (بيانات حقيقية)'; 
             }
         }
 
