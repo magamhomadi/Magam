@@ -161,8 +161,7 @@
         const displayDonors = () => {
             donorsListDiv.innerHTML = '<p class="loading-message">جاري تحميل بيانات المتبرعين...</p>';
 
-            // تم تغيير اسم المجموعة هنا إلى "Doner"
-            const q = query(collection(db, "Doner"), orderBy("Date", "desc")); // الترتيب الآن حسب حقل Date
+            const q = query(collection(db, "Doner"), orderBy("Date", "desc"));
 
             onSnapshot(q, (snapshot) => {
                 if (snapshot.empty) {
@@ -187,7 +186,11 @@
                     const donor = doc.data();
                     donorsHtml += `
                         <tr>
-                            <td>${donor.Name}</td>    <td>${donor.Address}</td> <td>${donor.Date}</td>    <td>${donor.Bloode}</td>  </tr>
+                            <td>${donor.Name}</td>
+                            <td>${donor.Address}</td>
+                            <td>${donor.Date}</td>
+                            <td>${donor.Bloode}</td>
+                        </tr>
                     `;
                 });
 
