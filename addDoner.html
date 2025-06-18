@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إضافة بيانات المتبرعين بالدم</title>
+    <title>إضافة بيانات المتبرعين بالدم (Firebase)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
@@ -31,8 +31,8 @@
             color: var(--text-color);
             text-align: center;
             line-height: 1.6;
-            padding: 30px 0; /* حشوة علوية وسفلية للمحتوى */
-            direction: rtl; /* للتأكد من الاتجاه من اليمين لليسار */
+            padding: 30px 0;
+            direction: rtl;
         }
 
         .container {
@@ -54,7 +54,7 @@
 
         .form-group {
             margin-bottom: 20px;
-            text-align: right; /* محاذاة لليمين للحقول */
+            text-align: right;
         }
 
         .form-group label {
@@ -67,17 +67,17 @@
         .form-group input[type="text"],
         .form-group input[type="date"],
         .form-group select {
-            width: calc(100% - 20px); /* ضبط العرض مع الحشوة */
+            width: calc(100% - 20px);
             padding: 12px 10px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             font-size: 1em;
-            font-family: 'Tajawal', sans-serif; /* تطبيق الخط على المدخلات */
+            font-family: 'Tajawal', sans-serif;
             box-sizing: border-box;
         }
 
         .form-group input[type="date"] {
-            cursor: pointer; /* مؤشر اليد على حقل التاريخ */
+            cursor: pointer;
         }
 
         .submit-button {
@@ -101,7 +101,7 @@
             margin-top: 50px;
             border-top: 1px solid var(--medium-gray);
             padding-top: 40px;
-            text-align: right; /* محاذاة لليمين لقائمة المتبرعين */
+            text-align: right;
         }
 
         .donors-list-section h2 {
@@ -109,7 +109,7 @@
             margin-bottom: 25px;
             font-size: 2em;
             font-weight: 700;
-            text-align: center; /* توسيط عنوان القائمة */
+            text-align: center;
         }
 
         .donors-table {
@@ -118,7 +118,7 @@
             margin-top: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             border-radius: 8px;
-            overflow: hidden; /* لإخفاء الحواف الزائدة للجدول */
+            overflow: hidden;
         }
 
         .donors-table th, .donors-table td {
@@ -131,21 +131,28 @@
             background-color: var(--primary-red);
             color: white;
             font-weight: 700;
-            text-align: center; /* توسيط رؤوس الأعمدة */
+            text-align: center;
         }
 
         .donors-table tbody tr:nth-child(even) {
-            background-color: #f2f2f2; /* لون للصفوف الزوجية */
+            background-color: #f2f2f2;
         }
 
         .donors-table tbody tr:hover {
-            background-color: #e6e6e6; /* تأثير عند تمرير الماوس */
+            background-color: #e6e6e6;
         }
 
         .no-donors-message {
             text-align: center;
             color: #6c757d;
             font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .loading-message {
+            text-align: center;
+            color: var(--primary-red);
+            font-size: 1.2em;
             margin-top: 20px;
         }
 
@@ -160,7 +167,7 @@
             .form-group input[type="text"],
             .form-group input[type="date"],
             .form-group select {
-                width: 100%; /* عرض كامل للحقول على الشاشات الصغيرة */
+                width: 100%;
             }
             .donors-table {
                 font-size: 0.9em;
@@ -174,6 +181,8 @@
             }
         }
     </style>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -217,19 +226,44 @@
         <div class="donors-list-section">
             <h2>قائمة المتبرعين الحاليين</h2>
             <div id="donorsList">
-                <p class="no-donors-message">لا يوجد متبرعون مضافون بعد.</p>
+                <p class="loading-message">جاري تحميل بيانات المتبرعين...</p>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const donorForm = document.getElementById('donorForm');
-            const donorsListDiv = document.getElementById('donorsList');
-            let donors = JSON.parse(localStorage.getItem('donors')) || []; // تحميل البيانات من التخزين المحلي
+        // *** 1. قم بتغيير هذه القيم لتتناسب مع مشروعك في Firebase ***
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
-            // دالة لعرض المتبرعين
-            function displayDonors() {
+        // 2. تهيئة Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // 3. الحصول على مرجع لقاعدة بيانات Firestore
+        const db = firebase.firestore();
+        const donorsCollection = db.collection('donors'); // اسم المجموعة (Collection) في Firestore
+
+        // تعريف العناصر من DOM
+        const donorForm = document.getElementById('donorForm');
+        const donorsListDiv = document.getElementById('donorsList');
+
+        // دالة لعرض المتبرعين
+        async function displayDonors() {
+            donorsListDiv.innerHTML = '<p class="loading-message">جاري تحميل بيانات المتبرعين...</p>'; // رسالة تحميل
+
+            try {
+                const snapshot = await donorsCollection.orderBy('name').get(); // قراءة البيانات وفرزها بالاسم
+                let donors = [];
+                snapshot.forEach(doc => {
+                    donors.push({ id: doc.id, ...doc.data() }); // إضافة ID الوثيقة لسهولة التعامل لاحقاً
+                });
+
                 if (donors.length === 0) {
                     donorsListDiv.innerHTML = '<p class="no-donors-message">لا يوجد متبرعون مضافون بعد.</p>';
                     return;
@@ -263,29 +297,38 @@
                     </table>
                 `;
                 donorsListDiv.innerHTML = tableHTML;
+
+            } catch (error) {
+                console.error("Error getting documents: ", error);
+                donorsListDiv.innerHTML = '<p class="no-donors-message" style="color:red;">حدث خطأ أثناء تحميل البيانات. يرجى المحاولة لاحقاً.</p>';
             }
+        }
 
-            // الاستماع لحدث إرسال النموذج
-            donorForm.addEventListener('submit', (event) => {
-                event.preventDefault(); // منع إرسال النموذج بالطريقة التقليدية وإعادة تحميل الصفحة
+        // الاستماع لحدث إرسال النموذج
+        donorForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // منع إرسال النموذج بالطريقة التقليدية
 
-                const newDonor = {
-                    name: document.getElementById('donorName').value,
-                    address: document.getElementById('donorAddress').value,
-                    lastDonationDate: document.getElementById('lastDonationDate').value,
-                    bloodType: document.getElementById('bloodType').value
-                };
+            const newDonor = {
+                name: document.getElementById('donorName').value,
+                address: document.getElementById('donorAddress').value,
+                lastDonationDate: document.getElementById('lastDonationDate').value,
+                bloodType: document.getElementById('bloodType').value,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp() // إضافة ختم زمني
+            };
 
-                donors.push(newDonor); // إضافة المتبرع الجديد للمصفوفة
-                localStorage.setItem('donors', JSON.stringify(donors)); // حفظ البيانات في التخزين المحلي
-
+            try {
+                await donorsCollection.add(newDonor); // إضافة المتبرع الجديد إلى Firestore
                 donorForm.reset(); // تفريغ حقول النموذج
+                alert('تم حفظ بيانات المتبرع بنجاح!'); // إشعار للمستخدم
                 displayDonors(); // تحديث عرض قائمة المتبرعين
-            });
-
-            // عرض المتبرعين عند تحميل الصفحة لأول مرة
-            displayDonors();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert('حدث خطأ أثناء حفظ البيانات: ' + error.message);
+            }
         });
+
+        // عرض المتبرعين عند تحميل الصفحة لأول مرة
+        document.addEventListener('DOMContentLoaded', displayDonors);
     </script>
 </body>
 </html>
