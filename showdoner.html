@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض بيانات المتبرعين</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #dc3545;
+            --dark-red: #c82333;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --text-color: #343a40;
+            --heading-color: #212529;
+            --border-color: #ced4da;
+            --shadow-subtle: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            text-align: center;
+            line-height: 1.6;
+            padding: 30px 0;
+            direction: rtl;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px var(--shadow-subtle);
+            max-width: 90%;
+            width: 700px;
+            box-sizing: border-box;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: var(--primary-red);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        .donors-list-section {
+            padding-top: 20px;
+            text-align: right;
+        }
+
+        .donors-list-section h2 {
+            color: var(--heading-color);
+            margin-bottom: 25px;
+            font-size: 2em;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .donors-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .donors-table th, .donors-table td {
+            border: 1px solid #e0e0e0;
+            padding: 12px 15px;
+            text-align: right;
+        }
+
+        .donors-table th {
+            background-color: var(--primary-red);
+            color: white;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .donors-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .donors-table tbody tr:hover {
+            background-color: #e6e6e6;
+        }
+
+        .no-donors-message {
+            text-align: center;
+            color: #6c757d;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .loading-message {
+            text-align: center;
+            color: var(--primary-red);
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .donors-table {
+                font-size: 0.9em;
+            }
+            .donors-table th, .donors-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>اختبار عرض بيانات المتبرعين</h1>
+
+        <div class="donors-list-section">
+            <h2>قائمة المتبرعين الحاليين</h2>
+            <div id="donorsList">
+                <p class="loading-message">جاري تحميل بيانات المتبرعين...</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy1CbscoYB9Z9yo21230nhUeGDm7xBcXA",
+            authDomain: "docmagam.firebaseapp.com",
+            databaseURL: "https://docmagam-default-rtdb.firebaseio.com",
+            projectId: "docmagam",
+            storageBucket: "docmagam.firebasestorage.app",
+            messagingSenderId: "643175087125",
+            appId: "1:643175087125:web:da49e8ce6cc09dbba3a21c",
+            measurementId: "G-EJG80HC50P"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const donorsListDiv = document.getElementById('donorsList');
+
+        const displayDonors = () => {
+            donorsListDiv.innerHTML = '<p class="loading-message">جاري تحميل بيانات المتبرعين...</p>';
+
+            // تم تغيير اسم المجموعة هنا إلى "Doner"
+            const q = query(collection(db, "Doner"), orderBy("Date", "desc")); // الترتيب الآن حسب حقل Date
+
+            onSnapshot(q, (snapshot) => {
+                if (snapshot.empty) {
+                    donorsListDiv.innerHTML = '<p class="no-donors-message">لا يوجد متبرعون مضافون حاليًا.</p>';
+                    return;
+                }
+
+                let donorsHtml = `
+                    <table class="donors-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم الكامل</th>
+                                <th>العنوان</th>
+                                <th>تاريخ آخر سحب</th>
+                                <th>فصيلة الدم</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                snapshot.forEach((doc) => {
+                    const donor = doc.data();
+                    donorsHtml += `
+                        <tr>
+                            <td>${donor.Name}</td>    <td>${donor.Address}</td> <td>${donor.Date}</td>    <td>${donor.Bloode}</td>  </tr>
+                    `;
+                });
+
+                donorsHtml += `
+                        </tbody>
+                    </table>
+                `;
+                donorsListDiv.innerHTML = donorsHtml;
+            }, (error) => {
+                donorsListDiv.innerHTML = `<p class="no-donors-message">حدث خطأ أثناء تحميل بيانات المتبرعين: ${error.message}</p>`;
+                console.error("خطأ في جلب المستندات: ", error);
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', displayDonors);
+    </script>
+</body>
+</html>
