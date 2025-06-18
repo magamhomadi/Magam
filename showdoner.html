@@ -53,6 +53,24 @@
             font-weight: 700;
         }
 
+        .show-data-button {
+            background-color: #007bff; /* لون أزرق لزر العرض */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 700;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-bottom: 30px; /* مسافة تحت الزر */
+        }
+
+        .show-data-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
         .donors-list-section {
             padding-top: 20px;
             text-align: right;
@@ -131,10 +149,12 @@
     <div class="container">
         <h1>اختبار عرض بيانات المتبرعين</h1>
 
+        <button id="showDataButton" class="show-data-button">عرض بيانات المتبرعين</button>
+
         <div class="donors-list-section">
             <h2>قائمة المتبرعين الحاليين</h2>
             <div id="donorsList">
-                <p class="loading-message">جاري تحميل بيانات المتبرعين...</p>
+                <p class="no-donors-message">اضغط على زر "عرض بيانات المتبرعين" لرؤية القائمة.</p>
             </div>
         </div>
     </div>
@@ -143,6 +163,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js";
         import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js";
 
+        /* إعدادات مشروع Firebase الخاص بك */
         const firebaseConfig = {
             apiKey: "AIzaSyBy1CbscoYB9Z9yo21230nhUeGDm7xBcXA",
             authDomain: "docmagam.firebaseapp.com",
@@ -154,13 +175,17 @@
             measurementId: "G-EJG80HC50P"
         };
 
+        /* تهيئة Firebase */
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const donorsListDiv = document.getElementById('donorsList');
+        const showDataButton = document.getElementById('showDataButton');
 
+        /* دالة لعرض المتبرعين من Firestore */
         const displayDonors = () => {
             donorsListDiv.innerHTML = '<p class="loading-message">جاري تحميل بيانات المتبرعين...</p>';
 
+            /* إنشاء استعلام للاستماع إلى التحديثات في الوقت الفعلي والترتيب حسب الطابع الزمني */
             const q = query(collection(db, "Doner"), orderBy("Date", "desc"));
 
             onSnapshot(q, (snapshot) => {
@@ -184,6 +209,7 @@
 
                 snapshot.forEach((doc) => {
                     const donor = doc.data();
+                    /* استخدام أسماء الحقول الجديدة */
                     donorsHtml += `
                         <tr>
                             <td>${donor.Name}</td>
@@ -200,12 +226,18 @@
                 `;
                 donorsListDiv.innerHTML = donorsHtml;
             }, (error) => {
+                /* عرض رسالة الخطأ على الشاشة */
                 donorsListDiv.innerHTML = `<p class="no-donors-message">حدث خطأ أثناء تحميل بيانات المتبرعين: ${error.message}</p>`;
+                /* طباعة الخطأ في وحدة التحكم للمطورين */
                 console.error("خطأ في جلب المستندات: ", error);
             });
         };
 
-        document.addEventListener('DOMContentLoaded', displayDonors);
+        /* إضافة مستمع حدث لزر "عرض بيانات المتبرعين" */
+        showDataButton.addEventListener('click', displayDonors);
+
+        /* لا نستدعي displayDonors عند تحميل الصفحة الآن، فقط عند النقر على الزر */
+        /* document.addEventListener('DOMContentLoaded', displayDonors); */
     </script>
 </body>
 </html>
