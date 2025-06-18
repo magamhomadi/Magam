@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -181,8 +180,6 @@
             }
         }
     </style>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -231,113 +228,116 @@
         </div>
     </div>
 
-    <<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+    <script type="module">
+        // استيراد الدوال التي تحتاجها من حزم Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js";
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyBy1CbscoYB9Z9yo21230nhUeGDm7xBcXA",
-    authDomain: "docmagam.firebaseapp.com",
-    databaseURL: "https://docmagam-default-rtdb.firebaseio.com",
-    projectId: "docmagam",
-    storageBucket: "docmagam.firebasestorage.app",
-    messagingSenderId: "643175087125",
-    appId: "1:643175087125:web:da49e8ce6cc09dbba3a21c",
-    measurementId: "G-EJG80HC50P"
-  };
+        // إعدادات مشروع Firebase الخاص بك
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy1CbscoYB9Z9yo21230nhUeGDm7xBcXA",
+            authDomain: "docmagam.firebaseapp.com",
+            databaseURL: "https://docmagam-default-rtdb.firebaseio.com",
+            projectId: "docmagam",
+            storageBucket: "docmagam.firebasestorage.app",
+            messagingSenderId: "643175087125",
+            appId: "1:643175087125:web:da49e8ce6cc09dbba3a21c",
+            measurementId: "G-EJG80HC50P"
+        };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+        // تهيئة Firebase
+        const app = initializeApp(firebaseConfig);
+        // const analytics = getAnalytics(app); // التحليلات اختيارية لهذه الوظيفة
 
-        // 3. الحصول على مرجع لقاعدة بيانات Firestore
-        const db = firebase.firestore();
-        const donorsCollection = db.collection('Doner'); // اسم المجموعة (Collection) في Firestore
+        // الحصول على مرجع لقاعدة بيانات Firestore
+        const db = getFirestore(app);
 
-        // تعريف العناصر من DOM
+        // الحصول على عناصر النموذج
         const donorForm = document.getElementById('donorForm');
+        const donorNameInput = document.getElementById('donorName');
+        const donorAddressInput = document.getElementById('donorAddress');
+        const lastDonationDateInput = document.getElementById('lastDonationDate');
+        const bloodTypeSelect = document.getElementById('bloodType');
         const donorsListDiv = document.getElementById('donorsList');
 
-        // دالة لعرض المتبرعين
-        async function displayDonors() {
-            donorsListDiv.innerHTML = '<p class="loading-message">جاري تحميل بيانات المتبرعين...</p>'; // رسالة تحميل
+        // دالة لإضافة متبرع جديد إلى Firestore
+        donorForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); // منع الإرسال الافتراضي للنموذج
+
+            const donorName = donorNameInput.value;
+            const donorAddress = donorAddressInput.value;
+            const lastDonationDate = lastDonationDateInput.value;
+            const bloodType = bloodTypeSelect.value;
 
             try {
-                const snapshot = await donorsCollection.orderBy('Name').get(); // قراءة البيانات وفرزها بالاسم
-                let donors = [];
-                snapshot.forEach(doc => {
-                    donors.push({ id: doc.id, ...doc.data() }); // إضافة ID الوثيقة لسهولة التعامل لاحقاً
+                // إضافة مستند جديد إلى مجموعة "donors"
+                await addDoc(collection(db, "Doner"), {
+                    Name: donorName,
+                    Addres: donorAddress,
+                    Date: lastDonationDate,
+                    Blood: bloodType,
+                    timestamp: new Date() // إضافة طابع زمني للترتيب
                 });
 
-                if (donors.length === 0) {
-                    donorsListDiv.innerHTML = '<p class="no-donors-message">لا يوجد متبرعون مضافون بعد.</p>';
+                // مسح حقول النموذج بعد الإرسال الناجح
+                donorForm.reset();
+                alert('تم إضافة المتبرع بنجاح!'); // رسالة نجاح
+            } catch (e) {
+                console.error("خطأ في إضافة المستند: ", e);
+                alert('حدث خطأ أثناء إضافة المتبرع. الرجاء المحاولة مرة أخرى.'); // رسالة خطأ
+            }
+        });
+
+        // دالة لعرض المتبرعين من Firestore
+        const displayDonors = () => {
+            donorsListDiv.innerHTML = '<p class="loading-message">جاري تحميل بيانات المتبرعين...</p>'; // إظهار رسالة التحميل
+
+            // إنشاء استعلام للاستماع إلى التحديثات في الوقت الفعلي والترتيب حسب الطابع الزمني
+            const q = query(collection(db, "donors"), orderBy("timestamp", "desc"));
+
+            onSnapshot(q, (snapshot) => {
+                if (snapshot.empty) {
+                    donorsListDiv.innerHTML = '<p class="no-donors-message">لا يوجد متبرعون مضافون حاليًا.</p>';
                     return;
                 }
 
-                // إنشاء جدول لعرض البيانات
-                let tableHTML = `
+                let donorsHtml = `
                     <table class="donors-table">
                         <thead>
                             <tr>
-                                <th>الاسم</th>
+                                <th>الاسم الكامل</th>
                                 <th>العنوان</th>
-                                <th>آخر سحب</th>
+                                <th>تاريخ آخر سحب</th>
                                 <th>فصيلة الدم</th>
                             </tr>
                         </thead>
                         <tbody>
                 `;
-                donors.forEach(donor => {
-                    tableHTML += `
+
+                snapshot.forEach((doc) => {
+                    const donor = doc.data();
+                    donorsHtml += `
                         <tr>
-                            <td>${donor.name}</td>
-                            <td>${donor.Addres}</td>
+                            <td>${Name}</td>
+                            <td>${donor.Address}</td>
                             <td>${donor.Date}</td>
                             <td>${donor.Blood}</td>
                         </tr>
                     `;
                 });
-                tableHTML += `
+
+                donorsHtml += `
                         </tbody>
                     </table>
                 `;
-                donorsListDiv.innerHTML = tableHTML;
+                donorsListDiv.innerHTML = donorsHtml;
+            }, (error) => {
+                console.error("خطأ في جلب المستندات: ", error);
+                donorsListDiv.innerHTML = '<p class="no-donors-message">حدث خطأ أثناء تحميل بيانات المتبرعين.</p>';
+            });
+        };
 
-            } catch (error) {
-                console.error("Error getting documents: ", error);
-                donorsListDiv.innerHTML = '<p class="no-donors-message" style="color:red;">حدث خطأ أثناء تحميل البيانات. يرجى المحاولة لاحقاً.</p>';
-            }
-        }
-
-        // الاستماع لحدث إرسال النموذج
-        donorForm.addEventListener('submit', async (event) => {
-            event.preventDefault(); // منع إرسال النموذج بالطريقة التقليدية
-
-            const newDonor = {
-                name: document.getElementById('donorName').value,
-                address: document.getElementById('donorAddress').value,
-                lastDonationDate: document.getElementById('lastDonationDate').value,
-                bloodType: document.getElementById('bloodType').value,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp() // إضافة ختم زمني
-            };
-
-            try {
-                await donorsCollection.add(newDonor); // إضافة المتبرع الجديد إلى Firestore
-                donorForm.reset(); // تفريغ حقول النموذج
-                alert('تم حفظ بيانات المتبرع بنجاح!'); // إشعار للمستخدم
-                displayDonors(); // تحديث عرض قائمة المتبرعين
-            } catch (error) {
-                console.error("Error adding document: ", error);
-                alert('حدث خطأ أثناء حفظ البيانات: ' + error.message);
-            }
-        });
-
-        // عرض المتبرعين عند تحميل الصفحة لأول مرة
+        // استدعاء displayDonors عند تحميل الصفحة لعرض المتبرعين الحاليين
         document.addEventListener('DOMContentLoaded', displayDonors);
     </script>
 </body>
