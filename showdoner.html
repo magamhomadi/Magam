@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض المتبرعين</title>
+    <title>عرض بيانات المتبرعين</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
@@ -163,9 +163,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // لا توجد أي استيرادات (imports) هنا!
-        // نصل إلى Firebase من خلال الكائن العام 'firebase'
-
         const firebaseConfig = {
             apiKey: "AIzaSyBy1CbscoYB9Z9yo21230nhUeGDm7xBcXA",
             authDomain: "docmagam.firebaseapp.com",
@@ -177,9 +174,7 @@
             measurementId: "G-EJG80HC50P"
         };
 
-        // تهيئة Firebase باستخدام firebase.initializeApp
         const app = firebase.initializeApp(firebaseConfig);
-        // الوصول إلى Firestore من خلال firebase.firestore()
         const db = firebase.firestore();
 
         const donorsListDiv = document.getElementById('donorsList');
@@ -188,7 +183,6 @@
         const displayDonors = () => {
             donorsListDiv.innerHTML = '<p class="loading-message">جاري تحميل بيانات المتبرعين...</p>';
 
-            // استخدام الدوال مباشرة من كائن db
             const q = db.collection("Doner").orderBy("Date", "desc");
 
             q.onSnapshot((snapshot) => {
@@ -212,13 +206,26 @@
 
                 snapshot.forEach((doc) => {
                     const donor = doc.data();
+                    let formattedDate = '';
+                    if (donor.Date && typeof donor.Date.toDate === 'function') {
+                        // إذا كان الحقل Date هو Timestamp، قم بتحويله
+                        formattedDate = donor.Date.toDate().toLocaleDateString('ar-SA', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                    } else if (donor.Date) {
+                        // إذا كان الحقل Date مجرد نص (string)
+                        formattedDate = donor.Date;
+                    } else {
+                        // إذا كان الحقل مفقودًا أو undefined
+                        formattedDate = 'غير متوفر';
+                    }
+
                     donorsHtml += `
                         <tr>
-                            <td>${donor.Name}</td>
-                            <td>${donor.Address}</td>
-                            <td>${donor.Date}</td>
-                            <td>${donor.Bloode}</td>
-                        </tr>
+                            <td>${donor.Name || 'غير متوفر'}</td>   <td>${donor.Address || 'غير متوفر'}</td> <td>${formattedDate}</td>
+                            <td>${donor.Bloode || 'غير متوفر'}</td> </tr>
                     `;
                 });
 
@@ -237,4 +244,3 @@
     </script>
 </body>
 </html>
-    
