@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البحث عن المتبرعين</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #dc3545;
+            --dark-red: #c82333;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --text-color: #343a40;
+            --heading-color: #212529;
+            --border-color: #ced4da;
+            --shadow-subtle: rgba(0, 0, 0, 0.1);
+            --ready-donor-color: #28a745; /* أخضر للمستعدين */
+            --not-ready-donor-color: #dc3545; /* أحمر لغير المستعدين */
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            text-align: center;
+            line-height: 1.6;
+            padding: 30px 0;
+            direction: rtl;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px var(--shadow-subtle);
+            max-width: 90%;
+            width: 800px; /* زيادة العرض قليلاً */
+            box-sizing: border-box;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: var(--primary-red);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        /* تنسيق قسم البحث */
+        .search-section {
+            background-color: #f0f0f0;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: inset 0 1px 5px rgba(0,0,0,0.05);
+            text-align: right;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* عمودين */
+            gap: 20px; /* مسافة بين العناصر */
+        }
+
+        .search-section h2 {
+            grid-column: 1 / -1; /* يمتد العنوان على كل الأعمدة */
+            color: var(--heading-color);
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 0; /* تم التحكم بالمسافة عن طريق gap */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1em;
+            color: var(--text-color);
+            box-sizing: border-box;
+            background-color: #fff;
+            cursor: pointer;
+            -webkit-appearance: none; /* لإزالة التنسيقات الافتراضية للمتصفحات */
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2C114.7L154.5%2C247.3c-2.3%2C2.3-5.3%2C3.5-8.5%2C3.5s-6.2-1.2-8.5-3.5L5.4%2C114.7c-4.6-4.6-4.6-12%2C0-16.6s12-4.6%2C16.6%2C0L146%2C208.5c2.3%2C2.3%2C6.2%2C2.3%2C8.5%2C0l123.9-123.9c4.6-4.6%2C12-4.6%2C16.6%2C0S291.6%2C110.1%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E'); /* سهم مخصص للقائمة المنسدلة */
+            background-repeat: no-repeat;
+            background-position: left 12px center;
+            background-size: 12px;
+            padding-left: 30px; /* لترك مساحة للسهم */
+        }
+
+        .form-group select:focus {
+            border-color: var(--primary-red);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
+        }
+
+        .search-button-group {
+            grid-column: 1 / -1; /* الزر يمتد على كل الأعمدة */
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .search-button {
+            background-color: var(--primary-red);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: 700;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .search-button:hover {
+            background-color: var(--dark-red);
+            transform: translateY(-2px);
+        }
+
+        /* تنسيق قسم النتائج */
+        .search-results-section {
+            padding-top: 20px;
+            text-align: right;
+        }
+
+        .search-results-section h2 {
+            color: var(--heading-color);
+            margin-bottom: 25px;
+            font-size: 2em;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .donors-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .donors-table th, .donors-table td {
+            border: 1px solid #e0e0e0;
+            padding: 12px 15px;
+            text-align: right;
+        }
+
+        .donors-table th {
+            background-color: var(--primary-red);
+            color: white;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .donors-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .donors-table tbody tr:hover {
+            background-color: #e6e6e6;
+        }
+
+        /* ألوان التمييز بناءً على تاريخ آخر تبرع */
+        .ready-for-donation {
+            background-color: #d4edda; /* أخضر فاتح */
+            color: var(--ready-donor-color); /* نص أخضر داكن */
+        }
+
+        .not-ready-for-donation {
+            background-color: #f8d7da; /* أحمر فاتح */
+            color: var(--not-ready-donor-color); /* نص أحمر داكن */
+        }
+
+        .no-results-message, .loading-message {
+            text-align: center;
+            color: #6c757d;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .loading-message {
+            color: var(--primary-red);
+            font-size: 1.2em;
+        }
+
+        /* رسائل الخطأ */
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .search-section {
+                grid-template-columns: 1fr; /* عمود واحد في الشاشات الصغيرة */
+            }
+            .donors-table {
+                font-size: 0.85em;
+            }
+            .donors-table th, .donors-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>البحث عن المتبرعين</h1>
+
+        <div class="search-section">
+            <h2>ابحث عن متبرع</h2>
+            <div class="form-group">
+                <label for="searchBloodType">فصيلة الدم:</label>
+                <select id="searchBloodType">
+                    <option value="">كل الفصائل</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="searchAddress">المدينة:</label>
+                <select id="searchAddress">
+                    <option value="">كل المدن</option>
+                    <option value="اللحية">اللحية</option>
+                    <option value="الخوبة">الخوبة</option>
+                    <option value="وادي مور">وادي مور</option>
+                </select>
+            </div>
+            <div class="search-button-group">
+                <button id="searchButton" class="search-button">بحث</button>
+            </div>
+            <div id="searchMessage" class="error-message" style="display:none;"></div>
+        </div>
+
+        <div class="search-results-section">
+            <h2>نتائج البحث</h2>
+            <div id="searchResults">
+                <p class="no-results-message">الرجاء إدخال معايير البحث والنقر على "بحث".</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy1CbscoYB9Z9yo21230nhUeGDm7xBcXA",
+            authDomain: "docmagam.firebaseapp.com",
+            databaseURL: "https://docmagam-default-rtdb.firebaseio.com",
+            projectId: "docmagam",
+            storageBucket: "docmagam.firebasestorage.app",
+            messagingSenderId: "643175087125",
+            appId: "1:643175087125:web:da49e8ce6cc09dbba3a21c",
+            measurementId: "G-EJG80HC50P"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        const searchBloodType = document.getElementById('searchBloodType');
+        const searchAddress = document.getElementById('searchAddress');
+        const searchButton = document.getElementById('searchButton');
+        const searchResultsDiv = document.getElementById('searchResults');
+        const searchMessageDiv = document.getElementById('searchMessage');
+
+        const showSearchMessage = (message, type) => {
+            searchMessageDiv.textContent = message;
+            searchMessageDiv.className = `error-message ${type}`;
+            searchMessageDiv.style.display = 'block';
+            setTimeout(() => {
+                searchMessageDiv.style.display = 'none';
+            }, 5000);
+        };
+
+        const performSearch = async () => {
+            searchResultsDiv.innerHTML = '<p class="loading-message">جاري البحث عن المتبرعين...</p>';
+            searchMessageDiv.style.display = 'none'; // إخفاء أي رسائل سابقة
+
+            const bloodType = searchBloodType.value;
+            const address = searchAddress.value; // القيمة هنا ستكون بالضبط ما هو في القائمة المنسدلة
+
+            let donorsRef = db.collection("Doner");
+            let queryChain = donorsRef; // بدء سلسلة الاستعلام
+
+            // تطبيق فلاتر البحث
+            if (bloodType) {
+                queryChain = queryChain.where("Bloode", "==", bloodType);
+            }
+            if (address) {
+                queryChain = queryChain.where("Address", "==", address);
+            }
+
+            // ترتيب النتائج دائمًا بالأحدث أولاً
+            queryChain = queryChain.orderBy("timestamp", "desc");
+
+            try {
+                const snapshot = await queryChain.get(); // تنفيذ الاستعلام
+
+                if (snapshot.empty) {
+                    searchResultsDiv.innerHTML = '<p class="no-results-message">لا توجد نتائج مطابقة لمعايير البحث.</p>';
+                    return;
+                }
+
+                let donorsHtml = `
+                    <table class="donors-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم الكامل</th>
+                                <th>رقم الهاتف</th>
+                                <th>العنوان</th>
+                                <th>فصيلة الدم</th>
+                                <th>تاريخ آخر تبرع</th>
+                                <th>الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                // تحديد تاريخ 4 أشهر مضت من تاريخ اليوم
+                const fourMonthsAgo = new Date();
+                fourMonthsAgo.setMonth(fourMonthsAgo.getMonth() - 4);
+
+                snapshot.forEach((doc) => {
+                    const donor = doc.data();
+
+                    let formattedLastDonationDate = 'غير متوفر';
+                    let donationStatusClass = '';
+                    let donationStatusText = '';
+
+                    // معالجة تاريخ آخر تبرع وتحديد اللون
+                    if (donor.LastDonationDate && typeof donor.LastDonationDate.toDate === 'function') {
+                        const dateObj = donor.LastDonationDate.toDate();
+                        formattedLastDonationDate = dateObj.toLocaleDateString('ar-SA', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+
+                        // مقارنة التاريخ
+                        if (dateObj <= fourMonthsAgo) {
+                            donationStatusClass = 'ready-for-donation';
+                            donationStatusText = 'جاهز للتبرع';
+                        } else {
+                            donationStatusClass = 'not-ready-for-donation';
+                            donationStatusText = 'غير جاهز (أقل من 4 أشهر)';
+                        }
+                    } else {
+                        // إذا لم يتوفر تاريخ التبرع، نعتبره جاهزًا بشكل افتراضي أو نضع لونًا محايدًا
+                        donationStatusClass = 'ready-for-donation'; // يمكن تغييرها إلى فئة أخرى إذا أردت
+                        donationStatusText = 'تاريخ غير متوفر (قد يكون جاهز)';
+                    }
+
+                    donorsHtml += `
+                        <tr class="${donationStatusClass}">
+                            <td>${donor.Name || 'غير متوفر'}</td>
+                            <td>${donor.PhoneNumber || 'غير متوفر'}</td>
+                            <td>${donor.Address || 'غير متوفر'}</td>
+                            <td>${donor.Bloode || 'غير متوفر'}</td>
+                            <td>${formattedLastDonationDate}</td>
+                            <td>${donationStatusText}</td>
+                        </tr>
+                    `;
+                });
+
+                donorsHtml += `
+                        </tbody>
+                    </table>
+                `;
+                searchResultsDiv.innerHTML = donorsHtml;
+
+            } catch (error) {
+                showSearchMessage(`حدث خطأ أثناء البحث: ${error.message}`, 'error');
+                console.error("خطأ في جلب المستندات: ", error);
+                searchResultsDiv.innerHTML = '<p class="no-results-message">حدث خطأ أثناء تحميل البيانات.</p>';
+            }
+        };
+
+        searchButton.addEventListener('click', performSearch);
+
+        // قم بإجراء بحث أولي عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', performSearch);
+    </script>
+</body>
+</html>
