@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -249,7 +250,7 @@
                 min-width: unset;
             }
             .action-button {
-                width: 100%; /* الأزرار تأخذ عرض كامل على الشاشات الصغيرة */
+                width: 100%;
                 max-width: unset;
             }
             .donors-table {
@@ -284,7 +285,7 @@
             </div>
             <div class="action-buttons">
                 <button id="searchButton" class="action-button">بحث</button>
-                <button id="addDonorButton" class="action-button" onclick="location.href='showdoner.html'">متبرع جديد</button>
+                <button id="addDonorButton" class="action-button" onclick="location.href='index.html'">متبرع جديد</button>
             </div>
             <div id="searchMessage" class="error-message" style="display:none;"></div>
         </div>
@@ -292,7 +293,7 @@
         <div class="search-results-section">
             <h2>نتائج البحث</h2>
             <div id="searchResults">
-                <p class="no-results-message">الرجاء اختيار فصيلة الدم والنقر على "بحث".</p>
+                <p class="no-results-message">الرجاء اختيار فصيلة الدم والنقر على "بحث" لعرض النتائج.</p>
             </div>
         </div>
     </div>
@@ -337,10 +338,12 @@
 
             let queryChain = db.collection("Doner");
 
+            // تطبيق فلتر البحث على فصيلة الدم فقط
             if (bloodType) {
                 queryChain = queryChain.where("Bloode", "==", bloodType);
             }
 
+            // الترتيب الأحدث أولاً لضمان تناسق العرض
             queryChain = queryChain.orderBy("timestamp", "desc");
 
             try {
@@ -423,7 +426,8 @@
 
         searchButton.addEventListener('click', performSearch);
 
-        document.addEventListener('DOMContentLoaded', performSearch);
+        // تم إزالة الاستدعاء الأولي لـ performSearch()
+        // document.addEventListener('DOMContentLoaded', performSearch);
     </script>
 </body>
 </html>
