@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض بيانات المتبرعين</title>
+    <title>إدارة بيانات المتبرعين</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
@@ -53,27 +53,126 @@
             font-weight: 700;
         }
 
-        .show-data-button {
-            background-color: #007bff;
+        /* تنسيق الأزرار */
+        .button-group {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px; /* مسافة بين الأزرار */
+            justify-content: center;
+        }
+
+        .action-button {
+            background-color: #007bff; /* أزرق للزر الرئيسي */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.05em;
+            font-weight: 700;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .action-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .action-button.add-button {
+            background-color: #28a745; /* أخضر لزر الإضافة */
+        }
+
+        .action-button.add-button:hover {
+            background-color: #218838;
+        }
+
+
+        /* تنسيق النموذج */
+        .add-donor-form {
+            background-color: #f0f0f0;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: inset 0 1px 5px rgba(0,0,0,0.05);
+            text-align: right;
+        }
+
+        .add-donor-form h2 {
+            color: var(--heading-color);
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .form-group input[type="text"] {
+            width: calc(100% - 24px); /* خصم البادينج */
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1em;
+            color: var(--text-color);
+            box-sizing: border-box; /* لضمان أن العرض يشمل البادينج */
+        }
+
+        .form-group input[type="text"]:focus {
+            border-color: var(--primary-red);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1em;
+            color: var(--text-color);
+            background-color: #fff;
+            cursor: pointer;
+            -webkit-appearance: none; /* لإزالة التنسيقات الافتراضية للمتصفحات */
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2C114.7L154.5%2C247.3c-2.3%2C2.3-5.3%2C3.5-8.5%2C3.5s-6.2-1.2-8.5-3.5L5.4%2C114.7c-4.6-4.6-4.6-12%2C0-16.6s12-4.6%2C16.6%2C0L146%2C208.5c2.3%2C2.3%2C6.2%2C2.3%2C8.5%2C0l123.9-123.9c4.6-4.6%2C12-4.6%2C16.6%2C0S291.6%2C110.1%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E'); /* سهم مخصص للقائمة المنسدلة */
+            background-repeat: no-repeat;
+            background-position: left 12px center;
+            background-size: 12px;
+            padding-left: 30px; /* لترك مساحة للسهم */
+        }
+
+        .add-donor-button {
+            background-color: var(--primary-red);
             color: white;
             padding: 15px 30px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-weight: 700;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-bottom: 30px;
+            width: 100%; /* زر الإضافة يأخذ عرض النموذج بالكامل */
         }
 
-        .show-data-button:hover {
-            background-color: #0056b3;
+        .add-donor-button:hover {
+            background-color: var(--dark-red);
             transform: translateY(-2px);
         }
 
         .donors-list-section {
             padding-top: 20px;
             text-align: right;
+            margin-top: 40px; /* مسافة بين الفورم والجدول */
         }
 
         .donors-list-section h2 {
@@ -128,6 +227,27 @@
             margin-top: 20px;
         }
 
+        /* تنسيق رسائل التأكيد/الخطأ */
+        .message {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
@@ -141,15 +261,54 @@
             .donors-table th, .donors-table td {
                 padding: 10px;
             }
+            .button-group {
+                flex-direction: column;
+            }
+            .action-button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>اختبار عرض بيانات المتبرعين</h1>
+        <h1>إدارة بيانات المتبرعين</h1>
 
-        <button id="showDataButton" class="show-data-button">عرض بيانات المتبرعين</button>
+        <div class="add-donor-form">
+            <h2>إضافة متبرع جديد</h2>
+            <form id="addDonorForm">
+                <div class="form-group">
+                    <label for="name">الاسم الكامل:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">العنوان:</label>
+                    <input type="text" id="address" required>
+                </div>
+                <div class="form-group">
+                    <label for="bloode">فصيلة الدم:</label>
+                    <select id="bloode" required>
+                        <option value="">اختر فصيلة الدم</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+                <button type="submit" class="add-donor-button">إضافة متبرع</button>
+            </form>
+            <div id="formMessage" class="message" style="display:none;"></div>
+        </div>
+
+
+        <div class="button-group">
+            <button id="showDataButton" class="action-button">عرض بيانات المتبرعين</button>
+            </div>
 
         <div class="donors-list-section">
             <h2>قائمة المتبرعين الحاليين</h2>
@@ -163,6 +322,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
 
     <script>
+        // إعدادات مشروع Firebase الخاص بك
         const firebaseConfig = {
             apiKey: "AIzaSyBy1CbscoYB9Z9yo21230nhUeGDm7xBcXA",
             authDomain: "docmagam.firebaseapp.com",
@@ -174,16 +334,72 @@
             measurementId: "G-EJG80HC50P"
         };
 
+        // تهيئة Firebase والوصول إلى Firestore
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
+        // الحصول على عناصر DOM
         const donorsListDiv = document.getElementById('donorsList');
         const showDataButton = document.getElementById('showDataButton');
+        const addDonorForm = document.getElementById('addDonorForm');
+        const formMessage = document.getElementById('formMessage');
 
+        /* دالة لعرض رسائل التأكيد/الخطأ */
+        const showMessage = (message, type) => {
+            formMessage.textContent = message;
+            formMessage.className = `message ${type}`;
+            formMessage.style.display = 'block';
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+            }, 3000); // إخفاء الرسالة بعد 3 ثوانٍ
+        };
+
+        /* دالة لإضافة متبرع جديد */
+        addDonorForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); // منع إرسال النموذج الافتراضي (الذي يؤدي لإعادة تحميل الصفحة)
+
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const bloode = document.getElementById('bloode').value;
+
+            // الحصول على التاريخ والوقت الحالي وتنسيقه
+            const now = new Date();
+            const formattedCurrentDate = now.toLocaleDateString('ar-SA', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            try {
+                // إضافة مستند جديد إلى مجموعة "Doner"
+                await db.collection("Doner").add({
+                    Name: name,
+                    Address: address,
+                    Bloode: bloode,
+                    // حفظ التاريخ كـ Timestamp لسهولة الترتيب لاحقًا
+                    // والاحتفاظ بنسخة من التاريخ المنسق كـ String في حقل آخر إذا لزم الأمر
+                    Date: firebase.firestore.Timestamp.fromDate(now), // هذا هو التغيير الرئيسي للتاريخ
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp() // طابع زمني لخلق المستند (للترتيب)
+                });
+
+                showMessage('تمت إضافة المتبرع بنجاح!', 'success');
+                addDonorForm.reset(); // تفريغ حقول النموذج بعد الإضافة
+                displayDonors(); // تحديث قائمة المتبرعين تلقائيًا بعد الإضافة
+            } catch (error) {
+                showMessage(`خطأ في الإضافة: ${error.message}`, 'error');
+                console.error("خطأ في إضافة المستند: ", error);
+            }
+        });
+
+
+        /* دالة لعرض المتبرعين من Firestore */
         const displayDonors = () => {
             donorsListDiv.innerHTML = '<p class="loading-message">جاري تحميل بيانات المتبرعين...</p>';
 
-            const q = db.collection("Doner").orderBy("Date", "desc");
+            // الترتيب الآن سيكون على حقل 'timestamp' لضمان الأحدث أولاً
+            const q = db.collection("Doner").orderBy("timestamp", "desc");
 
             q.onSnapshot((snapshot) => {
                 if (snapshot.empty) {
@@ -206,26 +422,30 @@
 
                 snapshot.forEach((doc) => {
                     const donor = doc.data();
-                    let formattedDate = '';
+                    let formattedDate = 'غير متوفر'; // قيمة افتراضية
+
+                    // التحقق من أن حقل Date موجود وهو من نوع Timestamp
                     if (donor.Date && typeof donor.Date.toDate === 'function') {
-                        // إذا كان الحقل Date هو Timestamp، قم بتحويله
-                        formattedDate = donor.Date.toDate().toLocaleDateString('ar-SA', {
+                        const dateObj = donor.Date.toDate();
+                        formattedDate = dateObj.toLocaleDateString('ar-SA', {
                             year: 'numeric',
                             month: 'long',
                             day: 'numeric'
                         });
+                        // يمكنك إضافة الوقت إذا أردت:
+                        // formattedDate += ' ' + dateObj.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
                     } else if (donor.Date) {
-                        // إذا كان الحقل Date مجرد نص (string)
+                        // إذا كان الحقل Date موجودًا ولكنه ليس Timestamp (مثلاً نص)
                         formattedDate = donor.Date;
-                    } else {
-                        // إذا كان الحقل مفقودًا أو undefined
-                        formattedDate = 'غير متوفر';
                     }
 
                     donorsHtml += `
                         <tr>
-                            <td>${donor.Name || 'غير متوفر'}</td>   <td>${donor.Address || 'غير متوفر'}</td> <td>${formattedDate}</td>
-                            <td>${donor.Bloode || 'غير متوفر'}</td> </tr>
+                            <td>${donor.Name || 'غير متوفر'}</td>
+                            <td>${donor.Address || 'غير متوفر'}</td>
+                            <td>${formattedDate}</td>
+                            <td>${donor.Bloode || 'غير متوفر'}</td>
+                        </tr>
                     `;
                 });
 
@@ -240,7 +460,11 @@
             });
         };
 
+        // استماع لزر عرض البيانات
         showDataButton.addEventListener('click', displayDonors);
+
+        // عند تحميل الصفحة، يمكنك عرض البيانات مباشرة أو تركها للزر
+        // displayDonors(); // إذا أردت أن تعرض البيانات تلقائياً عند تحميل الصفحة
     </script>
 </body>
 </html>
