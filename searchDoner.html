@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -12,11 +11,13 @@
         :root {
             --primary-red: #dc3545; /* أحمر أساسي */
             --dark-red: #a71d2a;   /* أحمر داكن للتحويم */
-            --light-gray: #f8f9fa; /* خلفيات فاتحة */
+            --light-gray: #f8f9fa; /* خلفيات فاتحة جداً */
             --medium-gray: #e9ecef; /* خلفيات متوسطة */
+            --dark-gray: #6c757d; /* لون نص رمادي أغمق */
             --text-color: #343a40; /* لون النص الداكن */
             --heading-color: #212529; /* لون العناوين */
-            --border-color: #ced4da; /* لون الحدود */
+            --border-color: #ced4da; /* لون الحدود الافتراضي */
+            --table-border-color: #e0e0e0; /* لون حدود الجدول */
             --shadow-subtle: rgba(0, 0, 0, 0.1); /* ظل خفيف */
 
             /* ألوان الحالة للحفاظ على التمييز */
@@ -62,12 +63,11 @@
 
         /* تنسيق قسم البحث */
         .search-section {
-            background-color: #f0f0f0; /* خلفية خفيفة متناسقة */
+            background-color: var(--medium-gray); /* خلفية رمادية فاتحة متناسقة */
             padding: 30px;
             border-radius: 10px;
             margin-bottom: 40px;
             box-shadow: inset 0 1px 5px rgba(0,0,0,0.05);
-            text-align: right;
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
@@ -125,13 +125,13 @@
         }
 
         .action-buttons {
-            width: 100%; /* تأخذ عرض كامل */
+            width: 100%;
             text-align: center;
             margin-top: 10px;
             display: flex;
             justify-content: center;
-            gap: 15px; /* مسافة بين الأزرار */
-            flex-wrap: wrap; /* للسماح للأزرار بالانتقال لسطر جديد في الشاشات الصغيرة */
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         .action-button {
@@ -144,8 +144,8 @@
             font-size: 1.2em;
             font-weight: 700;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            flex-grow: 1; /* للسماح للأزرار بالتمدد */
-            max-width: 250px; /* تحديد أقصى عرض للزر */
+            flex-grow: 1;
+            max-width: 250px;
         }
 
         .action-button:hover {
@@ -169,24 +169,35 @@
 
         .donors-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: collapse; /* لإزالة الفراغات بين الخلايا */
             margin-top: 20px;
             box-shadow: 0 2px 10px var(--shadow-subtle);
-            border-radius: 8px;
-            overflow: hidden;
+            border-radius: 8px; /* للحفاظ على الزوايا المستديرة للجدول بأكمله */
+            overflow: hidden; /* مهم لضمان أن الزوايا المستديرة تظهر بشكل صحيح */
         }
 
-        .donors-table th, .donors-table td {
-            border: 1px solid #e0e0e0; /* حدود رمادية فاتحة */
+        .donors-table th,
+        .donors-table td {
+            border: 1px solid var(--table-border-color); /* حدود رمادية فاتحة متناسقة */
             padding: 12px 15px;
-            text-align: right;
+            text-align: right; /* محاذاة النص لليمين */
+            vertical-align: middle; /* محاذاة عمودية في الوسط */
         }
 
-        .donors-table th {
-            background-color: var(--table-header-bg);
+        .donors-table thead th {
+            background-color: var(--table-header-bg); /* لون رأس الجدول الأحمر */
             color: white;
             font-weight: 700;
-            text-align: center;
+            text-align: center; /* محاذاة رأس العمود للوسط */
+            padding: 15px 15px; /* زيادة التبطين لرؤوس الأعمدة */
+        }
+
+        /* تنسيق الزوايا المستديرة لرأس الجدول */
+        .donors-table thead tr:first-child th:first-child {
+            border-top-right-radius: 8px;
+        }
+        .donors-table thead tr:first-child th:last-child {
+            border-top-left-radius: 8px;
         }
 
         .donors-table tbody tr:nth-child(even) {
@@ -202,15 +213,23 @@
             background-color: var(--ready-donor-bg);
             color: var(--ready-donor-text);
         }
+        .ready-for-donation td { /* تطبيق اللون على الخلايا نفسها وليس الصف بأكمله */
+            background-color: var(--ready-donor-bg);
+            color: var(--ready-donor-text);
+        }
 
         .not-ready-for-donation {
+            background-color: var(--not-ready-donor-bg);
+            color: var(--not-ready-donor-text);
+        }
+        .not-ready-for-donation td { /* تطبيق اللون على الخلايا نفسها وليس الصف بأكمله */
             background-color: var(--not-ready-donor-bg);
             color: var(--not-ready-donor-text);
         }
 
         .no-results-message, .loading-message {
             text-align: center;
-            color: var(--text-color);
+            color: var(--dark-gray); /* لون رمادي داكن للرسائل */
             font-size: 1.1em;
             margin-top: 20px;
         }
@@ -258,6 +277,14 @@
             }
             .donors-table th, .donors-table td {
                 padding: 8px 10px;
+                word-break: break-word; /* لمنع تجاوز النصوص الطويلة */
+            }
+            /* إخفاء بعض الأعمدة على الشاشات الصغيرة لتحسين العرض */
+            .donors-table th:nth-child(2), /* رقم الهاتف */
+            .donors-table td:nth-child(2),
+            .donors-table th:nth-child(3), /* العنوان */
+            .donors-table td:nth-child(3) {
+                display: none;
             }
         }
     </style>
@@ -285,7 +312,7 @@
             </div>
             <div class="action-buttons">
                 <button id="searchButton" class="action-button">بحث</button>
-                <button id="addDonorButton" class="action-button" onclick="location.href='showDoner.html'">متبرع جديد</button>
+                <button id="addDonorButton" class="action-button" onclick="location.href='index.html'">متبرع جديد</button>
             </div>
             <div id="searchMessage" class="error-message" style="display:none;"></div>
         </div>
@@ -338,13 +365,11 @@
 
             let queryChain = db.collection("Doner");
 
-            // تطبيق فلتر البحث على فصيلة الدم فقط
             if (bloodType) {
                 queryChain = queryChain.where("Bloode", "==", bloodType);
             }
 
-            // الترتيب الأحدث أولاً لضمان تناسق العرض
-            
+            queryChain = queryChain.orderBy("timestamp", "desc");
 
             try {
                 const snapshot = await queryChain.get();
