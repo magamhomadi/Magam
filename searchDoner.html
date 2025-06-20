@@ -312,7 +312,7 @@
             </div>
             <div class="action-buttons">
                 <button id="searchButton" class="action-button">بحث</button>
-                <button id="addDonorButton" class="action-button" onclick="location.href='index.html'">متبرع جديد</button>
+                <button id="addDonorButton" class="action-button" onclick="location.href='showdoner.html'">متبرع جديد</button>
             </div>
             <div id="searchMessage" class="error-message" style="display:none;"></div>
         </div>
@@ -369,7 +369,7 @@
                 queryChain = queryChain.where("Bloode", "==", bloodType);
             }
 
-            queryChain = queryChain.orderBy("timestamp", "desc");
+            
 
             try {
                 const snapshot = await queryChain.get();
