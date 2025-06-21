@@ -438,7 +438,7 @@
                                 <th>رقم الهاتف (اتصال)</th>
                                 <th>العنوان</th>
                                 <th>فصيلة الدم</th>
-                                <th>تاريخ آخر تبرع</th>
+                                <th>تاريخ آخر تبرع (ميلادي)</th>
                                 <th>الحالة</th>
                             </tr>
                         </thead>
@@ -460,7 +460,8 @@
                     // التحقق مما إذا كان LastDonationDate موجودًا وهو طابع زمني صالح لـ Firestore
                     if (donor.LastDonationDate && typeof donor.LastDonationDate.toDate === 'function') {
                         const dateObj = donor.LastDonationDate.toDate();
-                        formattedLastDonationDate = dateObj.toLocaleDateString('ar-SA', {
+                        // تنسيق التاريخ الميلادي (مثال: June 21, 2025 أو 21/06/2025)
+                        formattedLastDonationDate = dateObj.toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'long',
                             day: 'numeric'
@@ -469,15 +470,15 @@
                         // تحديد الجاهزية بناءً على قاعدة الأربعة أشهر
                         if (dateObj <= fourMonthsAgo) {
                             donationStatusClass = 'ready-for-donation';
-                            donationStatusText = 'جاهز للتبرع';
+                            donationStatusText = 'جاهز';
                         } else {
                             donationStatusClass = 'not-ready-for-donation';
-                            donationStatusText = 'غير جاهز (أقل من 4 أشهر)';
+                            donationStatusText = 'غير جاهز';
                         }
                     } else {
-                        // إذا لم يتم تقديم تاريخ آخر تبرع، افترض أنهم قد يكونون جاهزين أو غير معروفين
-                        donationStatusClass = 'ready-for-donation';
-                        donationStatusText = 'تاريخ غير متوفر (قد يكون جاهز)';
+                        // إذا لم يتم تقديم تاريخ آخر تبرع
+                        donationStatusClass = 'ready-for-donation'; // يمكن تغييرها لفئة 'unknown-status' إذا أردت تمييزها
+                        donationStatusText = 'غير معروف';
                     }
 
                     donorsHtml += `
@@ -485,37 +486,4 @@
                             <td>${donor.Name || 'غير متوفر'}</td>
                             <td>
                                 ${donor.PhoneNumber ?
-                                    `<a href="tel:${donor.PhoneNumber}" title="اتصال بالمتبرع">
-                                        ${donor.PhoneNumber}
-                                        <button class="call-button">&#9742;</button>
-                                    </a>`
-                                    : 'غير متوفر'}
-                            </td>
-                            <td>${donor.Address || 'غير متوفر'}</td>
-                            <td>${donor.Bloode || 'غير متوفر'}</td>
-                            <td>${formattedLastDonationDate}</td>
-                            <td>${donationStatusText}</td>
-                        </tr>
-                    `;
-                });
-
-                donorsHtml += `
-                        </tbody>
-                    </table>
-                `;
-                searchResultsDiv.innerHTML = donorsHtml;
-
-            } catch (error) {
-                showSearchMessage(`حدث خطأ أثناء البحث: ${error.message}`, 'error');
-                console.error("خطأ في جلب المستندات: ", error);
-                searchResultsDiv.innerHTML = '<p class="no-results-message">حدث خطأ أثناء تحميل البيانات.</p>';
-            }
-        };
-
-        searchButton.addEventListener('click', performSearch);
-
-        // اختياري: إجراء بحث تلقائي لعرض جميع المتبرعين عند تحميل الصفحة
-        // document.addEventListener('DOMContentLoaded', performSearch);
-    </script>
-</body>
-</html>
+                                    `<a href
