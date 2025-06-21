@@ -403,7 +403,7 @@
             searchMessageDiv.style.display = 'block';
             setTimeout(() => {
                 searchMessageDiv.style.display = 'none';
-            }, 5000); // تختفي الرسالة بعد 5 ثوانٍ
+            }, 10000); // تختفي الرسالة بعد 5 ثوانٍ
         };
 
         /**
@@ -438,7 +438,7 @@
                                 <th>رقم الهاتف (اتصال)</th>
                                 <th>العنوان</th>
                                 <th>فصيلة الدم</th>
-                                <th>تاريخ آخر تبرع (ميلادي)</th>
+                                <th>تاريخ آخر تبرع</th>
                                 <th>الحالة</th>
                             </tr>
                         </thead>
@@ -460,12 +460,8 @@
                     // التحقق مما إذا كان LastDonationDate موجودًا وهو طابع زمني صالح لـ Firestore
                     if (donor.LastDonationDate && typeof donor.LastDonationDate.toDate === 'function') {
                         const dateObj = donor.LastDonationDate.toDate();
-                        // تنسيق التاريخ الميلادي (مثال: June 21, 2025 أو 21/06/2025)
-                        formattedLastDonationDate = dateObj.toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        });
+                        // تنسيق التاريخ الميلادي بصيغة رقمية بسيطة (يوم/شهر/سنة)
+                        formattedLastDonationDate = dateObj.toLocaleDateString('en-GB'); // 'en-GB' يعطي dd/mm/yyyy
 
                         // تحديد الجاهزية بناءً على قاعدة الأربعة أشهر
                         if (dateObj <= fourMonthsAgo) {
@@ -477,7 +473,7 @@
                         }
                     } else {
                         // إذا لم يتم تقديم تاريخ آخر تبرع
-                        donationStatusClass = 'ready-for-donation'; // يمكن تغييرها لفئة 'unknown-status' إذا أردت تمييزها
+                        donationStatusClass = 'ready-for-donation'; // افتراضياً جاهز ما لم يكن هناك تاريخ يمنع
                         donationStatusText = 'غير معروف';
                     }
 
@@ -486,4 +482,37 @@
                             <td>${donor.Name || 'غير متوفر'}</td>
                             <td>
                                 ${donor.PhoneNumber ?
-                                    `<a href
+                                    `<a href="tel:${donor.PhoneNumber}" title="اتصال بالمتبرع">
+                                        ${donor.PhoneNumber}
+                                        <button class="call-button">&#9742;</button>
+                                    </a>`
+                                    : 'غير متوفر'}
+                            </td>
+                            <td>${donor.Address || 'غير متوفر'}</td>
+                            <td>${donor.Bloode || 'غير متوفر'}</td>
+                            <td>${formattedLastDonationDate}</td>
+                            <td>${donationStatusText}</td>
+                        </tr>
+                    `;
+                });
+
+                donorsHtml += `
+                        </tbody>
+                    </table>
+                `;
+                searchResultsDiv.innerHTML = donorsHtml;
+
+            } catch (error) {
+                showSearchMessage(`حدث خطأ أثناء البحث: ${error.message}`, 'error');
+                console.error("خطأ في جلب المستندات: ", error);
+                searchResultsDiv.innerHTML = '<p class="no-results-message">حدث خطأ أثناء تحميل البيانات.</p>';
+            }
+        };
+
+        searchButton.addEventListener('click', performSearch);
+
+        // اختياري: إجراء بحث تلقائي لعرض جميع المتبرعين عند تحميل الصفحة
+        // document.addEventListener('DOMContentLoaded', performSearch);
+    </script>
+</body>
+    </html>
