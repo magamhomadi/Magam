@@ -253,6 +253,40 @@
             box-sizing: border-box;
         }
 
+        /* ==================================== */
+        /* أنماط زر الاتصال الجديد */
+        /* ==================================== */
+        .call-button {
+            background-color: #28a745; /* أخضر */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-right: 8px; /* مسافة بين الرقم والزر */
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1; /* لضمان محاذاة الرمز */
+        }
+
+        .call-button:hover {
+            background-color: #218838; /* أخضر أغمق عند التحويم */
+        }
+
+        /* تعديل بسيط للروابط داخل الخلايا لضمان المحاذاة */
+        .donors-table td a {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* لمحاذاة النص والزر لليمين */
+            gap: 5px; /* مسافة بين الرقم والزر */
+            text-decoration: none; /* إزالة التسطير من الرابط */
+            color: inherit; /* توريث لون النص من العنصر الأب */
+        }
+        /* ==================================== */
+
         @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
@@ -280,8 +314,6 @@
                 word-break: break-word; /* لمنع تجاوز النصوص الطويلة */
             }
             /* إخفاء بعض الأعمدة على الشاشات الصغيرة لتحسين العرض */
-            .donors-table th:nth-child(2), /* رقم الهاتف */
-            .donors-table td:nth-child(2),
             .donors-table th:nth-child(3), /* العنوان */
             .donors-table td:nth-child(3) {
                 display: none;
@@ -329,18 +361,30 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyBy1CbscoYB9Z9yo21230nhUeGDm7xBcXA",
-            authDomain: "docmagam.firebaseapp.com",
-            databaseURL: "https://docmagam-default-rtdb.firebaseio.com",
-            projectId: "docmagam",
-            storageBucket: "docmagam.firebasestorage.app",
-            messagingSenderId: "643175087125",
-            appId: "1:643175087125:web:da49e8ce6cc09dbba3a21c",
-            measurementId: "G-EJG80HC50P"
-        };
+        // Ensure Firebase app is initialized only once
+        let app;
+        try {
+            const firebaseConfig = {
+                apiKey: "AIzaSyBy1CbscoYB9Z9yo21230nhUeGDm7xBcXA",
+                authDomain: "docmagam.firebaseapp.com",
+                databaseURL: "https://docmagam-default-rtdb.firebaseio.com",
+                projectId: "docmagam",
+                storageBucket: "docmagam.firebasestorage.app",
+                messagingSenderId: "643175087125",
+                appId: "1:643175087125:web:da49e8ce6cc09dbba3a21c",
+                measurementId: "G-EJG80HC50P"
+            };
+            app = firebase.initializeApp(firebaseConfig);
+        } catch (error) {
+            console.error("فشل في تهيئة Firebase:", error);
+            // Display a user-friendly error message on the UI if Firebase fails to initialize
+            document.getElementById('searchMessage').textContent = "خطأ في تهيئة النظام. يرجى المحاولة لاحقًا.";
+            document.getElementById('searchMessage').className = "error-message";
+            document.getElementById('searchMessage').style.display = 'block';
+            // Prevent further script execution if Firebase is not initialized
+            throw new Error("فشل تهيئة Firebase.");
+        }
 
-        const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
         const searchBloodType = document.getElementById('searchBloodType');
@@ -348,28 +392,35 @@
         const searchResultsDiv = document.getElementById('searchResults');
         const searchMessageDiv = document.getElementById('searchMessage');
 
+        /**
+         * لعرض رسالة مؤقتة للمستخدم.
+         * @param {string} message - الرسالة المراد عرضها.
+         * @param {string} type - نوع الرسالة (على سبيل المثال، 'error', 'success'). ترتبط بفئات CSS.
+         */
         const showSearchMessage = (message, type) => {
             searchMessageDiv.textContent = message;
-            searchMessageDiv.className = `error-message ${type}`;
+            searchMessageDiv.className = `error-message ${type}`; // 'error' is default, can add more classes
             searchMessageDiv.style.display = 'block';
             setTimeout(() => {
                 searchMessageDiv.style.display = 'none';
-            }, 5000);
+            }, 5000); // تختفي الرسالة بعد 5 ثوانٍ
         };
 
+        /**
+         * لإجراء بحث عن متبرعي الدم بناءً على المعايير المختارة.
+         */
         const performSearch = async () => {
             searchResultsDiv.innerHTML = '<p class="loading-message">جاري البحث عن المتبرعين...</p>';
-            searchMessageDiv.style.display = 'none';
+            searchMessageDiv.style.display = 'none'; // إخفاء أي رسائل سابقة
 
             const bloodType = searchBloodType.value;
 
             let queryChain = db.collection("Doner");
 
+            // تطبيق فلتر فصيلة الدم إذا تم اختيار نوع معين
             if (bloodType) {
                 queryChain = queryChain.where("Bloode", "==", bloodType);
             }
-
-            
 
             try {
                 const snapshot = await queryChain.get();
@@ -384,7 +435,7 @@
                         <thead>
                             <tr>
                                 <th>الاسم الكامل</th>
-                                <th>رقم الهاتف</th>
+                                <th>رقم الهاتف (اتصال)</th>
                                 <th>العنوان</th>
                                 <th>فصيلة الدم</th>
                                 <th>تاريخ آخر تبرع</th>
@@ -394,8 +445,10 @@
                         <tbody>
                 `;
 
+                // حساب التاريخ قبل أربعة أشهر من اليوم لتحديد جاهزية المتبرع
                 const fourMonthsAgo = new Date();
                 fourMonthsAgo.setMonth(fourMonthsAgo.getMonth() - 4);
+                fourMonthsAgo.setHours(0, 0, 0, 0); // إعادة تعيين الوقت لمقارنة التواريخ بدقة
 
                 snapshot.forEach((doc) => {
                     const donor = doc.data();
@@ -404,6 +457,7 @@
                     let donationStatusClass = '';
                     let donationStatusText = '';
 
+                    // التحقق مما إذا كان LastDonationDate موجودًا وهو طابع زمني صالح لـ Firestore
                     if (donor.LastDonationDate && typeof donor.LastDonationDate.toDate === 'function') {
                         const dateObj = donor.LastDonationDate.toDate();
                         formattedLastDonationDate = dateObj.toLocaleDateString('ar-SA', {
@@ -412,6 +466,7 @@
                             day: 'numeric'
                         });
 
+                        // تحديد الجاهزية بناءً على قاعدة الأربعة أشهر
                         if (dateObj <= fourMonthsAgo) {
                             donationStatusClass = 'ready-for-donation';
                             donationStatusText = 'جاهز للتبرع';
@@ -420,6 +475,7 @@
                             donationStatusText = 'غير جاهز (أقل من 4 أشهر)';
                         }
                     } else {
+                        // إذا لم يتم تقديم تاريخ آخر تبرع، افترض أنهم قد يكونون جاهزين أو غير معروفين
                         donationStatusClass = 'ready-for-donation';
                         donationStatusText = 'تاريخ غير متوفر (قد يكون جاهز)';
                     }
@@ -427,7 +483,14 @@
                     donorsHtml += `
                         <tr class="${donationStatusClass}">
                             <td>${donor.Name || 'غير متوفر'}</td>
-                            <td>${donor.PhoneNumber || 'غير متوفر'}</td>
+                            <td>
+                                ${donor.PhoneNumber ?
+                                    `<a href="tel:${donor.PhoneNumber}" title="اتصال بالمتبرع">
+                                        ${donor.PhoneNumber}
+                                        <button class="call-button">&#9742;</button>
+                                    </a>`
+                                    : 'غير متوفر'}
+                            </td>
                             <td>${donor.Address || 'غير متوفر'}</td>
                             <td>${donor.Bloode || 'غير متوفر'}</td>
                             <td>${formattedLastDonationDate}</td>
@@ -451,7 +514,7 @@
 
         searchButton.addEventListener('click', performSearch);
 
-        // تم إزالة الاستدعاء الأولي لـ performSearch()
+        // اختياري: إجراء بحث تلقائي لعرض جميع المتبرعين عند تحميل الصفحة
         // document.addEventListener('DOMContentLoaded', performSearch);
     </script>
 </body>
