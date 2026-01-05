@@ -1,53 +1,52 @@
-<!DOCTYPE html> 
-<html lang="ar" dir="rtl"> 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المعجم للبرمجيات - ابدأ رحلتك البرمجية</title>
+    <title>المعجم للبرمجيات - حلول برمجية مبتكرة</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --primary-color: #007bff; /* أزرق أساسي */
-            --secondary-color: #0056b3; /* أزرق داكن للهوفر */
-            --accent-color: #28a745; /* أخضر للإبراز (يمكن استخدامه لاحقًا) */
-            --bg-light: #f0f2f5; /* خلفية فاتحة */
-            --text-dark: #333; /* لون النص الأساسي */
-            --shadow-light: rgba(0, 0, 0, 0.1);
-            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --primary-blue: #007bff;
+            --dark-blue: #004d9e;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --text-color: #343a40;
+            --heading-color: #212529;
+            --shadow-subtle: rgba(0, 0, 0, 0.08);
+            --shadow-strong: rgba(0, 0, 0, 0.15);
         }
 
         body {
             font-family: 'Tajawal', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e6ed 100%); /* خلفية متدرجة */
-            color: var(--text-dark);
-            text-align: center;
-            line-height: 1.6;
-            overflow-x: hidden; /* منع التمرير الأفقي غير المرغوب فيه */
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 0;
         }
 
         .container {
             background-color: #fff;
-            padding: 40px 30px;
-            border-radius: 15px; /* حواف أكثر دائرية */
-            box-shadow: 0 8px 25px var(--shadow-medium); /* ظل أعمق وأكثر حداثة */
-            max-width: 90%;
-            width: 550px; /* عرض أكبر قليلاً للحاوية */
-            box-sizing: border-box;
-            transform: translateY(0); /* نقطة بداية للأنيميشن */
+            padding: 50px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-strong);
+            max-width: 700px;
+            width: 95%;
             animation: fadeInScale 0.8s ease-out forwards;
         }
 
         @keyframes fadeInScale {
             from {
                 opacity: 0;
-                transform: translateY(20px) scale(0.95);
+                transform: translateY(30px) scale(0.98);
             }
             to {
                 opacity: 1;
@@ -56,141 +55,216 @@
         }
 
         h1 {
-            color: var(--secondary-color); /* استخدام الأزرق الداكن للعنوان */
-            margin-bottom: 20px; /* تقليل المسافة قليلاً */
-            font-size: 2.8em; /* حجم خط أكبر للعنوان */
-            font-weight: 800; /* خط أثقل */
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.05); /* ظل نص خفيف */
+            text-align: center;
+            font-size: 3em;
+            font-weight: 800;
+            color: var(--heading-color);
+            margin-bottom: 15px;
         }
 
-        p.subtitle {
-            font-size: 1.15em;
-            color: #555;
-            margin-bottom: 40px; /* مسافة أكبر قبل الأزرار */
-            max-width: 80%; /* تحديد عرض الفقرة الفرعية */
-            margin-left: auto;
-            margin-right: auto;
+        .tagline {
+            text-align: center;
+            font-size: 1.3em;
+            margin-bottom: 50px;
+        }
+
+        .section-heading {
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin: 60px 0 30px;
+            position: relative;
+        }
+
+        .section-heading::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-blue);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
         }
 
         .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .service-card {
+            background-color: var(--medium-gray);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px var(--shadow-subtle);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-text {
+            font-size: 1.05em;
+            margin-bottom: 18px;
         }
 
         .button {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 16px 30px; /* حشو أكبر للأزرار */
-            border: none;
-            border-radius: 10px; /* حواف أكثر دائرية للأزرار */
-            cursor: pointer;
-            font-size: 1.2em; /* حجم خط أكبر للأزرار */
-            font-weight: 700; /* خط أثقل للأزرار */
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* إضافة ظل للانتقال */
-            flex-grow: 1;
-            display: flex;
+            display: inline-flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 10px var(--shadow-light); /* ظل خفيف للأزرار */
+            background-color: var(--primary-blue);
+            color: #fff;
+            padding: 16px 22px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 15px var(--shadow-subtle);
+            transition: all 0.3s ease;
         }
 
         .button:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-3px) scale(1.02); /* تأثير رفع وتكبير بسيط */
-            box-shadow: 0 8px 20px var(--shadow-medium); /* ظل أعمق عند التحويم */
+            background-color: var(--dark-blue);
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 12px 25px var(--shadow-strong);
         }
 
-        .button:active {
-            transform: translateY(0); /* تأثير ضغط عند النقر */
-            box-shadow: 0 2px 5px var(--shadow-light);
-        }
-
-        /* تنسيق قسم الودجت (Meteotrend) */
         .weather-widget-container {
-            margin-top: 50px; /* مسافة أكبر من الأزرار */
-            padding-top: 30px;
-            border-top: 1px solid #eee;
+            margin-top: 70px;
+            padding-top: 40px;
+            border-top: 1px solid var(--medium-gray);
             text-align: center;
-            animation: fadeIn 1.2s ease-out forwards; /* أنيميشن ظهور */
-            opacity: 0; /* مخفي في البداية */
+            animation: fadeIn 1.2s ease-out forwards;
+            opacity: 0;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; }
             to { opacity: 1; }
         }
 
-        .weather-widget-container h2 {
-            color: var(--secondary-color);
-            margin-bottom: 25px;
-            font-size: 1.9em;
-            font-weight: 700;
+        @media (max-width: 768px) {
+            h1 { font-size: 2.4em; }
+            .tagline { font-size: 1.1em; }
+            .section-heading { font-size: 1.8em; }
         }
 
-        /* استعلام الوسائط للشاشات الأكبر من 600 بكسل */
-        @media (min-width: 600px) {
+        @media (max-width: 480px) {
             .button-group {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px; /* زيادة المسافة بين الأزرار على الشاشات الكبيرة */
-            }
-            .button {
-                width: calc(50% - 10px); /* زرين في الصف مع مسافة */
-                max-width: 280px; /* عرض أقصى للزر */
-            }
-        }
-
-        /* استعلام الوسائط للشاشات الصغيرة جداً */
-        @media (max-width: 400px) {
-            .container {
-                padding: 30px 15px;
-            }
-            h1 {
-                font-size: 2.2em;
-            }
-            p.subtitle {
-                font-size: 1em;
-            }
-            .button {
-                font-size: 1em;
-                padding: 12px 20px;
+                grid-template-columns: 1fr;
             }
         }
     </style>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TK2P19XK0V"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-TK2P19XK0V');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TK2P19XK0V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-TK2P19XK0V');
+    </script>
 </head>
+
 <body>
 
-    <div class="container">
-        <h1>المعجم للبرمجيات</h1>
-        <p class="subtitle">بوابتك لاستكشاف عالم البرمجة من خلال حلولنا المبتكرة وتطبيقاتنا التفاعلية. اختر وجهتك الآن!</p>
+<div class="container">
 
-        <div class="button-group">
-            <a href="docan.html" class="button">برنامج حسابات دكان/محل صغير</a>
+    <h1>حلول برمجية لنجاح عملك</h1>
+    <p class="tagline">
+        نقدم في المعجم للبرمجيات برامج مبتكرة وتطبيقات ذكية تساعدك على إدارة أعمالك بكفاءة وثقة.
+    </p>
+
+    <h2 class="section-heading">خدماتنا وبرامجنا</h2>
+
+    <div class="button-group">
+
+        <div class="service-card">
+            <p class="service-text">
+                نظام سهل وعملي لإدارة حسابات الدكان أو المحل الصغير ومتابعة الأرباح اليومية.
+            </p>
+            <a href="docan.html" class="button">برنامج حسابات دكان / محل صغير</a>
+        </div>
+
+        <div class="service-card">
+            <p class="service-text">
+                نظام متخصص لإدارة مشاريع المياه وتنظيم البيانات والتقارير بشكل احترافي.
+            </p>
             <a href="weter.html" class="button">نظام إدارة مشاريع المياه</a>
-            <a href="video.html" class="button">أعمالنا ومشاريعنا</a>
-            <a href="Request_demof.html" class="button">تواصل معنا</a>
-            <a href="index2.html" class="button">لعبة تخمين الرقم</a>
-            <a href="Memory_game.html" class="button">لعبة الذاكرة</a>
-            <a href="searchDoner.html" class="button">  المتبرعين بالدم</a>
         </div>
 
-        <div class="weather-widget-container">
-            <h2>الطقس الآن في اليمن</h2>
-            <div id="_MI_8117d182006143d496917e6cf11f01e6"><a href="https://ar.meteotrend.com/">النشرة الجوية</a></div>
-            <script type='text/javascript'>(function(d,w,t,k){function l(){if(typeof(w._MIOB_)=='undefined'){w._MIOB_={};}var m=w._MIOB_[t]=k;var s=d.createElement('script');m.p=('https:'==d.location.protocol?'https:':'http:');s.type='text/javascript';s.async=true;s.src=m.p+'//info.meteotrend.com/mt/'+m.t+'.js';d.body.appendChild(s);}if(d.readyState=='complete')l();else{if(w.attachEvent)w.attachEvent('onload',l);else w.addEventListener('load',l,false);}})(document,window,'8117d182006143d496917e6cf11f01e6',{t:'full5d',css:['{p}//info.meteotrend.com/mt/{t}.css','{p}//info.meteotrend.com/cs/a42307cffb83482e0c96c4dcb0035b0135080238.css'],source:'meteotrend'});</script>
+        <div class="service-card">
+            <p class="service-text">
+                تعرّف على أعمالنا السابقة وشاهد نماذج حقيقية من المشاريع التي نفذناها.
+            </p>
+            <a href="video.html" class="button">أعمالنا ومشاريعنا</a>
         </div>
+
+        <div class="service-card">
+            <p class="service-text">
+                هل ترغب بتجربة البرنامج أو التواصل معنا؟ يسعدنا خدمتك والإجابة على استفساراتك.
+            </p>
+            <a href="Request_demof.html" class="button">اطلب نسخة تجريبية أو تواصل معنا</a>
+        </div>
+
     </div>
+
+    <h2 class="section-heading">تطبيقاتنا التفاعلية</h2>
+
+    <div class="button-group">
+
+        <div class="service-card">
+            <p class="service-text">
+                لعبة بسيطة ومسلية لتنشيط التفكير واختبار سرعة البديهة.
+            </p>
+            <a href="Game1.html" class="button">لعبة تخمين الرقم</a>
+        </div>
+
+        <div class="service-card">
+            <p class="service-text">
+                لعبة ذكية لتقوية الذاكرة والتركيز بطريقة ممتعة.
+            </p>
+            <a href="Memory_game.html" class="button">لعبة الذاكرة</a>
+        </div>
+
+    </div>
+
+    <div class="weather-widget-container">
+        <h2 class="section-heading">الطقس الآن في اليمن</h2>
+        <div id="_MI_8117d182006143d496917e6cf11f01e6">
+            <a href="https://ar.meteotrend.com/">النشرة الجوية</a>
+        </div>
+        <script type='text/javascript'>
+            (function(d,w,t,k){
+                function l(){
+                    if(typeof(w._MIOB_)=='undefined'){w._MIOB_={};}
+                    var m=w._MIOB_[t]=k;
+                    var s=d.createElement('script');
+                    m.p=('https:'==d.location.protocol?'https:':'http:');
+                    s.type='text/javascript';
+                    s.async=true;
+                    s.src=m.p+'//info.meteotrend.com/mt/'+m.t+'.js';
+                    d.body.appendChild(s);
+                }
+                if(d.readyState=='complete')l();
+                else if(w.attachEvent)w.attachEvent('onload',l);
+                else w.addEventListener('load',l,false);
+            })(document,window,'8117d182006143d496917e6cf11f01e6',{
+                t:'full5d',
+                css:[
+                    '{p}//info.meteotrend.com/mt/{t}.css',
+                    '{p}//info.meteotrend.com/cs/a42307cffb83482e0c96c4dcb0035b0135080238.css'
+                ],
+                source:'meteotrend'
+            });
+        </script>
+    </div>
+
+</div>
 
 </body>
 </html>
