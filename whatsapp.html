@@ -1,194 +1,213 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منظم رسائل واتساب | المعجم للبرمجيات</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منظم رسائل واتساب | المعجم للبرمجيات</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --primary: #007bff;
-            --dark: #004d9e;
-            --bg: #f8f9fa;
-            --card: #ffffff;
-            --text: #343a40;
-            --shadow: rgba(0,0,0,0.12);
-        }
+<style>
+:root{
+    --green:#25D366;
+    --green-dark:#128C7E;
+    --bg:#f6fef9;
+    --text:#1f2933;
+}
 
-        body {
-            font-family: 'Tajawal', sans-serif;
-            margin: 0;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-        }
+body{
+    margin:0;
+    font-family:'Tajawal',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
 
-        .hero {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
-            color: #fff;
-            padding: 70px 20px;
-            text-align: center;
-        }
+/* HERO */
+.hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+}
 
-        .hero h1 {
-            font-size: 3em;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
+/* الموجة */
+.hero::before{
+    content:'';
+    position:absolute;
+    left:0;
+    top:0;
+    width:45%;
+    height:100%;
+    background:linear-gradient(180deg, rgba(37,211,102,0.85), rgba(18,140,126,0.85));
+    clip-path: polygon(0 0,100% 0,85% 100%,0 100%);
+}
 
-        .hero p {
-            font-size: 1.3em;
-            max-width: 700px;
-            margin: auto;
-        }
+/* محتوى الهيرو */
+.hero-content{
+    position:relative;
+    max-width:1100px;
+    margin:auto;
+    padding:80px 20px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+}
 
-        .container {
-            max-width: 900px;
-            margin: auto;
-            padding: 60px 20px;
-        }
+.hero-text h1{
+    font-size:3em;
+    font-weight:800;
+    margin-bottom:20px;
+}
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
+.hero-text p{
+    font-size:1.3em;
+    line-height:1.8;
+}
 
-        .feature {
-            background: var(--card);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px var(--shadow);
-            text-align: center;
-        }
+/* الميزات */
+.features{
+    margin:100px auto;
+    max-width:1100px;
+    padding:0 20px;
+}
 
-        .feature .icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
+.feature{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:25px;
+    align-items:center;
+    margin-bottom:60px;
+}
 
-        .feature h3 {
-            margin-bottom: 10px;
-            font-size: 1.3em;
-        }
+.feature img{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    object-fit:cover;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
 
-        .cta {
-            background: var(--card);
-            margin-top: 70px;
-            padding: 50px 30px;
-            border-radius: 14px;
-            box-shadow: 0 15px 35px var(--shadow);
-            text-align: center;
-        }
+.feature h3{
+    font-size:1.6em;
+    margin-bottom:8px;
+    color:var(--green-dark);
+}
 
-        .cta h2 {
-            font-size: 2.2em;
-            margin-bottom: 15px;
-        }
+.feature p{
+    font-size:1.1em;
+    line-height:1.7;
+}
 
-        .cta p {
-            font-size: 1.15em;
-            margin-bottom: 30px;
-        }
+/* CTA */
+.cta{
+    background:linear-gradient(135deg,var(--green),var(--green-dark));
+    color:#fff;
+    text-align:center;
+    padding:80px 20px;
+}
 
-        .btn {
-            display: inline-block;
-            background: var(--primary);
-            color: #fff;
-            padding: 18px 30px;
-            font-size: 1.2em;
-            font-weight: 700;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
+.cta h2{
+    font-size:2.5em;
+    margin-bottom:15px;
+}
 
-        .btn:hover {
-            background: var(--dark);
-            transform: scale(1.05);
-        }
+.cta p{
+    font-size:1.2em;
+    margin-bottom:35px;
+}
 
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 2.2em; }
-            .hero p { font-size: 1.1em; }
-            .cta h2 { font-size: 1.8em; }
-        }
-    </style>
+.cta a{
+    background:#fff;
+    color:var(--green-dark);
+    padding:18px 40px;
+    border-radius:50px;
+    font-size:1.2em;
+    font-weight:700;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.cta a:hover{
+    transform:scale(1.08);
+}
+
+/* موبايل */
+@media(max-width:768px){
+    .hero-content{
+        grid-template-columns:1fr;
+    }
+    .hero::before{
+        width:100%;
+        clip-path:none;
+    }
+    .feature{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+}
+</style>
 </head>
 
 <body>
 
 <!-- HERO -->
 <section class="hero">
-    <h1>منظم رسائل واتساب الذكي</h1>
-    <p>
-        أرسل آلاف الرسائل تلقائيًا، نظّم حملاتك التسويقية، وتواصل مع عملائك باحتراف.
-    </p>
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1>منظم رسائل واتساب الذكي</h1>
+            <p>
+                حوّل واتساب إلى أداة تسويق قوية،  
+                أرسل رسائل جماعية، نظّم حملاتك،  
+                واترك النظام يعمل بدلًا عنك.
+            </p>
+        </div>
+    </div>
 </section>
 
-<!-- CONTENT -->
-<div class="container">
+<!-- FEATURES -->
+<section class="features">
 
-    <h2 style="text-align:center;font-size:2.2em;">لماذا تحتاج هذا البرنامج؟</h2>
-    <p style="text-align:center;font-size:1.2em;max-width:700px;margin:auto;">
-        إذا كنت ترسل الرسائل يدويًا، فأنت تهدر وقتك وتخسر عملاء محتملين.
-        هذا النظام يجعل واتساب أداة بيع قوية تعمل عنك.
-    </p>
-
-    <!-- FEATURES -->
-    <div class="features">
-
-        <div class="feature">
-            <div class="icon">⏱️</div>
-            <h3>إرسال تلقائي</h3>
-            <p>إرسال مئات أو آلاف الرسائل بدون تدخل يدوي.</p>
+    <div class="feature">
+        <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e" alt="">
+        <div>
+            <h3>إرسال تلقائي بلا مجهود</h3>
+            <p>أرسل مئات أو آلاف الرسائل بضغطة زر ووفّر وقتك.</p>
         </div>
-
-        <div class="feature">
-            <div class="icon">📅</div>
-            <h3>جدولة ذكية</h3>
-            <p>حدد الوقت والتاريخ واترك النظام يعمل تلقائيًا.</p>
-        </div>
-
-        <div class="feature">
-            <div class="icon">🎯</div>
-            <h3>حملات تسويقية</h3>
-            <p>إدارة حملات العروض، الخصومات، والتنبيهات.</p>
-        </div>
-
-        <div class="feature">
-            <div class="icon">📊</div>
-            <h3>تنظيم الأرقام</h3>
-            <p>ترتيب الأرقام ومنع التكرار وتحسين النتائج.</p>
-        </div>
-
-        <div class="feature">
-            <div class="icon">🔒</div>
-            <h3>استخدام آمن</h3>
-            <p>مصمم لتقليل الحظر والاستخدام العشوائي.</p>
-        </div>
-
-        <div class="feature">
-            <div class="icon">💼</div>
-            <h3>مناسب للأعمال</h3>
-            <p>مثالي للتجار، الشركات، الصيدليات، والمكاتب.</p>
-        </div>
-
     </div>
 
-    <!-- CTA -->
-    <div class="cta">
-        <h2>حوّل واتساب إلى ماكينة مبيعات</h2>
-        <p>
-            اطلب نسخة تجريبية الآن أو تواصل معنا لمعرفة التفاصيل والأسعار.
-        </p>
-        <a href="Request_demof.html" class="btn">اطلب نسخة تجريبية الآن</a>
+    <div class="feature">
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" alt="">
+        <div>
+            <h3>حملات تسويقية ناجحة</h3>
+            <p>عروض، خصومات، تنبيهات… كلها منظمة وجاهزة.</p>
+        </div>
     </div>
 
-</div>
+    <div class="feature">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e" alt="">
+        <div>
+            <h3>تنظيم الأرقام بذكاء</h3>
+            <p>منع التكرار وتحسين وصول الرسائل للعملاء.</p>
+        </div>
+    </div>
+
+    <div class="feature">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2" alt="">
+        <div>
+            <h3>مناسب للتجار والشركات</h3>
+            <p>مثالي للصيدليات، المتاجر، المكاتب، والخدمات.</p>
+        </div>
+    </div>
+
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <h2>ابدأ حملتك التسويقية اليوم</h2>
+    <p>اطلب نسخة تجريبية الآن واجعل واتساب يعمل لصالحك</p>
+    <a href="Request_demof.html">اطلب النسخة التجريبية</a>
+</section>
 
 </body>
 </html>
