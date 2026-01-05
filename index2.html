@@ -1,49 +1,45 @@
-
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المعجم للبرمجيات - حلول برمجية مبتكرة</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --primary-blue: #007bff; /* أزرق الشركة الأساسي */
-            --dark-blue: #004d9e;   /* أزرق داكن للتميز */
-            --light-gray: #f8f9fa; /* خلفية فاتحة جدًا */
-            --medium-gray: #e9ecef; /* خلفية أفتح قليلاً */
-            --text-color: #343a40; /* لون نص داكن احترافي */
-            --heading-color: #212529; /* لون عناوين أغمق */
-            --shadow-subtle: rgba(0, 0, 0, 0.08); /* ظل ناعم */
-            --shadow-strong: rgba(0, 0, 0, 0.15); /* ظل أقوى */
+            --primary-blue: #007bff;
+            --dark-blue: #004d9e;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --text-color: #343a40;
+            --heading-color: #212529;
+            --shadow-subtle: rgba(0, 0, 0, 0.08);
+            --shadow-strong: rgba(0, 0, 0, 0.15);
         }
 
         body {
             font-family: 'Tajawal', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; /* ابدأ المحتوى من الأعلى وليس من المنتصف تمامًا */
             min-height: 100vh;
             margin: 0;
-            background-color: var(--light-gray); /* خلفية بسيطة وفاتحة */
+            background-color: var(--light-gray);
             color: var(--text-color);
-            text-align: center;
-            line-height: 1.6;
-            overflow-x: hidden;
-            padding: 40px 0; /* حشوة علوية وسفلية للمحتوى */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 0;
         }
 
         .container {
             background-color: #fff;
-            padding: 50px 40px; /* حشوة أكبر */
-            border-radius: 12px; /* حواف دائرية أنيقة */
-            box-shadow: 0 10px 30px var(--shadow-strong); /* ظل ثلاثي الأبعاد جذاب */
-            max-width: 95%; /* مساحة أكبر على الشاشات الصغيرة */
-            width: 700px; /* عرض أكبر للحاوية الرئيسية */
-            box-sizing: border-box;
-            transform: translateY(0);
+            padding: 50px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-strong);
+            max-width: 700px;
+            width: 95%;
             animation: fadeInScale 0.8s ease-out forwards;
         }
 
@@ -59,194 +55,216 @@
         }
 
         h1 {
-            color: var(--heading-color);
-            margin-bottom: 15px; /* مسافة أقل بين العنوان والوصف */
-            font-size: 3.2em; /* حجم خط كبير جدًا ومؤثر */
+            text-align: center;
+            font-size: 3em;
             font-weight: 800;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.03);
-            line-height: 1.2;
+            color: var(--heading-color);
+            margin-bottom: 15px;
         }
 
-        p.tagline {
-            font-size: 1.3em; /* حجم خط أكبر للعبارة الجذابة */
-            color: var(--text-color);
-            margin-bottom: 50px; /* مسافة أكبر قبل قسم الخدمات */
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: 400; /* خط عادي لسهولة القراءة */
+        .tagline {
+            text-align: center;
+            font-size: 1.3em;
+            margin-bottom: 50px;
         }
 
-        h2.section-heading {
-            color: var(--dark-blue);
-            margin-top: 60px; /* مسافة كبيرة قبل العناوين الجديدة */
-            margin-bottom: 30px;
+        .section-heading {
+            text-align: center;
             font-size: 2.2em;
             font-weight: 700;
+            color: var(--dark-blue);
+            margin: 60px 0 30px;
             position: relative;
-            padding-bottom: 10px;
         }
-        h2.section-heading::after {
+
+        .section-heading::after {
             content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
             width: 80px;
             height: 4px;
             background-color: var(--primary-blue);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
             border-radius: 2px;
         }
 
-
-        .button-group, .games-group {
-            display: grid; /* استخدام CSS Grid بدلاً من Flexbox لمرونة أكبر في الأعمدة */
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* أعمدة متكيفة */
-            gap: 20px; /* مسافة بين العناصر */
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
             margin-top: 30px;
-            justify-content: center; /* توسيط العناصر في الشبكة */
+        }
+
+        .service-card {
+            background-color: var(--medium-gray);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px var(--shadow-subtle);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-text {
+            font-size: 1.05em;
+            margin-bottom: 18px;
         }
 
         .button {
-            background-color: var(--primary-blue);
-            color: white;
-            padding: 18px 25px; /* حشوة أكبر لجعل الأزرار أضخم */
-            border: none;
-            border-radius: 8px; /* حواف أنيقة */
-            cursor: pointer;
-            font-size: 1.15em;
-            font-weight: 700;
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 6px 15px var(--shadow-subtle); /* ظل خفيف على الأزرار */
-            display: flex;
+            display: inline-flex;
             justify-content: center;
             align-items: center;
-            min-height: 70px; /* ارتفاع أدنى للأزرار لتبدو متناسقة */
+            background-color: var(--primary-blue);
+            color: #fff;
+            padding: 16px 22px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 15px var(--shadow-subtle);
+            transition: all 0.3s ease;
         }
 
         .button:hover {
             background-color: var(--dark-blue);
-            transform: translateY(-5px) scale(1.03); /* تأثير رفع وتكبير أكثر وضوحًا */
-            box-shadow: 0 12px 25px var(--shadow-strong); /* ظل أعمق عند التحويم */
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 12px 25px var(--shadow-strong);
         }
 
-        .button:active {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px var(--shadow-subtle);
-        }
-
-        /* تنسيق قسم ودجت الطقس */
         .weather-widget-container {
-            margin-top: 60px;
+            margin-top: 70px;
             padding-top: 40px;
-            border-top: 1px solid var(--medium-gray); /* خط فاصل أكثر سمكًا ووضوحًا */
+            border-top: 1px solid var(--medium-gray);
             text-align: center;
             animation: fadeIn 1.2s ease-out forwards;
             opacity: 0;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; }
             to { opacity: 1; }
         }
 
-        .weather-widget-container h2 {
-            color: var(--dark-blue);
-            margin-bottom: 25px;
-            font-size: 2.2em;
-            font-weight: 700;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        .weather-widget-container h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--primary-blue);
-            border-radius: 2px;
-        }
-
-        /* استعلامات الوسائط لتحسين الاستجابة */
         @media (max-width: 768px) {
-            .container {
-                padding: 40px 25px;
-                width: 90%;
-            }
-            h1 {
-                font-size: 2.5em;
-            }
-            p.tagline {
-                font-size: 1.1em;
-            }
-            h2.section-heading, .weather-widget-container h2 {
-                font-size: 1.8em;
-            }
-            .button-group, .games-group {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 15px;
-            }
-            .button {
-                padding: 15px 20px;
-                font-size: 1em;
-            }
+            h1 { font-size: 2.4em; }
+            .tagline { font-size: 1.1em; }
+            .section-heading { font-size: 1.8em; }
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 30px 15px;
-            }
-            h1 {
-                font-size: 2em;
-            }
-            p.tagline {
-                font-size: 1em;
-            }
-            h2.section-heading, .weather-widget-container h2 {
-                font-size: 1.6em;
-            }
-            .button-group, .games-group {
-                grid-template-columns: 1fr; /* عمود واحد على الشاشات الصغيرة جداً */
+            .button-group {
+                grid-template-columns: 1fr;
             }
         }
     </style>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TK2P19XK0V"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-TK2P19XK0V');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TK2P19XK0V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-TK2P19XK0V');
+    </script>
 </head>
+
 <body>
 
-    <div class="container">
-        <h1>حلول برمجية لنجاح عملك</h1>
-        <p class="tagline">نقدم في المعجم للبرمجيات برامج مبتكرة وتطبيقات تفاعلية مصممة لتبسيط أعمالك وتحقيق أهدافك.</p>
+<div class="container">
 
-        <h2 class="section-heading">خدماتنا وبرامجنا</h2>
-        <div class="button-group">
-            <a href="docan.html" class="button">برنامج حسابات دكان/محل صغير</a>
+    <h1>حلول برمجية لنجاح عملك</h1>
+    <p class="tagline">
+        نقدم في المعجم للبرمجيات برامج مبتكرة وتطبيقات ذكية تساعدك على إدارة أعمالك بكفاءة وثقة.
+    </p>
+
+    <h2 class="section-heading">خدماتنا وبرامجنا</h2>
+
+    <div class="button-group">
+
+        <div class="service-card">
+            <p class="service-text">
+                نظام سهل وعملي لإدارة حسابات الدكان أو المحل الصغير ومتابعة الأرباح اليومية.
+            </p>
+            <a href="docan.html" class="button">برنامج حسابات دكان / محل صغير</a>
+        </div>
+
+        <div class="service-card">
+            <p class="service-text">
+                نظام متخصص لإدارة مشاريع المياه وتنظيم البيانات والتقارير بشكل احترافي.
+            </p>
             <a href="weter.html" class="button">نظام إدارة مشاريع المياه</a>
+        </div>
+
+        <div class="service-card">
+            <p class="service-text">
+                تعرّف على أعمالنا السابقة وشاهد نماذج حقيقية من المشاريع التي نفذناها.
+            </p>
             <a href="video.html" class="button">أعمالنا ومشاريعنا</a>
+        </div>
+
+        <div class="service-card">
+            <p class="service-text">
+                هل ترغب بتجربة البرنامج أو التواصل معنا؟ يسعدنا خدمتك والإجابة على استفساراتك.
+            </p>
             <a href="Request_demof.html" class="button">اطلب نسخة تجريبية أو تواصل معنا</a>
         </div>
 
-        <h2 class="section-heading">تطبيقاتنا التفاعلية</h2>
-        <div class="games-group button-group"> <a href="Game1.html" class="button">لعبة تخمين الرقم</a>
+    </div>
+
+    <h2 class="section-heading">تطبيقاتنا التفاعلية</h2>
+
+    <div class="button-group">
+
+        <div class="service-card">
+            <p class="service-text">
+                لعبة بسيطة ومسلية لتنشيط التفكير واختبار سرعة البديهة.
+            </p>
+            <a href="Game1.html" class="button">لعبة تخمين الرقم</a>
+        </div>
+
+        <div class="service-card">
+            <p class="service-text">
+                لعبة ذكية لتقوية الذاكرة والتركيز بطريقة ممتعة.
+            </p>
             <a href="Memory_game.html" class="button">لعبة الذاكرة</a>
         </div>
 
-        <div class="weather-widget-container">
-            <h2 class="section-heading">الطقس الآن في اليمن</h2>
-            <div id="_MI_8117d182006143d496917e6cf11f01e6"><a href="https://ar.meteotrend.com/">النشرة الجوية</a></div>
-            <script type='text/javascript'>(function(d,w,t,k){function l(){if(typeof(w._MIOB_)=='undefined'){w._MIOB_={};}var m=w._MIOB_[t]=k;var s=d.createElement('script');m.p=('https:'==d.location.protocol?'https:':'http:');s.type='text/javascript';s.async=true;s.src=m.p+'//info.meteotrend.com/mt/'+m.t+'.js';d.body.appendChild(s);}if(d.readyState=='complete')l();else{if(w.attachEvent)w.attachEvent('onload',l);else w.addEventListener('load',l,false);}})(document,window,'8117d182006143d496917e6cf11f01e6',{t:'full5d',css:['{p}//info.meteotrend.com/mt/{t}.css','{p}//info.meteotrend.com/cs/a42307cffb83482e0c96c4dcb0035b0135080238.css'],source:'meteotrend'});</script>
-        </div>
     </div>
+
+    <div class="weather-widget-container">
+        <h2 class="section-heading">الطقس الآن في اليمن</h2>
+        <div id="_MI_8117d182006143d496917e6cf11f01e6">
+            <a href="https://ar.meteotrend.com/">النشرة الجوية</a>
+        </div>
+        <script type='text/javascript'>
+            (function(d,w,t,k){
+                function l(){
+                    if(typeof(w._MIOB_)=='undefined'){w._MIOB_={};}
+                    var m=w._MIOB_[t]=k;
+                    var s=d.createElement('script');
+                    m.p=('https:'==d.location.protocol?'https:':'http:');
+                    s.type='text/javascript';
+                    s.async=true;
+                    s.src=m.p+'//info.meteotrend.com/mt/'+m.t+'.js';
+                    d.body.appendChild(s);
+                }
+                if(d.readyState=='complete')l();
+                else if(w.attachEvent)w.attachEvent('onload',l);
+                else w.addEventListener('load',l,false);
+            })(document,window,'8117d182006143d496917e6cf11f01e6',{
+                t:'full5d',
+                css:[
+                    '{p}//info.meteotrend.com/mt/{t}.css',
+                    '{p}//info.meteotrend.com/cs/a42307cffb83482e0c96c4dcb0035b0135080238.css'
+                ],
+                source:'meteotrend'
+            });
+        </script>
+    </div>
+
+</div>
 
 </body>
 </html>
