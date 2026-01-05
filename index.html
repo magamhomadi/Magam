@@ -3,227 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المعجم للبرمجيات | حلول ذكية لأعمالك</title>
+    <title>المعجم للبرمجيات | حلول ذكية</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --green: #1faa59;
-            --green-dark: #0f7a3a;
+            --primary: #1faa59;
+            --dark: #0b5e2d;
             --yellow: #FFD700;
-            --bg: #f4fbf7;
-            --text: #1f2933;
-            --white: #ffffff;
+            --light-bg: #fdfdfd;
+            --text: #2d3436;
         }
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background: var(--bg);
             margin: 0;
-            padding: 20px 0;
+            background: var(--light-bg);
             color: var(--text);
+            overflow-x: hidden;
         }
 
-        .container {
-            background: var(--white);
-            width: 90%;
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 50px 30px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        /* رأس الصفحة الملون والمتحرك */
+        header {
+            background: linear-gradient(-45deg, #0b5e2d, #1faa59, #2ecc71);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            color: white;
+            padding: 80px 20px 120px;
             text-align: center;
+            clip-path: ellipse(120% 100% at 50% 0%);
         }
 
-        h1 {
-            font-size: 2.8em;
-            font-weight: 800;
-            color: var(--green-dark);
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            margin: 0;
+            font-weight: 900;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.4em;
+            opacity: 0.9;
+            margin-top: 15px;
+        }
+
+        /* قسم الخدمات بدون بطاقات */
+        .content-section {
+            max-width: 1000px;
+            margin: -50px auto 50px;
+            padding: 0 20px;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            padding: 40px 0;
+            border-bottom: 1px solid #eee;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+
+        .service-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .service-item:nth-child(even) {
+            flex-direction: row-reverse;
+            transform: translateX(-50px);
+        }
+
+        .service-icon {
+            font-size: 4em;
+            color: var(--primary);
+            width: 150px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .service-info {
+            flex: 1;
+            padding: 0 30px;
+        }
+
+        .service-info h2 {
+            font-size: 2em;
+            color: var(--dark);
             margin-bottom: 10px;
         }
 
-        .tagline {
+        .service-info p {
             font-size: 1.2em;
-            color: #555;
-            max-width: 600px;
-            margin: 0 auto 50px;
+            color: #636e72;
+            line-height: 1.8;
         }
 
-        /* شبكة الخدمات */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 60px;
-        }
-
-        .service-card {
-            background: var(--white);
-            border: 2px solid #eee;
-            padding: 30px 20px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .service-card:hover {
-            border-color: var(--green);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(31, 170, 89, 0.1);
-        }
-
-        .icon-circle {
-            width: 70px;
-            height: 70px;
-            background: var(--bg);
-            color: var(--green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            margin-bottom: 20px;
-        }
-
-        .service-title {
-            font-size: 1.4em;
-            font-weight: 700;
-            color: var(--green-dark);
-            margin-bottom: 12px;
-        }
-
-        .service-text {
-            font-size: 1em;
-            color: #666;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-
-        .main-btn {
-            background: var(--green);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
+        .btn-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 800;
+            font-size: 1.1em;
+            border-bottom: 2px solid transparent;
             transition: 0.3s;
-            width: 80%;
         }
 
-        .main-btn:hover {
-            background: var(--green-dark);
-            box-shadow: 0 5px 15px rgba(31, 170, 89, 0.3);
+        .btn-link:hover {
+            border-bottom-color: var(--yellow);
+            letter-spacing: 1px;
         }
 
-        /* الفوتر (الذيل) والألعاب */
-        .footer-games {
-            border-top: 2px dashed #eee;
-            padding-top: 40px;
+        /* ذيل الصفحة والألعاب */
+        footer {
+            background: #f1f2f6;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .games-tray {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
             margin-top: 20px;
         }
 
-        .footer-games h3 {
-            font-size: 1.1em;
-            color: #888;
-            margin-bottom: 20px;
-            font-weight: 400;
-        }
-
-        .game-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .game-btn {
-            background: #f0f0f0;
-            color: #555;
-            padding: 8px 20px;
+        .mini-game-btn {
+            background: white;
+            padding: 10px 25px;
             border-radius: 50px;
             text-decoration: none;
-            font-size: 0.9em;
+            color: var(--dark);
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             transition: 0.3s;
             border: 1px solid #ddd;
         }
 
-        .game-btn:hover {
+        .mini-game-btn:hover {
             background: var(--yellow);
-            color: var(--green-dark);
-            border-color: var(--yellow);
+            transform: scale(1.1);
         }
 
-        @media (max-width: 600px) {
-            h1 { font-size: 2em; }
-            .container { width: 95%; padding: 30px 15px; }
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2em; }
+            .service-item, .service-item:nth-child(even) { 
+                flex-direction: column; 
+                text-align: center;
+            }
+            .service-icon { margin-bottom: 20px; }
         }
     </style>
 </head>
-
 <body>
 
-<div class="container">
-
+<header>
     <h1>المعجم للبرمجيات</h1>
-    <p class="tagline">
-        نبتكر حلولاً برمجية ذكية مصممة خصيصاً لتناسب احتياجات السوق اليمني وتدعم نمو أعمالك.
-    </p>
+    <p>حلول تقنية مبتكرة برؤية يمنية طموحة</p>
+</header>
 
-    <div class="services-grid">
+<div class="content-section">
 
-        <div class="service-card">
-            <div class="icon-circle"><i class="fas fa-file-invoice-dollar"></i></div>
-            <div class="service-title">حسابات دكان</div>
-            <p class="service-text">بساطة في إدارة المبيعات والمخزون، صُمم خصيصاً للمحلات التجارية والشركات الصغيرة.</p>
-            <a href="docan.html" class="main-btn">استعرض النظام</a>
+    <div class="service-item">
+        <div class="service-icon"><i class="fas fa-cash-register"></i></div>
+        <div class="service-info">
+            <h2>نظام دكان المحاسبي</h2>
+            <p>أدر متجرك بذكاء، تتبع مبيعاتك ومخزونك بكل سهولة ويسر عبر واجهة بسيطة لا تتطلب خبرة محاسبية.</p>
+            <a href="docan.html" class="btn-link">استكشف النظام ←</a>
         </div>
-
-        <div class="service-card">
-            <div class="icon-circle"><i class="fab fa-whatsapp"></i></div>
-            <div class="service-title">منظم واتساب</div>
-            <p class="service-text">أداة قوية لإرسال الحملات التسويقية وجدولة الرسائل لعملائك دفعة واحدة.</p>
-            <a href="whatsapp.html" class="main-btn">تعرف عليه</a>
-        </div>
-
-        <div class="service-card">
-            <div class="icon-circle"><i class="fas fa-faucet-drip"></i></div>
-            <div class="service-title">مشاريع المياه</div>
-            <p class="service-text">نظام متكامل لإدارة المشتركين، القراءات، والتحصيل المالي لمشاريع المياه.</p>
-            <a href="weter.html" class="main-btn">عرض التفاصيل</a>
-        </div>
-
-        <div class="service-card">
-            <div class="icon-circle"><i class="fas fa-headset"></i></div>
-            <div class="service-title">تواصل معنا</div>
-            <p class="service-text">هل لديك استفسار أو تود طلب نسخة تجريبية؟ فريقنا جاهز لخدمتك في أي وقت.</p>
-            <a href="Request_demof.html" class="main-btn">اطلب نسختك</a>
-        </div>
-
     </div>
 
-    <div class="footer-games">
-        <h3>تطبيقات ترفيهية خفيفة</h3>
-        <div class="game-buttons">
-            <a href="Memory_game.html" class="game-btn">
-                <i class="fas fa-brain"></i> لعبة الذاكرة
-            </a>
-            <a href="Game1.html" class="game-btn">
-                <i class="fas fa-question-circle"></i> تخمين الرقم
-            </a>
+    <div class="service-item">
+        <div class="service-icon"><i class="fab fa-whatsapp-square"></i></div>
+        <div class="service-info">
+            <h2>منظم رسائل واتساب</h2>
+            <p>ضاعف مبيعاتك عبر الوصول المباشر لعملائك. إرسال جماعي، جدولة حملات، وتنظيم تلقائي للأرقام.</p>
+            <a href="whatsapp.html" class="btn-link">ابدأ حملتك الآن ←</a>
+        </div>
+    </div>
+
+    <div class="service-item">
+        <div class="service-icon"><i class="fas fa-water"></i></div>
+        <div class="service-info">
+            <h2>إدارة مشاريع المياه</h2>
+            <p>الحل الأمثل لمشاريع المياه الأهلية والخاصة. تنظيم العدادات، الفواتير، والتحصيل المالي بدقة متناهية.</p>
+            <a href="weter.html" class="btn-link">شاهد المميزات ←</a>
+        </div>
+    </div>
+
+    <div class="service-item">
+        <div class="service-icon"><i class="fas fa-rocket"></i></div>
+        <div class="service-info">
+            <h2>طلب نسخة تجريبية</h2>
+            <p>نحن هنا لخدمتك. اطلب نسختك التجريبية الآن واحصل على استشارة تقنية مجانية لمشروعك.</p>
+            <a href="Request_demof.html" class="btn-link">تواصل معنا ←</a>
         </div>
     </div>
 
 </div>
+
+<footer>
+    <p style="color: #888;">تطبيقات تفاعلية خفيفة</p>
+    <div class="games-tray">
+        <a href="Memory_game.html" class="mini-game-btn"><i class="fas fa-brain"></i> الذاكرة</a>
+        <a href="Game1.html" class="mini-game-btn"><i class="fas fa-bolt"></i> التخمين</a>
+    </div>
+    <p style="margin-top: 40px; font-size: 0.9em; opacity: 0.6;">© 2024 المعجم للبرمجيات - جميع الحقوق محفوظة</p>
+</footer>
+
+<script>
+    // تفعيل حركة الظهور عند التمرير
+    const observerOptions = { threshold: 0.2 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.service-item').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
