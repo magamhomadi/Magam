@@ -9,9 +9,9 @@
 
 <style>
 :root{
-    --green:#25D366;
-    --green-dark:#128C7E;
-    --bg:#f6fef9;
+    --green:#1faa59;
+    --green-dark:#0f7a3a;
+    --bg:#f4fbf7;
     --text:#1f2933;
 }
 
@@ -31,16 +31,19 @@ body{
     overflow:hidden;
 }
 
-/* الموجة */
+/* الشريط المتموج */
 .hero::before{
     content:'';
     position:absolute;
     left:0;
     top:0;
-    width:45%;
+    width:48%;
     height:100%;
-    background:linear-gradient(180deg, rgba(37,211,102,0.85), rgba(18,140,126,0.85));
-    clip-path: polygon(0 0,100% 0,85% 100%,0 100%);
+    background:linear-gradient(180deg,
+        rgba(31,170,89,0.92),
+        rgba(15,122,58,0.85)
+    );
+    clip-path: polygon(0 0,100% 0,82% 100%,0 100%);
 }
 
 /* محتوى الهيرو */
@@ -48,7 +51,7 @@ body{
     position:relative;
     max-width:1100px;
     margin:auto;
-    padding:80px 20px;
+    padding:90px 20px;
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:40px;
@@ -63,40 +66,56 @@ body{
 .hero-text p{
     font-size:1.3em;
     line-height:1.8;
+    margin-bottom:30px;
+}
+
+/* زر علوي */
+.hero-btn{
+    display:inline-block;
+    background:#fff;
+    color:var(--green-dark);
+    padding:16px 38px;
+    border-radius:50px;
+    font-size:1.15em;
+    font-weight:800;
+    text-decoration:none;
+    transition:.3s;
+}
+.hero-btn:hover{
+    transform:scale(1.08);
 }
 
 /* الميزات */
 .features{
-    margin:100px auto;
     max-width:1100px;
+    margin:120px auto;
     padding:0 20px;
 }
 
 .feature{
     display:grid;
-    grid-template-columns:120px 1fr;
-    gap:25px;
+    grid-template-columns:200px 1fr;
+    gap:35px;
     align-items:center;
-    margin-bottom:60px;
+    margin-bottom:90px;
 }
 
-.feature img{
-    width:110px;
-    height:110px;
-    border-radius:50%;
-    object-fit:cover;
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+/* SVG */
+.illus{
+    width:190px;
+    height:190px;
+    filter: drop-shadow(0 18px 35px rgba(0,0,0,0.18));
 }
 
 .feature h3{
-    font-size:1.6em;
-    margin-bottom:8px;
+    font-size:1.8em;
     color:var(--green-dark);
+    margin-bottom:12px;
 }
 
 .feature p{
-    font-size:1.1em;
-    line-height:1.7;
+    font-size:1.15em;
+    line-height:1.8;
 }
 
 /* CTA */
@@ -104,32 +123,31 @@ body{
     background:linear-gradient(135deg,var(--green),var(--green-dark));
     color:#fff;
     text-align:center;
-    padding:80px 20px;
+    padding:90px 20px;
 }
 
 .cta h2{
-    font-size:2.5em;
+    font-size:2.6em;
     margin-bottom:15px;
 }
 
 .cta p{
-    font-size:1.2em;
+    font-size:1.25em;
     margin-bottom:35px;
 }
 
 .cta a{
     background:#fff;
     color:var(--green-dark);
-    padding:18px 40px;
+    padding:18px 45px;
     border-radius:50px;
     font-size:1.2em;
-    font-weight:700;
+    font-weight:800;
     text-decoration:none;
     transition:.3s;
 }
-
 .cta a:hover{
-    transform:scale(1.08);
+    transform:scale(1.1);
 }
 
 /* موبايل */
@@ -145,6 +163,9 @@ body{
         grid-template-columns:1fr;
         text-align:center;
     }
+    .illus{
+        margin:auto;
+    }
 }
 </style>
 </head>
@@ -157,10 +178,11 @@ body{
         <div class="hero-text">
             <h1>منظم رسائل واتساب الذكي</h1>
             <p>
-                حوّل واتساب إلى أداة تسويق قوية،  
-                أرسل رسائل جماعية، نظّم حملاتك،  
-                واترك النظام يعمل بدلًا عنك.
+                برنامج عملي لأصحاب الأعمال في اليمن  
+                لتنظيم الرسائل، تشغيل الحملات التسويقية،  
+                وزيادة المبيعات بدون تعب.
             </p>
+            <a href="Request_demof.html" class="hero-btn">جرّب الآن مجانًا</a>
         </div>
     </div>
 </section>
@@ -168,35 +190,64 @@ body{
 <!-- FEATURES -->
 <section class="features">
 
+    <!-- Feature 1 -->
     <div class="feature">
-        <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e" alt="">
+        <div class="illus">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#1faa59" d="M45,-64C58,-55,68,-42,71,-27C74,-11,69,8,60,23C51,38,38,49,22,58C6,67,-13,74,-31,69C-49,64,-66,47,-73,27C-80,7,-76,-16,-65,-30C-54,-44,-36,-49,-19,-57C-2,-65,15,-76,45,-64Z" transform="translate(100 100)"/>
+                <circle cx="100" cy="80" r="30" fill="#FFD6A5"/>
+                <rect x="55" y="110" width="90" height="60" rx="35" fill="#0f7a3a"/>
+                <rect x="80" y="60" width="40" height="12" rx="6" fill="#0f7a3a"/>
+            </svg>
+        </div>
         <div>
-            <h3>إرسال تلقائي بلا مجهود</h3>
+            <h3>إرسال تلقائي سريع</h3>
             <p>أرسل مئات أو آلاف الرسائل بضغطة زر ووفّر وقتك.</p>
         </div>
     </div>
 
+    <!-- Feature 2 -->
     <div class="feature">
-        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" alt="">
+        <div class="illus">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#1faa59" d="M50,-60C65,-50,75,-30,72,-10C69,10,53,30,35,45C17,60,-3,70,-22,66C-41,62,-58,45,-66,25C-74,5,-73,-18,-60,-35C-47,-52,-23,-63,0,-63C23,-63,46,-70,50,-60Z" transform="translate(100 100)"/>
+                <circle cx="100" cy="85" r="28" fill="#FFD6A5"/>
+                <rect x="60" y="115" width="80" height="55" rx="28" fill="#0f7a3a"/>
+            </svg>
+        </div>
         <div>
-            <h3>حملات تسويقية ناجحة</h3>
-            <p>عروض، خصومات، تنبيهات… كلها منظمة وجاهزة.</p>
+            <h3>حملات تسويقية منظمة</h3>
+            <p>عروض وخصومات وتنبيهات تصل لعملائك في الوقت المناسب.</p>
         </div>
     </div>
 
+    <!-- Feature 3 -->
     <div class="feature">
-        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e" alt="">
+        <div class="illus">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#1faa59" d="M42,-62C56,-52,69,-40,73,-24C77,-8,72,11,63,28C54,45,40,60,22,68C4,76,-18,77,-36,68C-54,59,-68,40,-72,20C-76,0,-70,-21,-57,-36C-44,-51,-22,-60,-2,-58C18,-56,36,-72,42,-62Z" transform="translate(100 100)"/>
+                <circle cx="100" cy="82" r="29" fill="#FFD6A5"/>
+                <rect x="58" y="112" width="84" height="58" rx="30" fill="#0f7a3a"/>
+            </svg>
+        </div>
         <div>
             <h3>تنظيم الأرقام بذكاء</h3>
-            <p>منع التكرار وتحسين وصول الرسائل للعملاء.</p>
+            <p>منع التكرار وتحسين وصول الرسائل بدون مشاكل.</p>
         </div>
     </div>
 
+    <!-- Feature 4 -->
     <div class="feature">
-        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2" alt="">
+        <div class="illus">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#1faa59" d="M48,-66C62,-55,72,-37,73,-18C74,1,66,21,53,38C40,55,22,69,3,71C-16,73,-33,63,-48,49C-63,35,-76,17,-76,-2C-76,-21,-63,-42,-46,-54C-29,-66,-7,-69,12,-67C31,-65,48,-77,48,-66Z" transform="translate(100 100)"/>
+                <circle cx="100" cy="80" r="30" fill="#FFD6A5"/>
+                <rect x="55" y="110" width="90" height="60" rx="32" fill="#0f7a3a"/>
+            </svg>
+        </div>
         <div>
-            <h3>مناسب للتجار والشركات</h3>
-            <p>مثالي للصيدليات، المتاجر، المكاتب، والخدمات.</p>
+            <h3>مناسب للسوق اليمني</h3>
+            <p>مصمم ليعمل بسلاسة حتى مع ضعف الإنترنت.</p>
         </div>
     </div>
 
@@ -204,8 +255,8 @@ body{
 
 <!-- CTA -->
 <section class="cta">
-    <h2>ابدأ حملتك التسويقية اليوم</h2>
-    <p>اطلب نسخة تجريبية الآن واجعل واتساب يعمل لصالحك</p>
+    <h2>ابدأ حملتك اليوم</h2>
+    <p>جرّب النظام الآن واجعل واتساب يعمل لصالحك</p>
     <a href="Request_demof.html">اطلب النسخة التجريبية</a>
 </section>
 
