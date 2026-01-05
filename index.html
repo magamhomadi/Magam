@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المعجم للبرمجيات - حلول برمجية مبتكرة</title>
+    <title>المعجم للبرمجيات | حلول ذكية لأعمالك</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,245 +23,212 @@
 
         body {
             font-family: 'Tajawal', sans-serif;
-            min-height: 100vh;
+            background: var(--light-gray);
             margin: 0;
-            background-color: var(--light-gray);
-            color: var(--text-color);
+            padding: 40px 0;
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 40px 0;
         }
 
         .container {
-            background-color: #fff;
-            padding: 50px 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px var(--shadow-strong);
-            max-width: 700px;
+            background: #fff;
             width: 95%;
-            animation: fadeInScale 0.8s ease-out forwards;
+            max-width: 750px;
+            padding: 50px 40px;
+            border-radius: 14px;
+            box-shadow: 0 15px 35px var(--shadow-strong);
+            animation: fadeIn 0.8s ease;
         }
 
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.98);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(30px);}
+            to {opacity: 1; transform: translateY(0);}
         }
 
         h1 {
             text-align: center;
             font-size: 3em;
             font-weight: 800;
-            color: var(--heading-color);
             margin-bottom: 15px;
+            color: var(--heading-color);
         }
 
         .tagline {
             text-align: center;
-            font-size: 1.3em;
+            font-size: 1.35em;
             margin-bottom: 50px;
+            color: var(--text-color);
         }
 
         .section-heading {
             text-align: center;
             font-size: 2.2em;
-            font-weight: 700;
             color: var(--dark-blue);
-            margin: 60px 0 30px;
+            margin: 60px 0 35px;
             position: relative;
         }
 
         .section-heading::after {
             content: '';
-            width: 80px;
+            width: 90px;
             height: 4px;
-            background-color: var(--primary-blue);
+            background: var(--primary-blue);
             position: absolute;
-            bottom: -10px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
-            border-radius: 2px;
+            border-radius: 3px;
         }
 
         .button-group {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
-            margin-top: 30px;
         }
 
         .service-card {
-            background-color: var(--medium-gray);
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 6px 15px var(--shadow-subtle);
-            transition: transform 0.3s ease;
+            background: var(--medium-gray);
+            padding: 28px;
+            border-radius: 12px;
             text-align: center;
+            box-shadow: 0 6px 18px var(--shadow-subtle);
+            transition: all 0.3s ease;
         }
 
         .service-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px var(--shadow-strong);
+        }
+
+        .icon {
+            font-size: 2.4em;
+            margin-bottom: 15px;
+        }
+
+        .service-title {
+            font-size: 1.25em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--heading-color);
         }
 
         .service-text {
             font-size: 1.05em;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
+            color: var(--text-color);
         }
 
         .button {
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            background-color: var(--primary-blue);
+            background: var(--primary-blue);
             color: #fff;
-            padding: 16px 22px;
+            padding: 16px 24px;
             border-radius: 8px;
             font-size: 1.1em;
             font-weight: 700;
             text-decoration: none;
-            box-shadow: 0 6px 15px var(--shadow-subtle);
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
 
         .button:hover {
-            background-color: var(--dark-blue);
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 12px 25px var(--shadow-strong);
-        }
-
-        .weather-widget-container {
-            margin-top: 70px;
-            padding-top: 40px;
-            border-top: 1px solid var(--medium-gray);
-            text-align: center;
-            animation: fadeIn 1.2s ease-out forwards;
-            opacity: 0;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.4em; }
-            .tagline { font-size: 1.1em; }
-            .section-heading { font-size: 1.8em; }
+            background: var(--dark-blue);
+            transform: scale(1.05);
         }
 
         @media (max-width: 480px) {
-            .button-group {
-                grid-template-columns: 1fr;
-            }
+            h1 {font-size: 2.2em;}
+            .tagline {font-size: 1.1em;}
+            .section-heading {font-size: 1.7em;}
+            .button-group {grid-template-columns: 1fr;}
         }
     </style>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TK2P19XK0V"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-TK2P19XK0V');
-    </script>
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>حلول برمجية لنجاح عملك</h1>
+    <h1>حلول ذكية تدير عملك بثقة</h1>
     <p class="tagline">
-        نقدم في المعجم للبرمجيات برامج مبتكرة وتطبيقات ذكية تساعدك على إدارة أعمالك بكفاءة وثقة.
+        في <strong>المعجم للبرمجيات</strong> نطوّر أنظمة عملية تساعدك على تنظيم عملك، زيادة أرباحك، وتوفير وقتك.
     </p>
 
-    <h2 class="section-heading">خدماتنا وبرامجنا</h2>
+    <h2 class="section-heading">برامجنا وخدماتنا</h2>
 
     <div class="button-group">
 
         <div class="service-card">
+            <div class="icon">🧾</div>
+            <div class="service-title">برنامج حسابات دكان</div>
             <p class="service-text">
-                نظام سهل وعملي لإدارة حسابات الدكان أو المحل الصغير ومتابعة الأرباح اليومية.
+                تحكّم بمبيعاتك، مصروفاتك، وأرباحك اليومية بسهولة حتى لو لم تكن خبير محاسبة.
             </p>
-            <a href="docan.html" class="button">برنامج حسابات دكان / محل صغير</a>
+            <a href="docan.html" class="button">استعرض البرنامج</a>
         </div>
 
         <div class="service-card">
+            <div class="icon">🚰</div>
+            <div class="service-title">إدارة مشاريع المياه</div>
             <p class="service-text">
-                نظام متخصص لإدارة مشاريع المياه وتنظيم البيانات والتقارير بشكل احترافي.
+                نظام احترافي لإدارة مشاريع المياه، تتبع البيانات، وإنشاء تقارير دقيقة.
             </p>
-            <a href="weter.html" class="button">نظام إدارة مشاريع المياه</a>
+            <a href="weter.html" class="button">عرض التفاصيل</a>
         </div>
 
         <div class="service-card">
+            <div class="icon">📲</div>
+            <div class="service-title">منظم رسائل واتساب</div>
             <p class="service-text">
-                تعرّف على أعمالنا السابقة وشاهد نماذج حقيقية من المشاريع التي نفذناها.
+                أرسل آلاف الرسائل التسويقية تلقائيًا، نظّم الحملات، وجدولة الإرسال باحتراف.
             </p>
-            <a href="video.html" class="button">أعمالنا ومشاريعنا</a>
+            <a href="whatsapp.html" class="button">تعرف على النظام</a>
         </div>
 
         <div class="service-card">
+            <div class="icon">🎯</div>
+            <div class="service-title">أعمالنا السابقة</div>
             <p class="service-text">
-                هل ترغب بتجربة البرنامج أو التواصل معنا؟ يسعدنا خدمتك والإجابة على استفساراتك.
+                شاهد نماذج حقيقية من مشاريعنا وثقة عملائنا في حلولنا البرمجية.
             </p>
-            <a href="Request_demof.html" class="button">اطلب نسخة تجريبية أو تواصل معنا</a>
+            <a href="video.html" class="button">مشاهدة الأعمال</a>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">📞</div>
+            <div class="service-title">طلب نسخة تجريبية</div>
+            <p class="service-text">
+                جرّب البرنامج بنفسك أو تواصل معنا وسنساعدك في اختيار الحل الأنسب لك.
+            </p>
+            <a href="Request_demof.html" class="button">ابدأ الآن</a>
         </div>
 
     </div>
 
-    <h2 class="section-heading">تطبيقاتنا التفاعلية</h2>
+    <h2 class="section-heading">تطبيقات تفاعلية</h2>
 
     <div class="button-group">
 
         <div class="service-card">
+            <div class="icon">🧠</div>
+            <div class="service-title">لعبة الذاكرة</div>
             <p class="service-text">
-                لعبة بسيطة ومسلية لتنشيط التفكير واختبار سرعة البديهة.
+                لعبة ذكية لتنشيط العقل وتحسين التركيز بطريقة ممتعة.
             </p>
-            <a href="Game1.html" class="button">لعبة تخمين الرقم</a>
+            <a href="Memory_game.html" class="button">ابدأ اللعب</a>
         </div>
 
         <div class="service-card">
+            <div class="icon">🔢</div>
+            <div class="service-title">لعبة تخمين الرقم</div>
             <p class="service-text">
-                لعبة ذكية لتقوية الذاكرة والتركيز بطريقة ممتعة.
+                اختبر ذكاءك وسرعة تفكيرك في لعبة خفيفة ومسلية.
             </p>
-            <a href="Memory_game.html" class="button">لعبة الذاكرة</a>
+            <a href="Game1.html" class="button">جرّب الآن</a>
         </div>
 
-    </div>
-
-    <div class="weather-widget-container">
-        <h2 class="section-heading">الطقس الآن في اليمن</h2>
-        <div id="_MI_8117d182006143d496917e6cf11f01e6">
-            <a href="https://ar.meteotrend.com/">النشرة الجوية</a>
-        </div>
-        <script type='text/javascript'>
-            (function(d,w,t,k){
-                function l(){
-                    if(typeof(w._MIOB_)=='undefined'){w._MIOB_={};}
-                    var m=w._MIOB_[t]=k;
-                    var s=d.createElement('script');
-                    m.p=('https:'==d.location.protocol?'https:':'http:');
-                    s.type='text/javascript';
-                    s.async=true;
-                    s.src=m.p+'//info.meteotrend.com/mt/'+m.t+'.js';
-                    d.body.appendChild(s);
-                }
-                if(d.readyState=='complete')l();
-                else if(w.attachEvent)w.attachEvent('onload',l);
-                else w.addEventListener('load',l,false);
-            })(document,window,'8117d182006143d496917e6cf11f01e6',{
-                t:'full5d',
-                css:[
-                    '{p}//info.meteotrend.com/mt/{t}.css',
-                    '{p}//info.meteotrend.com/cs/a42307cffb83482e0c96c4dcb0035b0135080238.css'
-                ],
-                source:'meteotrend'
-            });
-        </script>
     </div>
 
 </div>
