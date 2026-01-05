@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظم رسائل واتساب | المعجم للبرمجيات</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #007bff;
+            --dark: #004d9e;
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text: #343a40;
+            --shadow: rgba(0,0,0,0.12);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: #fff;
+            padding: 70px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 60px 20px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .feature {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px var(--shadow);
+            text-align: center;
+        }
+
+        .feature .icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .cta {
+            background: var(--card);
+            margin-top: 70px;
+            padding: 50px 30px;
+            border-radius: 14px;
+            box-shadow: 0 15px 35px var(--shadow);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            font-size: 1.15em;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            padding: 18px 30px;
+            font-size: 1.2em;
+            font-weight: 700;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--dark);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.2em; }
+            .hero p { font-size: 1.1em; }
+            .cta h2 { font-size: 1.8em; }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>منظم رسائل واتساب الذكي</h1>
+    <p>
+        أرسل آلاف الرسائل تلقائيًا، نظّم حملاتك التسويقية، وتواصل مع عملائك باحتراف.
+    </p>
+</section>
+
+<!-- CONTENT -->
+<div class="container">
+
+    <h2 style="text-align:center;font-size:2.2em;">لماذا تحتاج هذا البرنامج؟</h2>
+    <p style="text-align:center;font-size:1.2em;max-width:700px;margin:auto;">
+        إذا كنت ترسل الرسائل يدويًا، فأنت تهدر وقتك وتخسر عملاء محتملين.
+        هذا النظام يجعل واتساب أداة بيع قوية تعمل عنك.
+    </p>
+
+    <!-- FEATURES -->
+    <div class="features">
+
+        <div class="feature">
+            <div class="icon">⏱️</div>
+            <h3>إرسال تلقائي</h3>
+            <p>إرسال مئات أو آلاف الرسائل بدون تدخل يدوي.</p>
+        </div>
+
+        <div class="feature">
+            <div class="icon">📅</div>
+            <h3>جدولة ذكية</h3>
+            <p>حدد الوقت والتاريخ واترك النظام يعمل تلقائيًا.</p>
+        </div>
+
+        <div class="feature">
+            <div class="icon">🎯</div>
+            <h3>حملات تسويقية</h3>
+            <p>إدارة حملات العروض، الخصومات، والتنبيهات.</p>
+        </div>
+
+        <div class="feature">
+            <div class="icon">📊</div>
+            <h3>تنظيم الأرقام</h3>
+            <p>ترتيب الأرقام ومنع التكرار وتحسين النتائج.</p>
+        </div>
+
+        <div class="feature">
+            <div class="icon">🔒</div>
+            <h3>استخدام آمن</h3>
+            <p>مصمم لتقليل الحظر والاستخدام العشوائي.</p>
+        </div>
+
+        <div class="feature">
+            <div class="icon">💼</div>
+            <h3>مناسب للأعمال</h3>
+            <p>مثالي للتجار، الشركات، الصيدليات، والمكاتب.</p>
+        </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+        <h2>حوّل واتساب إلى ماكينة مبيعات</h2>
+        <p>
+            اطلب نسخة تجريبية الآن أو تواصل معنا لمعرفة التفاصيل والأسعار.
+        </p>
+        <a href="Request_demof.html" class="btn">اطلب نسخة تجريبية الآن</a>
+    </div>
+
+</div>
+
+</body>
+</html>
