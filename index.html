@@ -8,141 +8,164 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary-blue: #007bff;
-            --dark-blue: #004d9e;
-            --light-gray: #f8f9fa;
-            --medium-gray: #e9ecef;
-            --text-color: #343a40;
-            --heading-color: #212529;
-            --shadow-subtle: rgba(0, 0, 0, 0.08);
-            --shadow-strong: rgba(0, 0, 0, 0.15);
+            --green: #1faa59;
+            --green-dark: #0f7a3a;
+            --yellow: #FFD700;
+            --bg: #f4fbf7;
+            --text: #1f2933;
+            --white: #ffffff;
         }
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background: var(--light-gray);
+            background: var(--bg);
             margin: 0;
-            padding: 40px 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            padding: 20px 0;
+            color: var(--text);
         }
 
         .container {
-            background: #fff;
-            width: 95%;
-            max-width: 750px;
-            padding: 50px 40px;
-            border-radius: 14px;
-            box-shadow: 0 15px 35px var(--shadow-strong);
-            animation: fadeIn 0.8s ease;
-        }
-
-        @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(30px);}
-            to {opacity: 1; transform: translateY(0);}
+            background: var(--white);
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 50px 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
         }
 
         h1 {
-            text-align: center;
-            font-size: 3em;
+            font-size: 2.8em;
             font-weight: 800;
-            margin-bottom: 15px;
-            color: var(--heading-color);
+            color: var(--green-dark);
+            margin-bottom: 10px;
         }
 
         .tagline {
-            text-align: center;
-            font-size: 1.35em;
-            margin-bottom: 50px;
-            color: var(--text-color);
+            font-size: 1.2em;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 50px;
         }
 
-        .section-heading {
-            text-align: center;
-            font-size: 2.2em;
-            color: var(--dark-blue);
-            margin: 60px 0 35px;
-            position: relative;
-        }
-
-        .section-heading::after {
-            content: '';
-            width: 90px;
-            height: 4px;
-            background: var(--primary-blue);
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 3px;
-        }
-
-        .button-group {
+        /* شبكة الخدمات */
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 25px;
+            margin-bottom: 60px;
         }
 
         .service-card {
-            background: var(--medium-gray);
-            padding: 28px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 6px 18px var(--shadow-subtle);
+            background: var(--white);
+            border: 2px solid #eee;
+            padding: 30px 20px;
+            border-radius: 20px;
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .service-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px var(--shadow-strong);
+            border-color: var(--green);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(31, 170, 89, 0.1);
         }
 
-        .icon {
-            font-size: 2.4em;
-            margin-bottom: 15px;
+        .icon-circle {
+            width: 70px;
+            height: 70px;
+            background: var(--bg);
+            color: var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 20px;
         }
 
         .service-title {
-            font-size: 1.25em;
+            font-size: 1.4em;
             font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--heading-color);
+            color: var(--green-dark);
+            margin-bottom: 12px;
         }
 
         .service-text {
-            font-size: 1.05em;
+            font-size: 1em;
+            color: #666;
             margin-bottom: 20px;
-            color: var(--text-color);
+            flex-grow: 1;
         }
 
-        .button {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            background: var(--primary-blue);
-            color: #fff;
-            padding: 16px 24px;
-            border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: 700;
+        .main-btn {
+            background: var(--green);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
             text-decoration: none;
+            font-weight: 700;
             transition: 0.3s;
+            width: 80%;
         }
 
-        .button:hover {
-            background: var(--dark-blue);
-            transform: scale(1.05);
+        .main-btn:hover {
+            background: var(--green-dark);
+            box-shadow: 0 5px 15px rgba(31, 170, 89, 0.3);
         }
 
-        @media (max-width: 480px) {
-            h1 {font-size: 2.2em;}
-            .tagline {font-size: 1.1em;}
-            .section-heading {font-size: 1.7em;}
-            .button-group {grid-template-columns: 1fr;}
+        /* الفوتر (الذيل) والألعاب */
+        .footer-games {
+            border-top: 2px dashed #eee;
+            padding-top: 40px;
+            margin-top: 20px;
+        }
+
+        .footer-games h3 {
+            font-size: 1.1em;
+            color: #888;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .game-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .game-btn {
+            background: #f0f0f0;
+            color: #555;
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            border: 1px solid #ddd;
+        }
+
+        .game-btn:hover {
+            background: var(--yellow);
+            color: var(--green-dark);
+            border-color: var(--yellow);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .container { width: 95%; padding: 30px 15px; }
         }
     </style>
 </head>
@@ -151,84 +174,53 @@
 
 <div class="container">
 
-    <h1>حلول ذكية تدير عملك بثقة</h1>
+    <h1>المعجم للبرمجيات</h1>
     <p class="tagline">
-        في <strong>المعجم للبرمجيات</strong> نطوّر أنظمة عملية تساعدك على تنظيم عملك، زيادة أرباحك، وتوفير وقتك.
+        نبتكر حلولاً برمجية ذكية مصممة خصيصاً لتناسب احتياجات السوق اليمني وتدعم نمو أعمالك.
     </p>
 
-    <h2 class="section-heading">برامجنا وخدماتنا</h2>
-
-    <div class="button-group">
+    <div class="services-grid">
 
         <div class="service-card">
-            <div class="icon">🧾</div>
-            <div class="service-title">برنامج حسابات دكان</div>
-            <p class="service-text">
-                تحكّم بمبيعاتك، مصروفاتك، وأرباحك اليومية بسهولة حتى لو لم تكن خبير محاسبة.
-            </p>
-            <a href="docan.html" class="button">استعرض البرنامج</a>
+            <div class="icon-circle"><i class="fas fa-file-invoice-dollar"></i></div>
+            <div class="service-title">حسابات دكان</div>
+            <p class="service-text">بساطة في إدارة المبيعات والمخزون، صُمم خصيصاً للمحلات التجارية والشركات الصغيرة.</p>
+            <a href="docan.html" class="main-btn">استعرض النظام</a>
         </div>
 
         <div class="service-card">
-            <div class="icon">🚰</div>
-            <div class="service-title">إدارة مشاريع المياه</div>
-            <p class="service-text">
-                نظام احترافي لإدارة مشاريع المياه، تتبع البيانات، وإنشاء تقارير دقيقة.
-            </p>
-            <a href="weter.html" class="button">عرض التفاصيل</a>
+            <div class="icon-circle"><i class="fab fa-whatsapp"></i></div>
+            <div class="service-title">منظم واتساب</div>
+            <p class="service-text">أداة قوية لإرسال الحملات التسويقية وجدولة الرسائل لعملائك دفعة واحدة.</p>
+            <a href="whatsapp.html" class="main-btn">تعرف عليه</a>
         </div>
 
         <div class="service-card">
-            <div class="icon">📲</div>
-            <div class="service-title">منظم رسائل واتساب</div>
-            <p class="service-text">
-                أرسل آلاف الرسائل التسويقية تلقائيًا، نظّم الحملات، وجدولة الإرسال باحتراف.
-            </p>
-            <a href="whatsapp.html" class="button">تعرف على النظام</a>
+            <div class="icon-circle"><i class="fas fa-faucet-drip"></i></div>
+            <div class="service-title">مشاريع المياه</div>
+            <p class="service-text">نظام متكامل لإدارة المشتركين، القراءات، والتحصيل المالي لمشاريع المياه.</p>
+            <a href="weter.html" class="main-btn">عرض التفاصيل</a>
         </div>
 
         <div class="service-card">
-            <div class="icon">🎯</div>
-            <div class="service-title">أعمالنا السابقة</div>
-            <p class="service-text">
-                شاهد نماذج حقيقية من مشاريعنا وثقة عملائنا في حلولنا البرمجية.
-            </p>
-            <a href="video.html" class="button">مشاهدة الأعمال</a>
-        </div>
-
-        <div class="service-card">
-            <div class="icon">📞</div>
-            <div class="service-title">طلب نسخة تجريبية</div>
-            <p class="service-text">
-                جرّب البرنامج بنفسك أو تواصل معنا وسنساعدك في اختيار الحل الأنسب لك.
-            </p>
-            <a href="Request_demof.html" class="button">ابدأ الآن</a>
+            <div class="icon-circle"><i class="fas fa-headset"></i></div>
+            <div class="service-title">تواصل معنا</div>
+            <p class="service-text">هل لديك استفسار أو تود طلب نسخة تجريبية؟ فريقنا جاهز لخدمتك في أي وقت.</p>
+            <a href="Request_demof.html" class="main-btn">اطلب نسختك</a>
         </div>
 
     </div>
 
-    <h2 class="section-heading">تطبيقات تفاعلية</h2>
-
-    <div class="button-group">
-
-        <div class="service-card">
-            <div class="icon">🧠</div>
-            <div class="service-title">لعبة الذاكرة</div>
-            <p class="service-text">
-                لعبة ذكية لتنشيط العقل وتحسين التركيز بطريقة ممتعة.
-            </p>
-            <a href="Memory_game.html" class="button">ابدأ اللعب</a>
+    <div class="footer-games">
+        <h3>تطبيقات ترفيهية خفيفة</h3>
+        <div class="game-buttons">
+            <a href="Memory_game.html" class="game-btn">
+                <i class="fas fa-brain"></i> لعبة الذاكرة
+            </a>
+            <a href="Game1.html" class="game-btn">
+                <i class="fas fa-question-circle"></i> تخمين الرقم
+            </a>
         </div>
-
-        <div class="service-card">
-            <div class="icon">🔢</div>
-            <div class="service-title">لعبة تخمين الرقم</div>
-            <p class="service-text">
-                اختبر ذكاءك وسرعة تفكيرك في لعبة خفيفة ومسلية.
-            </p>
-            <a href="Game1.html" class="button">جرّب الآن</a>
-        </div>
-
     </div>
 
 </div>
