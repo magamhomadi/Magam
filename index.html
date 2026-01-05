@@ -17,6 +17,11 @@
             --text: #2d3436;
         }
 
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Tajawal', sans-serif;
             margin: 0;
@@ -27,11 +32,11 @@
 
         /* رأس الصفحة الملون والمتحرك */
         header {
-            background: linear-gradient(-45deg, #0b5e2d, #1faa59, #2ecc71);
+            background: linear-gradient(-45deg, #0b5e2d, #1faa59, #2ecc71, #16a085);
             background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
+            animation: gradientBG 15s ease infinite;
             color: white;
-            padding: 80px 20px 120px;
+            padding: 100px 20px 140px;
             text-align: center;
             clip-path: ellipse(120% 100% at 50% 0%);
         }
@@ -43,66 +48,71 @@
         }
 
         header h1 {
-            font-size: 3.5em;
+            font-size: clamp(2rem, 5vw, 3.5rem);
             margin: 0;
             font-weight: 900;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         header p {
-            font-size: 1.4em;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
             opacity: 0.9;
             margin-top: 15px;
         }
 
-        /* قسم الخدمات بدون بطاقات */
+        /* قسم الخدمات */
         .content-section {
-            max-width: 1000px;
-            margin: -50px auto 50px;
+            max-width: 1100px;
+            margin: -60px auto 60px;
             padding: 0 20px;
         }
 
         .service-item {
             display: flex;
             align-items: center;
-            padding: 40px 0;
-            border-bottom: 1px solid #eee;
+            justify-content: space-between;
+            padding: 40px 20px;
+            margin: 20px 0;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
             opacity: 0;
-            transform: translateX(50px);
+            transform: translateY(50px);
             transition: all 0.8s ease;
+            flex-wrap: wrap;
         }
 
         .service-item.visible {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateY(0);
         }
 
         .service-item:nth-child(even) {
             flex-direction: row-reverse;
-            transform: translateX(-50px);
         }
 
         .service-icon {
-            font-size: 4em;
+            font-size: clamp(3rem, 6vw, 4em);
             color: var(--primary);
             width: 150px;
             text-align: center;
             transition: 0.3s;
+            flex-shrink: 0;
         }
 
         .service-info {
             flex: 1;
-            padding: 0 30px;
+            padding: 0 20px;
         }
 
         .service-info h2 {
-            font-size: 2em;
+            font-size: clamp(1.5rem, 3vw, 2em);
             color: var(--dark);
             margin-bottom: 10px;
         }
 
         .service-info p {
-            font-size: 1.2em;
+            font-size: clamp(1rem, 2.5vw, 1.2em);
             color: #636e72;
             line-height: 1.8;
         }
@@ -115,7 +125,7 @@
             font-weight: 800;
             font-size: 1.1em;
             border-bottom: 2px solid transparent;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
         .btn-link:hover {
@@ -133,35 +143,40 @@
         .games-tray {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
             gap: 20px;
             margin-top: 20px;
         }
 
         .mini-game-btn {
             background: white;
-            padding: 10px 25px;
+            padding: 12px 30px;
             border-radius: 50px;
             text-decoration: none;
             color: var(--dark);
             font-weight: 700;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.08);
             transition: 0.3s;
             border: 1px solid #ddd;
         }
 
         .mini-game-btn:hover {
             background: var(--yellow);
+            color: #fff;
             transform: scale(1.1);
         }
 
-        @media (max-width: 768px) {
-            header h1 { font-size: 2.2em; }
-            .service-item, .service-item:nth-child(even) { 
-                flex-direction: column; 
-                text-align: center;
-            }
+        /* تجاوب مع الشاشات الصغيرة */
+        @media (max-width: 1024px) {
+            .service-item { flex-direction: column; text-align: center; padding: 30px 15px; }
+            .service-item:nth-child(even) { flex-direction: column; }
             .service-icon { margin-bottom: 20px; }
         }
+
+        @media (max-width: 600px) {
+            header { padding: 80px 15px 100px; }
+        }
+
     </style>
 </head>
 <body>
