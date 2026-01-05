@@ -22,94 +22,82 @@ body{
   overflow-x:hidden;
 }
 
-/* HERO */
+/* HERO SECTION */
 .hero{
   position:relative;
-  min-height:80vh;
+  min-height:70vh;
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-  overflow:hidden;
-  padding:40px 20px;
+  padding:60px 20px;
+  background: linear-gradient(135deg, var(--green-dark), var(--green));
+  color: white;
+  /* شكل هندسي في الخلفية */
+  clip-path: ellipse(150% 100% at 50% 0%);
 }
 
-/* الشريط المتموج */
-.hero::before{
-  content:'';
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background: linear-gradient(180deg, rgba(31,170,89,0.85), rgba(15,122,58,0.9));
-  clip-path: polygon(0 0,100% 0,100% 85%,0 100%);
-  z-index:1;
-}
-.hero::after{
-  content:'';
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:15%;
-  background: rgba(255,215,0,0.25);
-  z-index:2;
-}
-
-/* محتوى الهيرو */
 .hero-content{
   position:relative;
   z-index:3;
-  max-width:900px;
+  max-width:800px;
 }
 
 .hero-content h1{
-  font-size:2.8em;
-  font-weight:800;
-  margin-bottom:15px;
-  color:white;
+  font-size:clamp(2em, 5vw, 3.5em);
+  font-weight: 800;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 .hero-content p{
-  font-size:1.3em;
-  margin-bottom:25px;
-  line-height:1.6;
-  color:white;
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  opacity: 0.9;
 }
 
-/* زر CTA */
 .hero-btn{
   display:inline-block;
   background:var(--yellow);
   color:var(--green-dark);
-  padding:16px 38px;
+  padding:18px 45px;
   border-radius:50px;
   font-size:1.2em;
   font-weight:800;
   text-decoration:none;
-  transition:.3s;
-}
-.hero-btn:hover{
-  transform:scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transition:.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* الميزات */
+.hero-btn:hover{
+  transform: scale(1.1);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+}
+
+/* FEATURES SECTION */
 .features{
-  max-width:1000px;
-  margin:60px auto;
+  max-width:1100px;
+  margin:80px auto;
   padding:0 20px;
 }
 
-.feature{
-  display:grid;
-  grid-template-columns:150px 1fr;
-  gap:20px;
-  align-items:center;
-  margin-bottom:40px;
-  opacity:0;
-  transform:translateY(30px);
-  transition: all 0.8s ease-out;
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 60px;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease-out;
+}
+
+/* عكس ترتيب العناصر في الميزات الزوجية لشكل أكثر جمالاً */
+.feature:nth-child(even) {
+  flex-direction: row-reverse;
 }
 
 .feature.visible{
@@ -117,131 +105,124 @@ body{
   transform:translateY(0);
 }
 
+.feature-img-wrapper {
+  flex-shrink: 0;
+  width: 180px;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 25px;
+}
+
 .feature img{
-  width:150px;
-  height:150px;
-  object-fit:cover;
-  border-radius:20%;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.feature h3{
-  font-size:1.5em;
+.feature-text h3{
+  font-size:1.6em;
   color:var(--green-dark);
-  margin-bottom:8px;
+  margin-top: 0;
+  margin-bottom:12px;
 }
 
-.feature p{
+.feature-text p{
   font-size:1.1em;
-  line-height:1.6;
+  line-height:1.7;
+  color: #555;
+  margin: 0;
 }
 
-/* CTA أسفل الصفحة */
+/* CTA SECTION */
 .cta{
   background:linear-gradient(135deg,var(--green),var(--green-dark));
   color:#fff;
   text-align:center;
-  padding:80px 20px;
+  padding:100px 20px;
+  margin-top: 50px;
 }
 
-.cta h2{
-  font-size:2.5em;
-  margin-bottom:15px;
-}
-
-.cta p{
-  font-size:1.2em;
-  margin-bottom:30px;
-}
+.cta h2{ font-size:2.5em; margin-bottom:20px; }
 
 .cta a{
   background:var(--yellow);
   color:var(--green-dark);
-  padding:16px 45px;
+  padding:18px 50px;
   border-radius:50px;
-  font-size:1.2em;
+  font-size:1.3em;
   font-weight:800;
   text-decoration:none;
+  display: inline-block;
   transition:.3s;
 }
-.cta a:hover{
-  transform:scale(1.05);
-}
 
-/* موبايل */
+/* RESPONSIVE */
 @media(max-width:768px){
-  .hero-content h1{font-size:2em;}
-  .hero-content p{font-size:1.1em;}
-  .feature{grid-template-columns:1fr; text-align:center;}
-  .feature img{margin:auto;}
+  .feature { flex-direction: column !important; text-align: center; }
+  .feature-img-wrapper { width: 150px; height: 150px; }
 }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
     <h1>منظم رسائل واتساب الذكي</h1>
-    <p>برنامج عملي لأصحاب الأعمال في اليمن لتنظيم الرسائل، تشغيل الحملات التسويقية، وزيادة المبيعات بسهولة.</p>
-    <a href="Request_demof.html" class="hero-btn">جرّب الآن مجانًا</a>
+    <p>أول نظام متكامل في اليمن لإدارة حملاتك التسويقية والتواصل مع عملائك بضغطة زر واحدة.</p>
+    <a href="#" class="hero-btn">جرّب النسخة المجانية</a>
   </div>
 </section>
 
-<!-- FEATURES -->
 <section class="features">
-
   <div class="feature">
-    <img src="https://i.ibb.co/3rTnW7H/yemeni-1.jpg" alt="تاجر يمني">
-    <div>
-      <h3>إرسال تلقائي سريع</h3>
-      <p>أرسل مئات الرسائل بضغطة زر ووفّر وقتك.</p>
+    <div class="feature-img-wrapper">
+      <img src="https://via.placeholder.com/200x200/1faa59/ffffff?text=WhatsApp" alt="إرسال تلقائي">
+    </div>
+    <div class="feature-text">
+      <h3>إرسال تلقائي فائق السرعة</h3>
+      <p>وداعاً للإرسال اليدوي الممل. أرسل مئات الرسائل لعملائك مع إمكانية تخصيص اسم العميل في كل رسالة لزيادة التفاعل.</p>
     </div>
   </div>
 
   <div class="feature">
-    <img src="https://i.ibb.co/WVpQn4Y/yemeni-2.jpg" alt="رائد أعمال يمني">
-    <div>
-      <h3>حملات تسويقية منظمة</h3>
-      <p>عروض وخصومات وتنبيهات تصل لعملائك في الوقت المناسب.</p>
+    <div class="feature-img-wrapper">
+      <img src="https://via.placeholder.com/200x200/1faa59/ffffff?text=Marketing" alt="حملات تسويقية">
+    </div>
+    <div class="feature-text">
+      <h3>إدارة الحملات بذكاء</h3>
+      <p>جدول عروضك وخصوماتك الموسمية، وتابع حالة وصول الرسائل لضمان تحقيق أعلى نسبة مبيعات لمشروعك.</p>
     </div>
   </div>
 
   <div class="feature">
-    <img src="https://i.ibb.co/Phg9V8G/yemeni-3.jpg" alt="موظف يمني">
-    <div>
-      <h3>تنظيم الرسائل بذكاء</h3>
-      <p>منع التكرار وتحسين وصول الرسائل بسهولة.</p>
+    <div class="feature-img-wrapper">
+      <img src="https://via.placeholder.com/200x200/1faa59/ffffff?text=Data" alt="تنظيم أرقام">
+    </div>
+    <div class="feature-text">
+      <h3>فلترة وتنظيم جهات الاتصال</h3>
+      <p>استورد أرقامك من ملفات Excel، وتخلص من الأرقام المكررة أو الخاطئة تلقائياً قبل البدء بالإرسال.</p>
     </div>
   </div>
-
-  <div class="feature">
-    <img src="https://i.ibb.co/JFfRk6q/yemeni-4.jpg" alt="صاحب متجر يمني">
-    <div>
-      <h3>مناسب للسوق اليمني</h3>
-      <p>مصمم ليعمل بسلاسة حتى مع ضعف الإنترنت.</p>
-    </div>
-  </div>
-
 </section>
 
-<!-- CTA -->
 <section class="cta">
-  <h2>ابدأ حملتك اليوم</h2>
-  <p>جرّب النظام الآن واجعل واتساب يعمل لصالحك</p>
-  <a href="Request_demof.html">اطلب النسخة التجريبية</a>
+  <h2>هل أنت مستعد لمضاعفة أرباحك؟</h2>
+  <p>انضم إلى مئات التجار في اليمن الذين طوروا تجارتهم باستخدام نظامنا.</p>
+  <a href="#">اطلب التجربة الآن</a>
 </section>
 
 <script>
-// حركة Fade عند التمرير
-const features = document.querySelectorAll('.feature');
-window.addEventListener('scroll', () => {
-  const triggerBottom = window.innerHeight * 0.85;
-  features.forEach(f => {
-    const top = f.getBoundingClientRect().top;
-    if(top < triggerBottom) f.classList.add('visible');
+// تفعيل ظهور العناصر عند التمرير
+const observerOptions = { threshold: 0.2 };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
   });
-});
+}, observerOptions);
+
+document.querySelectorAll('.feature').forEach(el => observer.observe(el));
 </script>
 
 </body>
