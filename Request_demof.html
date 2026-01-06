@@ -1,266 +1,189 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>طلب نسخة تجريبية لبرامجنا</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* التنسيقات الأساسية والثابتة (لجميع الشاشات) */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>طلب نسخة تجريبية</title>
 
-        body {
-            font-family: 'Tajawal', sans-serif;
-            line-height: 1.7;
-            background-color: #f0f2f5;
-            color: #333;
-            text-align: right;
-            direction: rtl;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
-        .container {
-            background-color: #fff;
-            padding: 10px 10px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            max-width: 100%;
-            width: 600px; /* عرض مناسب لصفحة نموذج */
-            margin: 0 auto;
-            box-sizing: border-box;
-        }
-
-        h1 {
-            color: #0056b3;
-            margin-bottom: 30px;
-            font-size: 2.2em;
-            text-align: center;
-        }
-
-        p {
-            margin-bottom: 25px;
-            font-size: 1.05em;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #555;
-            font-size: 1.0em;
-        }
-
-        input[type="text"],
-        input[type="tel"],
-        select { /* أضفنا select هنا */
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 1.0em;
-            font-family: 'Tajawal', sans-serif;
-            background-color: #f9f9f9;
-        }
-
-        input[type="text"]:focus,
-        input[type="tel"]:focus,
-        select:focus { /* أضفنا select هنا */
-            border-color: #007bff;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-        }
-
-        .whatsapp-button {
-            background-color: #25D366; /* لون واتساب الأخضر */
-            color: white;
-            padding: 15px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.2em;
-            font-weight: bold;
-            text-decoration: none;
-            display: block;
-            width: 100%;
-            text-align: center;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 30px;
-        }
-
-        .whatsapp-button:hover {
-            background-color: #1DA851;
-            transform: translateY(-2px);
-        }
-
-        /* تنسيقات شريط التنقل العلوي */
-        .top-navbar {
-            background-color: #0056b3;
-            padding: 15px 0;
-            text-align: center;
-            border-radius: 12px 12px 0 0;
-            margin-bottom: 30px;
-        }
-
-        .top-navbar ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        .top-navbar ul li {
-            margin: 0 15px;
-        }
-
-        .top-navbar ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .top-navbar ul li a:hover {
-            background-color: #004085;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 25px;
-            margin-top: 40px;
-            background-color: #333;
-            color: #fff;
-            border-radius: 0 0 12px 12px;
-            font-size: 0.95em;
-        }
-
-        /* استعلامات الوسائط (Media Queries) للتجاوب */
-        @media (max-width: 767px) {
-            body {
-                padding: 10px;
-            }
-            .container {
-                padding: 25px 15px;
-            }
-            h1 {
-                font-size: 1.8em;
-            }
-            p {
-                font-size: 0.95em;
-            }
-            label, input[type="text"], input[type="tel"], select, .whatsapp-button {
-                font-size: 0.95em;
-                padding: 10px;
-            }
-            .top-navbar ul li {
-                margin: 0 8px;
-            }
-            .top-navbar ul li a {
-                padding: 6px 10px;
-            }
-        }
-    </style>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    font-family:'Tajawal',sans-serif;
+    background:#f0f2f5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:15px;
+}
+.container{
+    background:#fff;
+    width:100%;
+    max-width:600px;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,.1);
+    overflow:hidden;
+}
+header{
+    background:#0056b3;
+    color:#fff;
+    text-align:center;
+    padding:20px;
+}
+header h1{font-size:1.8em}
+.content{padding:25px}
+.form-group{margin-bottom:18px}
+label{display:block;margin-bottom:6px;font-weight:bold}
+input,select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:1em;
+}
+input:focus,select:focus{
+    border-color:#007bff;
+    outline:none;
+}
+button{
+    width:100%;
+    background:#25D366;
+    color:#fff;
+    padding:15px;
+    font-size:1.2em;
+    font-weight:bold;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+button:disabled{
+    background:#999;
+}
+footer{
+    background:#333;
+    color:#fff;
+    text-align:center;
+    padding:15px;
+    font-size:.9em;
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container">
-        <nav class="top-navbar">
-            <ul>
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="docan.html">برنامج دكان</a></li>
-            </ul>
-        </nav>
+<div class="container">
+<header>
+    <h1>طلب نسخة تجريبية</h1>
+    <p>سيتم التواصل معك عبر واتساب</p>
+</header>
 
-        <h1>اطلب نسختك التجريبية من برامجنا</h1>
-        <p>املأ البيانات أدناه وسنتواصل معك عبر واتساب لتزويدك بالنسخة التجريبية وشرح مميزات البرنامج الذي اخترته.</p>
+<div class="content">
+<form id="requestForm">
 
-        <form id="requestForm">
-            <div class="form-group">
-                <label for="fullName">الاسم الكامل:</label>
-                <input type="text" id="fullName" name="fullName" required placeholder="أدخل اسمك الكريم">
-            </div>
-            <div class="form-group">
-                <label for="phoneNumber">رقم الهاتف (مع رمز الدولة إذا كنت خارج اليمن):</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" required placeholder="مثال: 967771234567">
-            </div>
-            <div class="form-group">
-                <label for="programName">اختر البرنامج الذي تود تجربته:</label>
-                <select id="programName" name="programName" required>
-                    <option value="">-- يرجى الاختيار --</option>
-                    <option value="برنامج دكان">برنامج دكان</option>
-                    <option value="مشروع المياه">مشروع المياه</option>
-                    <option value="المبيعات الجملة">المبيعات الجملة</option>
-                </select>
-            </div>
-            
-            <button type="submit" class="whatsapp-button">
-                إرسال الطلب عبر الواتساب
-            </button>
-        </form>
-
-        <footer class="footer">
-            <p>&copy; 2024 المعجم للبرمجيات. جميع الحقوق محفوظة.</p>
-        </footer>
+    <div class="form-group">
+        <label>الاسم الكامل</label>
+        <input type="text" id="fullName" required placeholder="اسمك الكريم">
     </div>
 
-    <script>
-        document.getElementById('requestForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // منع الإرسال الافتراضي للنموذج
+    <div class="form-group">
+        <label>رقم الهاتف</label>
+        <input type="tel" id="phoneNumber" required placeholder="775123456">
+    </div>
 
-            const fullName = document.getElementById('fullName').value;
-            const phoneNumber = document.getElementById('phoneNumber').value;
-            const programName = document.getElementById('programName').value;
+    <div class="form-group">
+        <label>اختر البرنامج</label>
+        <select id="programName" required>
+            <option value="">-- اختر البرنامج --</option>
+            <option value="docan">برنامج دكان</option>
+            <option value="water">مشروع المياه</option>
+            <option value="wholesale">المبيعات الجملة</option>
+        </select>
+    </div>
 
-            // التحقق إذا لم يتم اختيار برنامج
-            if (programName === "") {
-                alert('الرجاء اختيار اسم البرنامج الذي تود تجربته.');
-                return; // إيقاف تنفيذ الدالة
-            }
+    <button type="submit" id="sendBtn">إرسال عبر واتساب</button>
 
-            // رقم الهاتف الخاص بك مع رمز الدولة
-            const myPhoneNumber = '967775715662'; // رقمك 775715662 مع رمز اليمن +967
+</form>
+</div>
 
-            // الرسالة التي ستظهر في واتساب
-            const message = `مرحباً! أود طلب نسخة تجريبية من برنامج "${programName}".
-اسمي: ${fullName}
-رقم هاتفي: ${phoneNumber}
-الرجاء التواصل معي.`;
+<footer>
+&copy; 2024 المعجم للبرمجيات
+</footer>
+</div>
 
-            // تشفير الرسالة لعنوان URL
-            const encodedMessage = encodeURIComponent(message);
+<script>
+// رقمك في واتساب
+const ADMIN_PHONE = "967775715662";
 
-            // إنشاء رابط واتساب
-            const whatsappUrl = `https://wa.me/${myPhoneNumber}?text=${encodedMessage}`;
+// قوالب رسائل واتساب (منظمة)
+const whatsappTemplates = {
+    docan: {
+        title: "برنامج دكان",
+        desc: "إدارة المبيعات والمخزون",
+    },
+    water: {
+        title: "مشروع المياه",
+        desc: "إدارة توزيع وبيع المياه",
+    },
+    wholesale: {
+        title: "المبيعات الجملة",
+        desc: "إدارة العملاء والفواتير بالجملة",
+    }
+};
 
-            // فتح رابط واتساب في نافذة جديدة
-            window.open(whatsappUrl, '_blank');
+document.getElementById("requestForm").addEventListener("submit", function(e){
+    e.preventDefault();
 
-            // رسالة تأكيد للمستخدم
-            alert('تم تجهيز رسالة الواتساب. يرجى الضغط على إرسال في تطبيق الواتساب لإتمام الطلب، ثم عد إلى الموقع لتجد الرابط للتحميل.');
+    const btn = document.getElementById("sendBtn");
+    const name = document.getElementById("fullName").value.trim();
+    let phone = document.getElementById("phoneNumber").value.trim();
+    const programKey = document.getElementById("programName").value;
 
-            // (اختياري) يمكنك تفريغ الحقول بعد الإرسال
-            // document.getElementById('fullName').value = '';
-            // document.getElementById('phoneNumber').value = '';
-            // document.getElementById('programName').value = ''; // لتفريغ القائمة المنسدلة
-        });
-    </script>
+    if(!programKey){
+        alert("يرجى اختيار البرنامج");
+        return;
+    }
+
+    // تنظيف الرقم
+    phone = phone.replace(/\D/g,"");
+
+    // إضافة رمز اليمن تلقائيًا
+    if(phone.length === 9){
+        phone = "967" + phone;
+    }
+
+    if(phone.length < 11){
+        alert("رقم الهاتف غير صحيح");
+        return;
+    }
+
+    const program = whatsappTemplates[programKey];
+
+    const message = 
+`السلام عليكم 👋
+أرغب بالحصول على نسخة تجريبية
+
+📌 البرنامج: ${program.title}
+📝 الوصف: ${program.desc}
+
+👤 الاسم: ${name}
+📞 الهاتف: ${phone}
+
+بانتظار تواصلكم 🤝`;
+
+    btn.disabled = true;
+    btn.innerText = "جاري التحويل إلى واتساب...";
+
+    const url = `https://api.whatsapp.com/send?phone=${ADMIN_PHONE}&text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+
+    setTimeout(()=>{
+        btn.disabled = false;
+        btn.innerText = "إرسال عبر واتساب";
+    },3000);
+});
+</script>
 
 </body>
 </html>
