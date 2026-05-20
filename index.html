@@ -18,26 +18,27 @@
 
     <style>
         :root {
-    /* الألوان الأساسية للتصميم الأبيض */
-    --primary: #22c55e;        /* اللون الأخضر المميز لـ "المعجم" */
-    --bg-body: #ffffff;        /* خلفية الموقع البيضاء */
-    --text-dark: #1e293b;      /* لون الخط الداكن للقراءة المريحة */
-    --text-gray: #64748b;      /* لون النصوص الفرعية الرمادي */
-    --card-bg: #f8fafc;        /* خلفية البطاقات (Service Items) */
-    --accent: #fbbf24;         /* لون ذهبي للتفاصيل الجمالية */
-}
+            /* الهوية اللونية الجديدة: ليموني، أبيض، ورمادي */
+            --primary: #a3e635;        /* لون ليموني حيوي ومشرق */
+            --primary-dark: #84cc16;   /* ليموني داكن قليلاً للتأثيرات */
+            --bg-body: #ffffff;        /* خلفية الموقع البيضاء الأساسية */
+            --text-dark: #1e293b;      /* لون الخط الداكن للقراءة المريحة */
+            --text-gray: #64748b;      /* لون النصوص الفرعية الرمادي */
+            --card-bg: #f8fafc;        /* خلفية البطاقات الرمادية الفاتحة جداً */
+            --accent: #cbd5e1;         /* رمادي متوسط للحدود والتفاصيل */
+        }
 
         * { box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
             font-family: 'Tajawal', sans-serif;
             margin: 0;
-            background-color: var(--deep-bg);
-            color: var(--text-white);
+            background-color: var(--bg-body);
+            color: var(--text-dark);
             overflow-x: hidden;
         }
 
-        /* حاوية الشبكة المتحركة - قوية وواضحة */
+        /* حاوية الشبكة المتحركة - متناسقة مع الخلفية البيضاء */
         #particles-js {
             position: fixed;
             width: 100%;
@@ -45,7 +46,7 @@
             top: 0;
             left: 0;
             z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #064e3b 0%, #020617 100%);
+            background: radial-gradient(circle at 50% 50%, #f7fee7 0%, #ffffff 100%);
         }
 
         header {
@@ -57,15 +58,15 @@
             font-size: clamp(3rem, 10vw, 5rem); 
             margin: 0; 
             font-weight: 900;
-            background: linear-gradient(to bottom, #fff 40%, var(--neon-green));
+            background: linear-gradient(to bottom, var(--text-dark) 40%, var(--primary-dark));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.05));
         }
 
         header p { 
             font-size: clamp(1.2rem, 3vw, 1.8rem); 
-            color: #94a3b8; 
+            color: var(--text-gray); 
             max-width: 700px; 
             margin: 20px auto;
             line-height: 1.4;
@@ -77,33 +78,35 @@
             padding: 0 20px;
         }
 
-        /* تصميم المنتج العصري - بدون حدود لكن بظهور فخم */
+        /* تصميم المنتج العصري باللون الرمادي الفاتح واللمسة الليمونية */
         .service-item {
             display: flex;
             align-items: center;
             padding: 60px 40px;
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.02);
+            margin-bottom: 25px;
+            background: var(--card-bg);
             border-radius: 30px;
-            transition: all 0.5s ease;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(34, 197, 94, 0.05);
+            border: 1px solid rgba(163, 230, 53, 0.15);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
         }
 
         .service-item:hover {
-            background: rgba(34, 197, 94, 0.05);
-            transform: scale(1.02);
-            border-color: rgba(34, 197, 94, 0.3);
+            background: #ffffff;
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 25px -5px rgba(163, 230, 53, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
         .service-icon {
             font-size: 3.5rem;
-            color: var(--neon-green);
+            color: var(--primary-dark);
             width: 120px;
             flex-shrink: 0;
             text-align: center;
-            filter: drop-shadow(0 0 15px rgba(34, 197, 94, 0.4));
+            filter: drop-shadow(0 4px 8px rgba(132, 204, 22, 0.2));
         }
 
         .service-info { flex: 1; padding: 0 40px; }
@@ -112,55 +115,59 @@
             font-size: 2.2rem; 
             margin: 0 0 15px 0; 
             font-weight: 800;
-            color: #fff;
+            color: var(--text-dark);
         }
 
         .service-info p { 
             font-size: 1.15rem; 
-            color: #cbd5e1; 
+            color: var(--text-gray); 
             line-height: 1.8; 
             margin-bottom: 25px;
         }
 
-        /* زر التحويل (الذي يجذب الزبائن) */
+        /* زر التحويل باللون الليموني الجذاب والخط الداكن */
         .btn-main {
             display: inline-block;
             padding: 12px 35px;
-            background: var(--neon-green);
-            color: #000;
+            background: var(--primary);
+            color: var(--text-dark);
             text-decoration: none;
             font-weight: 900;
             border-radius: 12px;
             transition: 0.3s;
-            box-shadow: 0 10px 20px rgba(34, 197, 94, 0.2);
+            box-shadow: 0 4px 12px rgba(163, 230, 53, 0.3);
         }
 
         .btn-main:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(34, 197, 94, 0.4);
-            background: #fff;
+            box-shadow: 0 8px 20px rgba(163, 230, 53, 0.5);
+            background: var(--text-dark);
+            color: #fff;
         }
 
         footer {
             padding: 100px 20px;
             text-align: center;
-            background: rgba(0,0,0,0.4);
+            background: #f1f5f9; /* رمادي خفيف جداً متناسق */
+            border-top: 1px solid #e2e8f0;
         }
 
         .mini-game-btn {
             display: inline-block;
             margin: 10px;
             padding: 10px 25px;
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #94a3b8;
+            border: 1px solid var(--accent);
+            color: var(--text-gray);
             text-decoration: none;
             border-radius: 50px;
             transition: 0.3s;
+            background: #fff;
         }
 
         .mini-game-btn:hover {
-            border-color: var(--neon-green);
-            color: var(--neon-green);
+            border-color: var(--primary-dark);
+            color: var(--text-dark);
+            background: var(--primary);
         }
 
         @media (max-width: 850px) {
@@ -231,21 +238,22 @@
         <a href="Memory_game.html" class="mini-game-btn">تحدي الذاكرة</a>
         <a href="Game1.html" class="mini-game-btn">سرعة التخمين</a>
     </div>
-    <p style="margin-top: 50px; font-size: 0.9rem; opacity: 0.3;">© 2026 المعجم للبرمجيات - الابتكار بلا حدود</p>
+    <p style="margin-top: 50px; font-size: 0.9rem; opacity: 0.6; color: var(--text-gray);">© 2026 المعجم للبرمجيات - الابتكار بلا حدود</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
 <script>
+    /* تعديل لون النقاط المتحركة لتتناسب مع اللون الليموني الجديد */
     particlesJS("particles-js", {
         "particles": {
-            "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
-            "color": { "value": "#22c55e" },
+            "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+            "color": { "value": "#84cc16" },
             "shape": { "type": "circle" },
-            "opacity": { "value": 0.5, "random": true },
+            "opacity": { "value": 0.4, "random": true },
             "size": { "value": 3, "random": true },
-            "line_linked": { "enable": true, "distance": 180, "color": "#22c55e", "opacity": 0.25, "width": 1 },
-            "move": { "enable": true, "speed": 2 }
+            "line_linked": { "enable": true, "distance": 180, "color": "#a3e635", "opacity": 0.3, "width": 1 },
+            "move": { "enable": true, "speed": 1.5 }
         },
         "interactivity": {
             "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }
