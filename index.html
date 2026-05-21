@@ -15,167 +15,9 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 
-    <style>
-        :root {
-            /* الهوية اللونية الجديدة: ليموني، أبيض، ورمادي */
-            --primary: #a3e635;        /* لون ليموني حيوي ومشرق */
-            --primary-dark: #84cc16;   /* ليموني داكن قليلاً للتأثيرات */
-            --bg-body: #ffffff;        /* خلفية الموقع البيضاء الأساسية */
-            --text-dark: #1e293b;      /* لون الخط الداكن للقراءة المريحة */
-            --text-gray: #64748b;      /* لون النصوص الفرعية الرمادي */
-            --card-bg: #f8fafc;        /* خلفية البطاقات الرمادية الفاتحة جداً */
-            --accent: #cbd5e1;         /* رمادي متوسط للحدود والتفاصيل */
-        }
-
-        * { box-sizing: border-box; scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Tajawal', sans-serif;
-            margin: 0;
-            background-color: var(--bg-body);
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-
-        /* حاوية الشبكة المتحركة - متناسقة مع الخلفية البيضاء */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #f7fee7 0%, #ffffff 100%);
-        }
-
-        header {
-            padding: 180px 20px 120px;
-            text-align: center;
-        }
-
-        header h1 { 
-            font-size: clamp(3rem, 10vw, 5rem); 
-            margin: 0; 
-            font-weight: 900;
-            background: linear-gradient(to bottom, var(--text-dark) 40%, var(--primary-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.05));
-        }
-
-        header p { 
-            font-size: clamp(1.2rem, 3vw, 1.8rem); 
-            color: var(--text-gray); 
-            max-width: 700px; 
-            margin: 20px auto;
-            line-height: 1.4;
-        }
-
-        .content-section {
-            max-width: 1100px;
-            margin: 0 auto 100px;
-            padding: 0 20px;
-        }
-
-        /* تصميم المنتج العصري باللون الرمادي الفاتح واللمسة الليمونية */
-        .service-item {
-            display: flex;
-            align-items: center;
-            padding: 60px 40px;
-            margin-bottom: 25px;
-            background: var(--card-bg);
-            border-radius: 30px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(163, 230, 53, 0.15);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
-        }
-
-        .service-item:hover {
-            background: #ffffff;
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 20px 25px -5px rgba(163, 230, 53, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .service-icon {
-            font-size: 3.5rem;
-            color: var(--primary-dark);
-            width: 120px;
-            flex-shrink: 0;
-            text-align: center;
-            filter: drop-shadow(0 4px 8px rgba(132, 204, 22, 0.2));
-        }
-
-        .service-info { flex: 1; padding: 0 40px; }
-
-        .service-info h2 { 
-            font-size: 2.2rem; 
-            margin: 0 0 15px 0; 
-            font-weight: 800;
-            color: var(--text-dark);
-        }
-
-        .service-info p { 
-            font-size: 1.15rem; 
-            color: var(--text-gray); 
-            line-height: 1.8; 
-            margin-bottom: 25px;
-        }
-
-        /* زر التحويل باللون الليموني الجذاب والخط الداكن */
-        .btn-main {
-            display: inline-block;
-            padding: 12px 35px;
-            background: var(--primary);
-            color: var(--text-dark);
-            text-decoration: none;
-            font-weight: 900;
-            border-radius: 12px;
-            transition: 0.3s;
-            box-shadow: 0 4px 12px rgba(163, 230, 53, 0.3);
-        }
-
-        .btn-main:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(163, 230, 53, 0.5);
-            background: var(--text-dark);
-            color: #fff;
-        }
-
-        footer {
-            padding: 100px 20px;
-            text-align: center;
-            background: #f1f5f9; /* رمادي خفيف جداً متناسق */
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .mini-game-btn {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 25px;
-            border: 1px solid var(--accent);
-            color: var(--text-gray);
-            text-decoration: none;
-            border-radius: 50px;
-            transition: 0.3s;
-            background: #fff;
-        }
-
-        .mini-game-btn:hover {
-            border-color: var(--primary-dark);
-            color: var(--text-dark);
-            background: var(--primary);
-        }
-
-        @media (max-width: 850px) {
-            .service-item { flex-direction: column; text-align: center; padding: 40px 20px; }
-            .service-icon { width: 100%; margin-bottom: 20px; }
-            .service-info { padding: 0; }
-        }
-    </style>
+                
 </head>
 <body>
 
@@ -248,7 +90,7 @@
     particlesJS("particles-js", {
         "particles": {
             "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-            "color": { "value": "#84cc16" },
+            "color": { "value": "#04cc16" },
             "shape": { "type": "circle" },
             "opacity": { "value": 0.4, "random": true },
             "size": { "value": 3, "random": true },
