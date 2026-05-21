@@ -23,6 +23,7 @@ body {
 }
 
 /* حاوية الشبكة المتحركة - متناسقة مع الخلفية البيضاء */
+/* خلفية تقنية ناعمة ومريحة للعين */
 #particles-js {
     position: fixed;
     width: 100%;
@@ -30,8 +31,9 @@ body {
     top: 0;
     left: 0;
     z-index: -1;
-    background: linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%);
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
 }
+
 
 
 header {
