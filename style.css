@@ -1,12 +1,12 @@
 :root {
-    /* الهوية اللونية الجديدة: ليموني، أبيض، ورمادي */
-    --primary: #a3e635;        /* لون ليموني حيوي ومشرق */
-    --primary-dark: #84cc16;   /* ليموني داكن قليلاً للتأثيرات */
-    --bg-body: #ffffff;        /* خلفية الموقع البيضاء الأساسية */
-    --text-dark: #1e293b;      /* لون الخط الداكن للقراءة المريحة */
-    --text-gray: #64748b;      /* لون النصوص الفرعية الرمادي */
-    --card-bg: #f8fafc;        /* خلفية البطاقات الرمادية الفاتحة جداً */
-    --accent: #cbd5e1;         /* رمادي متوسط للحدود والتفاصيل */
+    /* الهوية اللونية الجديدة: أزرق تقني، أبيض، وظلال فخمة */
+    --primary: #2563eb;        /* أزرق ملوكي حيوي للأزرار والتفاصيل */
+    --primary-dark: #1d4ed8;   /* أزرق داكن للتأثيرات عند التمرير */
+    --bg-body: #ffffff;        /* خلفية الموقع الأساسية */
+    --text-dark: #0f172a;      /* كحلي داكن جداً للنصوص الأساسية لضمان أعلى درجة وضوح */
+    --text-gray: #475569;      /* رمادي متزن للنصوص الفرعية */
+    --card-bg: #ffffff;        /* بطاقات بيضاء صافية لتبرز فوق الخلفية الثلجية */
+    --accent: #e2e8f0;         /* رمادي خفيف جداً للحدود والفواصل */
 }
 
 * { 
@@ -22,8 +22,7 @@ body {
     overflow-x: hidden;
 }
 
-/* حاوية الشبكة المتحركة - متناسقة مع الخلفية البيضاء */
-/* خلفية تقنية ناعمة ومريحة للعين */
+/* خلفية تقنية ناعمة ومريحة للعين بالتدرج الثلجي */
 #particles-js {
     position: fixed;
     width: 100%;
@@ -31,21 +30,20 @@ body {
     top: 0;
     left: 0;
     z-index: -1;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
 }
-
-
 
 header {
     padding: 180px 20px 120px;
     text-align: center;
 }
 
+/* تدرج عنوان الموقع من الكحلي الداكن إلى الأزرق التقني */
 header h1 { 
     font-size: clamp(3rem, 10vw, 5rem); 
     margin: 0; 
     font-weight: 900;
-    background: linear-gradient(to bottom, var(--text-dark) 40%, var(--primary-dark));
+    background: linear-gradient(to bottom, var(--text-dark) 30%, var(--primary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 4px 10px rgba(0,0,0,0.05));
@@ -65,7 +63,7 @@ header p {
     padding: 0 20px;
 }
 
-/* تصميم المنتج العصري باللون الرمادي الفاتح واللمسة الليمونية */
+/* تصميم المنتج العصري باللون الأبيض الصافي فوق الخلفية المائلة للرمادي */
 .service-item {
     display: flex;
     align-items: center;
@@ -76,7 +74,7 @@ header p {
     transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(163, 230, 53, 0.15);
+    border: 1px solid rgba(37, 99, 235, 0.1); /* حدود زرقاء خفيفة جداً */
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
 }
 
@@ -84,16 +82,17 @@ header p {
     background: #ffffff;
     transform: translateY(-5px);
     border-color: var(--primary);
-    box-shadow: 0 20px 25px -5px rgba(163, 230, 53, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
 }
 
+/* تعديل لون الأيقونات للأزرق التقني الفخم */
 .service-icon {
     font-size: 3.5rem;
-    color: var(--primary-dark);
+    color: var(--primary);
     width: 120px;
     flex-shrink: 0;
     text-align: center;
-    filter: drop-shadow(0 4px 8px rgba(132, 204, 22, 0.2));
+    filter: drop-shadow(0 4px 8px rgba(37, 99, 235, 0.15));
 }
 
 .service-info { 
@@ -115,30 +114,30 @@ header p {
     margin-bottom: 25px;
 }
 
-/* زر التحويل باللون الليموني الجذاب والخط الداكن */
+/* زر التحويل باللون الأزرق الملوكي الجذاب */
 .btn-main {
     display: inline-block;
     padding: 12px 35px;
     background: var(--primary);
-    color: var(--text-dark);
+    color: #ffffff;
     text-decoration: none;
     font-weight: 900;
     border-radius: 12px;
     transition: 0.3s;
-    box-shadow: 0 4px 12px rgba(163, 230, 53, 0.3);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
 
 .btn-main:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(163, 230, 53, 0.5);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
     background: var(--text-dark);
-    color: #fff;
+    color: #ffffff;
 }
 
 footer {
     padding: 100px 20px;
     text-align: center;
-    background: #f1f5f9; /* رمادي خفيف جداً متناسق */
+    background: #f1f5f9; 
     border-top: 1px solid #e2e8f0;
 }
 
@@ -156,7 +155,7 @@ footer {
 
 .mini-game-btn:hover {
     border-color: var(--primary-dark);
-    color: var(--text-dark);
+    color: #ffffff;
     background: var(--primary);
 }
 
