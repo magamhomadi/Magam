@@ -88,20 +88,27 @@
 <script>
     /* تعديل لون النقاط المتحركة لتتناسب مع اللون الليموني الجديد */
     particlesJS("particles-js", {
-        "particles": {
-            "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-            "color": { "value": "#04cc16" },
-            "shape": { "type": "circle" },
-            "opacity": { "value": 0.4, "random": true },
-            "size": { "value": 3, "random": true },
-            "line_linked": { "enable": true, "distance": 180, "color": "#a3e635", "opacity": 0.3, "width": 1 },
-            "move": { "enable": true, "speed": 1.5 }
+    "particles": {
+        "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#000000" }, /* ◄ هنا: تم تغيير لون النقاط إلى الأسود */
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.5, "random": false }, /* ◄ يمكنك رفع الـ value إلى 0.6 أو 0.7 لزيادة وضوح النقاط */
+        "size": { "value": 3, "random": true },
+        "line_linked": { 
+            "enable": true, 
+            "distance": 180, 
+            "color": "#000000", /* ◄ هنا: تم تغيير لون الخطوط الموصلة إلى الأسود */
+            "opacity": { "value": 0.4 }, /* ◄ تم رفع الشفافية هنا إلى 0.4 لتصبح الخطوط واضحة تماماً */
+            "width": 1 
         },
-        "interactivity": {
-            "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }
-        },
-        "retina_detect": true
-    });
+        "move": { "enable": true, "speed": 1.5 }
+    },
+    "interactivity": {
+        "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }
+    },
+    "retina_detect": true
+});
+
 </script>
 
 </body>
