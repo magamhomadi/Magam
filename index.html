@@ -89,25 +89,26 @@
     /* تعديل لون النقاط المتحركة لتتناسب مع اللون الليموني الجديد */
     particlesJS("particles-js", {
     "particles": {
-        "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-        "color": { "value": "#000000" }, /* ◄ هنا: تم تغيير لون النقاط إلى الأسود */
+        "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#1e293b" }, /* لون النقاط: رمادي داكن فخم بدلاً من الأسود الحاد */
         "shape": { "type": "circle" },
-        "opacity": { "value": 0.5, "random": false }, /* ◄ يمكنك رفع الـ value إلى 0.6 أو 0.7 لزيادة وضوح النقاط */
+        "opacity": { "value": 0.3, "random": false }, /* تقليل شفافية النقاط */
         "size": { "value": 3, "random": true },
         "line_linked": { 
             "enable": true, 
-            "distance": 180, 
-            "color": "#000000", /* ◄ هنا: تم تغيير لون الخطوط الموصلة إلى الأسود */
-            "opacity": { "value": 0.4 }, /* ◄ تم رفع الشفافية هنا إلى 0.4 لتصبح الخطوط واضحة تماماً */
+            "distance": 150, 
+            "color": "#1e293b", /* لون الخطوط: متناسق مع النقاط */
+            "opacity": 0.15,    /* ◄ السر هنا: شفافية منخفضة جداً تجعل الخطوط ناعمة كالعلامة المائية */
             "width": 1 
         },
-        "move": { "enable": true, "speed": 1.5 }
+        "move": { "enable": true, "speed": 1.2 } /* تقليل السرعة قليلاً لحركة أكثر انسيابية */
     },
     "interactivity": {
         "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }
     },
     "retina_detect": true
 });
+
 
 </script>
 
