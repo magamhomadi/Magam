@@ -1,0 +1,3205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>محطة مياه الضياء | مياه نقية وجودة وثقة</title>
+
+    <meta name="description"
+          content="محطة مياه الضياء - مياه نقية وجودة وثقة. تعرف على مشروع محطة مياه الضياء وخدماتنا وطرق التواصل معنا.">
+
+    <meta name="keywords"
+          content="محطة مياه الضياء, مياه نقية, مياه, الضياء, توصيل مياه">
+
+    <meta name="author" content="محطة مياه الضياء">
+
+    <meta property="og:title" content="محطة مياه الضياء | مياه نقية وجودة وثقة">
+    <meta property="og:description" content="مياه نقية... ثقة مستمرة">
+    <meta property="og:type" content="website">
+
+    <!-- الخط -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        /* =========================================================
+           الإعدادات الأساسية
+        ========================================================= */
+
+        :root {
+            --purple: #6d28d9;
+            --purple-dark: #4c1d95;
+            --purple-light: #8b5cf6;
+
+            --green: #16a34a;
+            --green-light: #22c55e;
+
+            --white: #ffffff;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --dark: #172033;
+
+            --shadow:
+                0 15px 40px rgba(76, 29, 149, 0.12);
+
+            --radius: 22px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Cairo", sans-serif;
+            background: var(--white);
+            color: var(--dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: min(1180px, 92%);
+            margin: auto;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-title .small-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .section-title h2 {
+            font-size: clamp(30px, 4vw, 44px);
+            color: var(--purple-dark);
+            font-weight: 900;
+            line-height: 1.4;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 650px;
+            margin: 15px auto 0;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 1000;
+
+            background: rgba(255,255,255,.92);
+            backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid rgba(109,40,217,.08);
+
+            transition: .3s;
+        }
+
+        .navbar {
+            height: 82px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* الشعار */
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--purple-dark);
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            color: white;
+
+            background:
+                linear-gradient(135deg,
+                var(--purple),
+                var(--green));
+
+            box-shadow: 0 8px 25px rgba(109,40,217,.25);
+        }
+
+        .logo-icon i {
+            font-size: 23px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 700;
+            color: #475569;
+            position: relative;
+            transition: .3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple);
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+
+            bottom: -8px;
+            right: 0;
+
+            width: 0;
+            height: 2px;
+
+            background: var(--green);
+
+            transition: .3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .header-whatsapp {
+            background: var(--green);
+            color: white !important;
+
+            padding: 10px 17px;
+            border-radius: 12px;
+
+            box-shadow: 0 8px 20px rgba(22,163,74,.2);
+        }
+
+        .header-whatsapp:hover {
+            background: #15803d;
+            transform: translateY(-2px);
+        }
+
+        .header-whatsapp::after {
+            display: none;
+        }
+
+        .menu-btn {
+            display: none;
+
+            border: 0;
+            background: transparent;
+
+            font-size: 25px;
+            color: var(--purple);
+
+            cursor: pointer;
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            min-height: 100vh;
+            padding-top: 82px;
+
+            display: flex;
+            align-items: center;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(139,92,246,.15),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(34,197,94,.13),
+                    transparent 35%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #faf7ff
+                );
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 550px;
+            height: 550px;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(109,40,217,.08),
+                    rgba(34,197,94,.08)
+                );
+
+            top: -250px;
+            left: -150px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            align-items: center;
+            gap: 70px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 15px;
+
+            border-radius: 50px;
+
+            background: rgba(109,40,217,.08);
+
+            color: var(--purple);
+
+            font-weight: 700;
+            font-size: 13px;
+
+            margin-bottom: 20px;
+        }
+
+        .hero-badge i {
+            color: var(--green);
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 72px);
+            line-height: 1.15;
+
+            font-weight: 900;
+
+            color: var(--purple-dark);
+
+            margin-bottom: 12px;
+        }
+
+        .hero h1 span {
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--purple),
+                    var(--green)
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(20px, 3vw, 28px);
+
+            color: var(--green);
+
+            font-weight: 800;
+
+            margin-bottom: 18px;
+        }
+
+        .hero-description {
+            color: var(--gray);
+
+            font-size: 17px;
+
+            max-width: 620px;
+
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 14px 25px;
+
+            border-radius: 14px;
+
+            font-family: inherit;
+            font-weight: 800;
+
+            transition: .3s;
+        }
+
+        .btn-primary {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--purple),
+                    var(--purple-light)
+                );
+
+            box-shadow:
+                0 12px 30px rgba(109,40,217,.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 18px 35px rgba(109,40,217,.32);
+        }
+
+        .btn-green {
+            color: white;
+
+            background: var(--green);
+
+            box-shadow:
+                0 12px 30px rgba(22,163,74,.2);
+        }
+
+        .btn-green:hover {
+            transform: translateY(-4px);
+            background: #15803d;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--purple);
+
+            border: 1px solid rgba(109,40,217,.2);
+        }
+
+        .btn-outline:hover {
+            background: #faf5ff;
+            transform: translateY(-3px);
+        }
+
+
+        /* =========================================================
+           HERO WATER VISUAL
+        ========================================================= */
+
+        .hero-visual {
+            min-height: 540px;
+
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .water-circle {
+            width: min(450px, 80vw);
+            aspect-ratio: 1;
+
+            border-radius: 50%;
+
+            position: relative;
+
+            background:
+                radial-gradient(
+                    circle at 35% 30%,
+                    rgba(255,255,255,.9),
+                    transparent 12%
+                ),
+                linear-gradient(
+                    145deg,
+                    rgba(109,40,217,.9),
+                    rgba(34,197,94,.75)
+                );
+
+            box-shadow:
+                0 40px 80px rgba(76,29,149,.22);
+
+            overflow: hidden;
+
+            animation: floating 5s ease-in-out infinite;
+        }
+
+        .water-circle::before,
+        .water-circle::after {
+            content: "";
+
+            position: absolute;
+
+            width: 120%;
+            height: 45%;
+
+            left: -10%;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.18);
+
+            transform: rotate(-10deg);
+        }
+
+        .water-circle::before {
+            bottom: -5%;
+        }
+
+        .water-circle::after {
+            bottom: 15%;
+            opacity: .5;
+        }
+
+        .water-content {
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 2;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+
+            text-align: center;
+        }
+
+        .water-content i {
+            font-size: 85px;
+
+            margin-bottom: 15px;
+
+            filter:
+                drop-shadow(
+                    0 10px 20px
+                    rgba(0,0,0,.15)
+                );
+        }
+
+        .water-content h3 {
+            font-size: 30px;
+            font-weight: 900;
+        }
+
+        .water-content p {
+            opacity: .9;
+        }
+
+        .bubble {
+            position: absolute;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.3);
+
+            animation: bubble 5s infinite ease-in;
+        }
+
+        .bubble-1 {
+            width: 18px;
+            height: 18px;
+
+            bottom: 20%;
+            left: 20%;
+        }
+
+        .bubble-2 {
+            width: 12px;
+            height: 12px;
+
+            bottom: 35%;
+            left: 70%;
+
+            animation-delay: 1s;
+        }
+
+        .bubble-3 {
+            width: 25px;
+            height: 25px;
+
+            bottom: 10%;
+            left: 55%;
+
+            animation-delay: 2s;
+        }
+
+        @keyframes floating {
+
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-18px);
+            }
+        }
+
+        @keyframes bubble {
+
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-180px);
+                opacity: 0;
+            }
+        }
+
+
+        /* =========================================================
+           ABOUT
+        ========================================================= */
+
+        .about {
+            background: var(--light);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            align-items: center;
+            gap: 70px;
+        }
+
+        .about-image {
+            min-height: 430px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(109,40,217,.9),
+                    rgba(34,197,94,.8)
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+
+            position: relative;
+            overflow: hidden;
+
+            box-shadow: var(--shadow);
+        }
+
+        .about-image::before {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            border: 50px solid rgba(255,255,255,.08);
+        }
+
+        .about-image i {
+            font-size: 130px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .about-content h3 {
+            font-size: 34px;
+
+            color: var(--purple-dark);
+
+            margin-bottom: 20px;
+        }
+
+        .about-content p {
+            color: var(--gray);
+
+            margin-bottom: 20px;
+        }
+
+        .check-list {
+            list-style: none;
+
+            display: grid;
+
+            gap: 13px;
+
+            margin-top: 25px;
+        }
+
+        .check-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-weight: 700;
+        }
+
+        .check-list i {
+            color: var(--green);
+
+            width: 25px;
+            height: 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: rgba(34,197,94,.12);
+        }
+
+
+        /* =========================================================
+           FOUNDER
+        ========================================================= */
+
+        .founder {
+            background: white;
+        }
+
+        .founder-card {
+            display: grid;
+
+            grid-template-columns: .75fr 1.25fr;
+
+            align-items: center;
+
+            gap: 60px;
+
+            padding: 55px;
+
+            border-radius: 32px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #faf7ff,
+                    #f3fff7
+                );
+
+            border: 1px solid rgba(109,40,217,.08);
+
+            box-shadow: var(--shadow);
+
+            overflow: hidden;
+
+            position: relative;
+        }
+
+        .founder-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            background: rgba(109,40,217,.05);
+
+            left: -100px;
+            bottom: -150px;
+        }
+
+        .founder-photo {
+            width: 100%;
+            max-width: 350px;
+
+            aspect-ratio: 1;
+
+            margin: auto;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--purple),
+                    var(--green)
+                );
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+
+            border: 12px solid white;
+
+            box-shadow:
+                0 20px 50px rgba(76,29,149,.2);
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .founder-photo i {
+            font-size: 100px;
+        }
+
+        .founder-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .founder-label {
+            color: var(--green);
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+        .founder-content h2 {
+            font-size: clamp(30px, 4vw, 43px);
+
+            color: var(--purple-dark);
+
+            line-height: 1.4;
+
+            margin-bottom: 20px;
+        }
+
+        .founder-content p {
+            color: var(--gray);
+
+            font-size: 16px;
+        }
+
+        .dua {
+            display: inline-block;
+
+            margin-top: 22px;
+
+            padding: 10px 18px;
+
+            border-radius: 12px;
+
+            color: var(--purple);
+
+            background: rgba(109,40,217,.08);
+
+            font-weight: 800;
+        }
+
+
+        /* =========================================================
+           WHY US
+        ========================================================= */
+
+        .why {
+            background: var(--light);
+        }
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 22px;
+        }
+
+        .card {
+            background: white;
+
+            padding: 30px 25px;
+
+            border-radius: var(--radius);
+
+            text-align: center;
+
+            border: 1px solid rgba(15,23,42,.04);
+
+            box-shadow:
+                0 10px 30px rgba(15,23,42,.05);
+
+            transition: .35s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+
+            box-shadow:
+                0 20px 45px rgba(76,29,149,.13);
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 20px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+
+            font-size: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--purple),
+                    var(--green)
+                );
+        }
+
+        .card h3 {
+            color: var(--purple-dark);
+
+            margin-bottom: 10px;
+
+            font-size: 20px;
+        }
+
+        .card p {
+            color: var(--gray);
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================================
+           STATS
+        ========================================================= */
+
+        .stats {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--purple-dark),
+                    var(--purple),
+                    #166534
+                );
+
+            color: white;
+
+            overflow: hidden;
+        }
+
+        .stats::before {
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            border: 100px solid rgba(255,255,255,.04);
+
+            left: -200px;
+            top: -250px;
+        }
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 30px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat i {
+            font-size: 30px;
+
+            margin-bottom: 10px;
+
+            color: #bbf7d0;
+        }
+
+        .stat-number {
+            font-size: 42px;
+
+            font-weight: 900;
+
+            line-height: 1.2;
+        }
+
+        .stat p {
+            opacity: .85;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================================
+           SERVICES
+        ========================================================= */
+
+        .services {
+            background: white;
+        }
+
+        .service-card {
+            text-align: right;
+        }
+
+        .service-card .card-icon {
+            margin-right: 0;
+            margin-left: auto;
+        }
+
+
+        /* =========================================================
+           CONTACT
+        ========================================================= */
+
+        .contact {
+            background: var(--light);
+        }
+
+        .contact-grid {
+            display: grid;
+
+            grid-template-columns: .8fr 1.2fr;
+
+            gap: 30px;
+        }
+
+        .contact-info,
+        .contact-form {
+            background: white;
+
+            border-radius: 25px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 10px 30px rgba(15,23,42,.05);
+        }
+
+        .contact-info h3,
+        .contact-form h3 {
+            color: var(--purple-dark);
+
+            font-size: 25px;
+
+            margin-bottom: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 22px;
+        }
+
+        .contact-item-icon {
+            min-width: 48px;
+            width: 48px;
+            height: 48px;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--purple),
+                    var(--green)
+                );
+        }
+
+        .contact-item small {
+            display: block;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+        }
+
+        .contact-item strong {
+            color: var(--dark);
+
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: var(--dark);
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .form-control {
+            width: 100%;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 12px;
+
+            padding: 13px 15px;
+
+            font-family: inherit;
+
+            outline: none;
+
+            transition: .3s;
+
+            background: #f8fafc;
+        }
+
+        .form-control:focus {
+            border-color: var(--purple-light);
+
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(139,92,246,.08);
+        }
+
+        textarea.form-control {
+            min-height: 130px;
+
+            resize: vertical;
+        }
+
+
+        /* =========================================================
+           MAP
+        ========================================================= */
+
+        .map-section {
+            padding-top: 0;
+
+            background: var(--light);
+        }
+
+        .map-wrapper {
+            overflow: hidden;
+
+            border-radius: 25px;
+
+            background: white;
+
+            box-shadow: var(--shadow);
+
+            position: relative;
+        }
+
+        .map-placeholder {
+            height: 350px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ede9fe,
+                    #dcfce7
+                );
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-direction: column;
+
+            text-align: center;
+
+            color: var(--purple-dark);
+        }
+
+        .map-placeholder i {
+            font-size: 55px;
+
+            color: var(--green);
+
+            margin-bottom: 15px;
+        }
+
+        .map-placeholder p {
+            color: var(--gray);
+
+            margin-bottom: 15px;
+        }
+
+
+        /* =========================================================
+           CTA
+        ========================================================= */
+
+        .cta {
+            padding: 80px 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f5f3ff,
+                    #f0fdf4
+                );
+        }
+
+        .cta-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--purple-dark),
+                    var(--purple)
+                );
+
+            color: white;
+
+            border-radius: 30px;
+
+            padding: 55px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 30px;
+
+            overflow: hidden;
+
+            position: relative;
+        }
+
+        .cta-box::after {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            border: 60px solid rgba(255,255,255,.05);
+
+            left: -100px;
+            top: -150px;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta h2 {
+            font-size: 32px;
+
+            margin-bottom: 8px;
+        }
+
+        .cta p {
+            opacity: .85;
+        }
+
+        .cta .btn {
+            background: white;
+
+            color: var(--purple-dark);
+
+            position: relative;
+            z-index: 2;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            background: #10051f;
+
+            color: white;
+
+            padding: 60px 0 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.5fr 1fr 1fr;
+
+            gap: 50px;
+
+            padding-bottom: 40px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+        }
+
+        .footer-logo {
+            margin-bottom: 15px;
+
+            color: white;
+        }
+
+        .footer-description {
+            color: #a5a3ad;
+
+            max-width: 430px;
+
+            font-size: 14px;
+        }
+
+        .footer h4 {
+            margin-bottom: 20px;
+
+            font-size: 17px;
+        }
+
+        .footer-links {
+            display: grid;
+
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: #aaa6b5;
+
+            font-size: 14px;
+
+            transition: .3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+
+            transform: translateX(-5px);
+        }
+
+        .socials {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 20px;
+        }
+
+        .social {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,255,255,.08);
+
+            transition: .3s;
+        }
+
+        .social:hover {
+            background: var(--green);
+
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+
+            color: #777382;
+
+            font-size: 13px;
+
+            padding-top: 25px;
+        }
+
+
+        /* =========================================================
+           WHATSAPP FLOATING
+        ========================================================= */
+
+        .whatsapp-float {
+            position: fixed;
+
+            left: 25px;
+            bottom: 25px;
+
+            width: 60px;
+            height: 60px;
+
+            border-radius: 50%;
+
+            background: #25d366;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+
+            z-index: 999;
+
+            box-shadow:
+                0 10px 30px rgba(37,211,102,.35);
+
+            animation:
+                whatsapp-pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.08);
+        }
+
+        @keyframes whatsapp-pulse {
+
+            0% {
+                box-shadow:
+                    0 0 0 0 rgba(37,211,102,.5);
+            }
+
+            70% {
+                box-shadow:
+                    0 0 0 15px rgba(37,211,102,0);
+            }
+
+            100% {
+                box-shadow:
+                    0 0 0 0 rgba(37,211,102,0);
+            }
+        }
+
+
+        /* =========================================================
+           SCROLL ANIMATION
+        ========================================================= */
+
+        .reveal {
+            opacity: 0;
+
+            transform: translateY(35px);
+
+            transition:
+                opacity .8s ease,
+                transform .8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1000px) {
+
+            .nav-links {
+                position: absolute;
+
+                top: 82px;
+                right: 0;
+                left: 0;
+
+                background: white;
+
+                padding: 20px;
+
+                flex-direction: column;
+
+                gap: 18px;
+
+                box-shadow:
+                    0 20px 30px rgba(0,0,0,.08);
+
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .header-whatsapp {
+                display: none;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+
+                text-align: center;
+
+                gap: 20px;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                min-height: 430px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content {
+                text-align: center;
+            }
+
+            .check-list {
+                text-align: right;
+
+                max-width: 400px;
+
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .founder-card {
+                grid-template-columns: 1fr;
+
+                text-align: center;
+            }
+
+            .cards {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-box {
+                flex-direction: column;
+
+                text-align: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            section {
+                padding: 70px 0;
+            }
+
+            .navbar {
+                height: 70px;
+            }
+
+            .nav-links {
+                top: 70px;
+            }
+
+            .hero {
+                padding-top: 70px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-subtitle {
+                font-size: 20px;
+            }
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+            }
+
+            .hero-visual {
+                min-height: 350px;
+            }
+
+            .water-circle {
+                width: 310px;
+            }
+
+            .water-content i {
+                font-size: 65px;
+            }
+
+            .water-content h3 {
+                font-size: 24px;
+            }
+
+            .founder-card {
+                padding: 30px 20px;
+            }
+
+            .founder-photo {
+                max-width: 230px;
+            }
+
+            .founder-photo i {
+                font-size: 70px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+
+                gap: 25px 10px;
+            }
+
+            .stat-number {
+                font-size: 30px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .contact-info,
+            .contact-form {
+                padding: 25px 20px;
+            }
+
+            .cta-box {
+                padding: 35px 20px;
+            }
+
+            .cta h2 {
+                font-size: 25px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+
+                gap: 35px;
+            }
+
+            .whatsapp-float {
+                left: 18px;
+                bottom: 18px;
+
+                width: 55px;
+                height: 55px;
+
+                font-size: 26px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+    <div class="container navbar">
+
+        <a href="#home" class="logo">
+
+            <div class="logo-icon">
+                <i class="fa-solid fa-droplet"></i>
+            </div>
+
+            <span>محطة مياه الضياء</span>
+
+        </a>
+
+
+        <nav class="nav-links" id="navLinks">
+
+            <a href="#home">الرئيسية</a>
+
+            <a href="#about">عن المشروع</a>
+
+            <a href="#founder">المؤسس</a>
+
+            <a href="#services">خدماتنا</a>
+
+            <a href="#contact">تواصل معنا</a>
+
+            <a href="#" class="header-whatsapp whatsapp-link">
+                <i class="fa-brands fa-whatsapp"></i>
+                تواصل معنا
+            </a>
+
+        </nav>
+
+
+        <button class="menu-btn" id="menuBtn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero" id="home">
+
+    <div class="container hero-grid">
+
+
+        <div class="hero-content reveal">
+
+            <div class="hero-badge">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                جودة • نقاء • ثقة
+
+            </div>
+
+
+            <h1>
+                محطة مياه
+                <span>الضياء</span>
+            </h1>
+
+
+            <div class="hero-subtitle">
+                مياه نقية... ثقة مستمرة
+            </div>
+
+
+            <p class="hero-description">
+
+                نسعى إلى تقديم مياه نقية بجودة عالية،
+                مع الاهتمام بالنظافة والجودة ورضا العملاء،
+                والاستمرار في تقديم خدمة موثوقة تلبي
+                احتياجات المجتمع.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a href="#contact" class="btn btn-primary">
+
+                    <i class="fa-solid fa-phone"></i>
+
+                    تواصل معنا
+
+                </a>
+
+
+                <a href="#" class="btn btn-green whatsapp-link">
+
+                    <i class="fa-brands fa-whatsapp"></i>
+
+                    واتساب
+
+                </a>
+
+
+                <a href="#about" class="btn btn-outline">
+
+                    تعرف على المشروع
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="hero-visual reveal">
+
+            <div class="water-circle">
+
+                <div class="water-content">
+
+                    <i class="fa-solid fa-droplet"></i>
+
+                    <h3>مياه الضياء</h3>
+
+                    <p>نقاء تثق به</p>
+
+                </div>
+
+
+                <span class="bubble bubble-1"></span>
+                <span class="bubble bubble-2"></span>
+                <span class="bubble bubble-3"></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     ABOUT
+========================================================= -->
+
+<section class="about" id="about">
+
+    <div class="container">
+
+        <div class="section-title reveal">
+
+            <div class="small-title">
+
+                <i class="fa-solid fa-water"></i>
+
+                تعرف علينا
+
+            </div>
+
+            <h2>عن محطة مياه الضياء</h2>
+
+            <p>
+                مشروع يضع الجودة والثقة وخدمة المجتمع
+                في مقدمة اهتماماته.
+            </p>
+
+        </div>
+
+
+
+        <div class="about-grid">
+
+
+            <div class="about-image reveal">
+
+                <!-- استبدل هذا الجزء بصورة المحطة -->
+
+                <i class="fa-solid fa-faucet-drip"></i>
+
+            </div>
+
+
+
+            <div class="about-content reveal">
+
+                <h3>
+                    مياه نقية لخدمة مجتمعنا
+                </h3>
+
+
+                <p>
+                    محطة مياه الضياء مشروع يهدف إلى تقديم
+                    مياه نقية بجودة عالية، مع الاهتمام
+                    بالنظافة والجودة ورضا العملاء،
+                    والاستمرار في تقديم خدمة موثوقة
+                    تلبي احتياجات المجتمع.
+                </p>
+
+
+                <p>
+                    نؤمن أن جودة المياه ليست مجرد خدمة،
+                    بل مسؤولية وثقة نبنيها مع عملائنا
+                    يوماً بعد يوم.
+                </p>
+
+
+                <ul class="check-list">
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        الاهتمام بالنظافة والجودة
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        خدمة موثوقة للعملاء
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        الاستمرار والتطوير
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        خدمة المجتمع
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FOUNDER
+========================================================= -->
+
+<section class="founder" id="founder">
+
+    <div class="container">
+
+        <div class="founder-card reveal">
+
+
+            <div class="founder-photo">
+
+                <!-- ضع صورة المؤسس هنا لاحقاً -->
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+
+
+            <div class="founder-content">
+
+                <div class="founder-label">
+
+                    في ذكرى المؤسس
+
+                </div>
+
+
+                <h2>
+                    المرحوم ضياء الثلايا
+                </h2>
+
+
+                <p>
+                    المرحوم ضياء الثلايا، مؤسس مشروع
+                    محطة مياه الضياء، ترك بصمة طيبة
+                    من خلال تأسيس هذا المشروع والسعي
+                    إلى تقديم خدمة نافعة للمجتمع.
+                </p>
+
+
+                <p>
+                    ويواصل المشروع مسيرته مستلهماً
+                    قيمه ورؤيته، تخليداً لذكراه
+                    وإرثه.
+                </p>
+
+
+                <span class="dua">
+
+                    رحمه الله وأسكنه فسيح جناته
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     WHY US
+========================================================= -->
+
+<section class="why">
+
+    <div class="container">
+
+        <div class="section-title reveal">
+
+            <div class="small-title">
+
+                <i class="fa-solid fa-star"></i>
+
+                لماذا نحن؟
+
+            </div>
+
+            <h2>لماذا محطة مياه الضياء؟</h2>
+
+            <p>
+                لأننا نؤمن أن العميل يستحق خدمة
+                موثوقة وجودة تستحق الثقة.
+            </p>
+
+        </div>
+
+
+
+        <div class="cards">
+
+
+            <div class="card reveal">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-droplet"></i>
+
+                </div>
+
+                <h3>النقاء</h3>
+
+                <p>
+                    مياه نهتم بجودتها ونظافتها.
+                </p>
+
+            </div>
+
+
+
+            <div class="card reveal">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-award"></i>
+
+                </div>
+
+                <h3>الجودة</h3>
+
+                <p>
+                    اهتمام مستمر بمعايير الجودة.
+                </p>
+
+            </div>
+
+
+
+            <div class="card reveal">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-shield-heart"></i>
+
+                </div>
+
+                <h3>الثقة</h3>
+
+                <p>
+                    خدمة تقوم على الثقة والالتزام.
+                </p>
+
+            </div>
+
+
+
+            <div class="card reveal">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-people-group"></i>
+
+                </div>
+
+                <h3>خدمة المجتمع</h3>
+
+                <p>
+                    نسعى إلى تقديم خدمة نافعة ومستدامة
+                    للمجتمع.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     STATS
+========================================================= -->
+
+<section class="stats">
+
+    <div class="container">
+
+        <div class="stats-grid">
+
+
+            <div class="stat reveal">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                <div
+                    class="stat-number counter"
+                    data-target="10">
+                    0
+                </div>
+
+                <p>سنوات من الخبرة</p>
+
+            </div>
+
+
+
+            <div class="stat reveal">
+
+                <i class="fa-solid fa-users"></i>
+
+                <div
+                    class="stat-number counter"
+                    data-target="1000">
+                    0
+                </div>
+
+                <p>عميل</p>
+
+            </div>
+
+
+
+            <div class="stat reveal">
+
+                <i class="fa-solid fa-truck-fast"></i>
+
+                <div
+                    class="stat-number counter"
+                    data-target="5000">
+                    0
+                </div>
+
+                <p>طلب تم تلبيته</p>
+
+            </div>
+
+
+
+            <div class="stat reveal">
+
+                <i class="fa-solid fa-headset"></i>
+
+                <div class="stat-number">
+                    24/7
+                </div>
+
+                <p>خدمة وتواصل</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SERVICES
+========================================================= -->
+
+<section class="services" id="services">
+
+    <div class="container">
+
+        <div class="section-title reveal">
+
+            <div class="small-title">
+
+                <i class="fa-solid fa-list-check"></i>
+
+                خدماتنا
+
+            </div>
+
+            <h2>خدمات محطة مياه الضياء</h2>
+
+            <p>
+                يمكن تعديل هذه الخدمات وإضافة الخدمات
+                الفعلية للمحطة.
+            </p>
+
+        </div>
+
+
+
+        <div class="cards">
+
+
+            <div class="card service-card reveal">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-bottle-water"></i>
+
+                </div>
+
+                <h3>تعبئة وتوفير المياه</h3>
+
+                <p>
+                    توفير المياه حسب احتياجات العملاء.
+                </p>
+
+            </div>
+
+
+
+            <div class="card service-card reveal">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-truck"></i>
+
+                </div>
+
+                <h3>توصيل المياه</h3>
+
+                <p>
+                    خدمة توصيل يمكن تعديل تفاصيلها
+                    حسب خدمات المحطة الفعلية.
+                </p>
+
+            </div>
+
+
+
+            <div class="card service-card reveal">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-headset"></i>
+
+                </div>
+
+                <h3>خدمة العملاء</h3>
+
+                <p>
+                    استقبال الاستفسارات والطلبات
+                    والتواصل مع العملاء.
+                </p>
+
+            </div>
+
+
+
+            <div class="card service-card reveal">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-clipboard-list"></i>
+
+                </div>
+
+                <h3>الطلبات والاشتراكات</h3>
+
+                <p>
+                    يمكن إضافة تفاصيل الاشتراكات
+                    والطلبات الخاصة بالمشروع.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CONTACT
+========================================================= -->
+
+<section class="contact" id="contact">
+
+    <div class="container">
+
+        <div class="section-title reveal">
+
+            <div class="small-title">
+
+                <i class="fa-solid fa-comments"></i>
+
+                نحن هنا لخدمتك
+
+            </div>
+
+            <h2>تواصل معنا</h2>
+
+            <p>
+                لديك استفسار؟ أرسل لنا رسالة وسنتواصل معك.
+            </p>
+
+        </div>
+
+
+
+        <div class="contact-grid">
+
+
+            <!-- بيانات التواصل -->
+
+            <div class="contact-info reveal">
+
+                <h3>بيانات التواصل</h3>
+
+
+                <div class="contact-item">
+
+                    <div class="contact-item-icon">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                    </div>
+
+                    <div>
+
+                        <small>الهاتف</small>
+
+                        <strong id="phoneDisplay">
+                            [رقم الهاتف هنا]
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="contact-item">
+
+                    <div class="contact-item-icon">
+
+                        <i class="fa-brands fa-whatsapp"></i>
+
+                    </div>
+
+                    <div>
+
+                        <small>واتساب</small>
+
+                        <strong id="whatsappDisplay">
+                            [رقم الواتساب هنا]
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="contact-item">
+
+                    <div class="contact-item-icon">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                    </div>
+
+                    <div>
+
+                        <small>الموقع</small>
+
+                        <strong id="addressDisplay">
+                            [عنوان المحطة هنا]
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="contact-item">
+
+                    <div class="contact-item-icon">
+
+                        <i class="fa-solid fa-clock"></i>
+
+                    </div>
+
+                    <div>
+
+                        <small>أوقات العمل</small>
+
+                        <strong id="workingHoursDisplay">
+                            [أوقات العمل هنا]
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <a href="#" class="btn btn-green whatsapp-link">
+
+                    <i class="fa-brands fa-whatsapp"></i>
+
+                    إرسال رسالة عبر واتساب
+
+                </a>
+
+            </div>
+
+
+
+            <!-- النموذج -->
+
+            <div class="contact-form reveal">
+
+                <h3>أرسل لنا رسالة</h3>
+
+
+                <form id="whatsappForm">
+
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group">
+
+                            <label>
+                                الاسم
+                            </label>
+
+                            <input
+                                type="text"
+                                id="name"
+                                class="form-control"
+                                placeholder="اكتب اسمك"
+                                required>
+
+                        </div>
+
+
+
+                        <div class="form-group">
+
+                            <label>
+                                رقم الهاتف
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="customerPhone"
+                                class="form-control"
+                                placeholder="رقم الهاتف"
+                                required>
+
+                        </div>
+
+
+
+                        <div class="form-group full">
+
+                            <label>
+                                الرسالة
+                            </label>
+
+                            <textarea
+                                id="message"
+                                class="form-control"
+                                placeholder="اكتب استفسارك هنا..."
+                                required></textarea>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-green">
+
+                        <i class="fa-brands fa-whatsapp"></i>
+
+                        إرسال عبر واتساب
+
+                    </button>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     MAP
+========================================================= -->
+
+<section class="map-section">
+
+    <div class="container">
+
+        <div class="section-title reveal">
+
+            <div class="small-title">
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
+                موقعنا
+
+            </div>
+
+            <h2>موقع محطة مياه الضياء</h2>
+
+        </div>
+
+
+
+        <div class="map-wrapper reveal">
+
+            <!--
+
+                عندما تحصل على رابط Google Maps الحقيقي
+                يمكنك وضع iframe هنا.
+
+                مثال:
+
+                <iframe
+                    src="رابط_الخريطة"
+                    width="100%"
+                    height="350"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy">
+                </iframe>
+
+            -->
+
+
+            <div class="map-placeholder">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <h3>
+                    موقع محطة مياه الضياء
+                </h3>
+
+                <p>
+                    أضف موقع المحطة الحقيقي هنا.
+                </p>
+
+                <a
+                    href="#"
+                    id="googleMapsButton"
+                    class="btn btn-primary">
+
+                    <i class="fa-solid fa-map"></i>
+
+                    فتح الموقع في خرائط Google
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CTA
+========================================================= -->
+
+<section class="cta">
+
+    <div class="container">
+
+        <div class="cta-box reveal">
+
+            <div class="cta-content">
+
+                <h2>
+                    هل لديك استفسار؟
+                </h2>
+
+                <p>
+                    تواصل معنا مباشرة عبر واتساب.
+                </p>
+
+            </div>
+
+
+            <a href="#" class="btn whatsapp-link">
+
+                <i class="fa-brands fa-whatsapp"></i>
+
+                تحدث معنا الآن
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="container">
+
+
+        <div class="footer-grid">
+
+
+            <div>
+
+                <div class="logo footer-logo">
+
+                    <div class="logo-icon">
+
+                        <i class="fa-solid fa-droplet"></i>
+
+                    </div>
+
+                    <span>
+                        محطة مياه الضياء
+                    </span>
+
+                </div>
+
+
+                <p class="footer-description">
+
+                    مياه نقية... ثقة مستمرة.
+                    نسعى إلى تقديم خدمة موثوقة
+                    وجودة تستحق ثقة عملائنا.
+
+                </p>
+
+
+                <div class="socials">
+
+                    <a href="#"
+                       class="social"
+                       aria-label="Facebook">
+
+                        <i class="fa-brands fa-facebook-f"></i>
+
+                    </a>
+
+
+                    <a href="#"
+                       class="social"
+                       aria-label="Instagram">
+
+                        <i class="fa-brands fa-instagram"></i>
+
+                    </a>
+
+
+                    <a href="#"
+                       class="social whatsapp-link"
+                       aria-label="WhatsApp">
+
+                        <i class="fa-brands fa-whatsapp"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div>
+
+                <h4>
+                    روابط سريعة
+                </h4>
+
+
+                <div class="footer-links">
+
+                    <a href="#home">
+                        الرئيسية
+                    </a>
+
+                    <a href="#about">
+                        عن المشروع
+                    </a>
+
+                    <a href="#founder">
+                        المؤسس
+                    </a>
+
+                    <a href="#services">
+                        خدماتنا
+                    </a>
+
+                    <a href="#contact">
+                        تواصل معنا
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div>
+
+                <h4>
+                    تواصل معنا
+                </h4>
+
+
+                <div class="footer-links">
+
+                    <a href="#">
+                        <i class="fa-solid fa-phone"></i>
+                        <span id="footerPhone">
+                            [رقم الهاتف]
+                        </span>
+                    </a>
+
+                    <a href="#" class="whatsapp-link">
+
+                        <i class="fa-brands fa-whatsapp"></i>
+
+                        واتساب
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <span id="footerAddress">
+                            [عنوان المحطة]
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="copyright">
+
+            © <span id="currentYear"></span>
+            محطة مياه الضياء - جميع الحقوق محفوظة
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================================================
+     WHATSAPP FLOATING BUTTON
+========================================================= -->
+
+<a href="#"
+   class="whatsapp-float whatsapp-link"
+   aria-label="تواصل معنا عبر واتساب">
+
+    <i class="fa-brands fa-whatsapp"></i>
+
+</a>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+
+/* =========================================================
+   بيانات المشروع
+   عدّل هذه البيانات فقط
+========================================================= */
+
+const WHATSAPP_NUMBER = "9677XXXXXXXX";
+
+const PHONE_NUMBER = "77XXXXXXX";
+
+const GOOGLE_MAPS_URL = "#";
+
+const ADDRESS = "[عنوان محطة مياه الضياء]";
+
+const WORKING_HOURS = "[أوقات العمل]";
+
+
+/* =========================================================
+   تحديث بيانات الصفحة
+========================================================= */
+
+document.getElementById("phoneDisplay").textContent =
+    PHONE_NUMBER;
+
+document.getElementById("whatsappDisplay").textContent =
+    WHATSAPP_NUMBER;
+
+document.getElementById("addressDisplay").textContent =
+    ADDRESS;
+
+document.getElementById("workingHoursDisplay").textContent =
+    WORKING_HOURS;
+
+document.getElementById("footerPhone").textContent =
+    PHONE_NUMBER;
+
+document.getElementById("footerAddress").textContent =
+    ADDRESS;
+
+document.getElementById("googleMapsButton").href =
+    GOOGLE_MAPS_URL;
+
+document.getElementById("currentYear").textContent =
+    new Date().getFullYear();
+
+
+/* =========================================================
+   روابط WhatsApp
+========================================================= */
+
+document.querySelectorAll(".whatsapp-link").forEach(link => {
+
+    link.addEventListener("click", function(event) {
+
+        event.preventDefault();
+
+        const url =
+            "https://wa.me/" +
+            WHATSAPP_NUMBER.replace(/\D/g, "");
+
+        window.open(url, "_blank");
+
+    });
+
+});
+
+
+/* =========================================================
+   نموذج WhatsApp
+========================================================= */
+
+document
+    .getElementById("whatsappForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document
+                .getElementById("name")
+                .value
+                .trim();
+
+
+        const phone =
+            document
+                .getElementById("customerPhone")
+                .value
+                .trim();
+
+
+        const message =
+            document
+                .getElementById("message")
+                .value
+                .trim();
+
+
+        if (!name || !phone || !message) {
+
+            alert("يرجى تعبئة جميع الحقول.");
+
+            return;
+
+        }
+
+
+        const whatsappMessage =
+            `السلام عليكم، أنا ${name}، رقم الهاتف ${phone}، وأرغب في الاستفسار عن: ${message}`;
+
+
+        const url =
+            "https://wa.me/" +
+            WHATSAPP_NUMBER.replace(/\D/g, "") +
+            "?text=" +
+            encodeURIComponent(whatsappMessage);
+
+
+        window.open(url, "_blank");
+
+    });
+
+
+
+/* =========================================================
+   القائمة في الهاتف
+========================================================= */
+
+const menuBtn =
+    document.getElementById("menuBtn");
+
+const navLinks =
+    document.getElementById("navLinks");
+
+
+menuBtn.addEventListener("click", function() {
+
+    navLinks.classList.toggle("active");
+
+});
+
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+
+    link.addEventListener("click", function() {
+
+        navLinks.classList.remove("active");
+
+    });
+
+});
+
+
+/* =========================================================
+   ظهور العناصر عند التمرير
+========================================================= */
+
+const observer =
+    new IntersectionObserver(
+        function(entries) {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("active");
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+
+document.querySelectorAll(".reveal").forEach(element => {
+
+    observer.observe(element);
+
+});
+
+
+/* =========================================================
+   Animated Counters
+========================================================= */
+
+const counters =
+    document.querySelectorAll(".counter");
+
+
+let countersStarted = false;
+
+
+const statsObserver =
+    new IntersectionObserver(
+        function(entries) {
+
+            if (
+                entries[0].isIntersecting &&
+                !countersStarted
+            ) {
+
+                countersStarted = true;
+
+
+                counters.forEach(counter => {
+
+                    const target =
+                        Number(
+                            counter.dataset.target
+                        );
+
+
+                    let current = 0;
+
+
+                    const increment =
+                        Math.max(
+                            1,
+                            Math.ceil(target / 70)
+                        );
+
+
+                    const updateCounter =
+                        () => {
+
+                            current += increment;
+
+
+                            if (current >= target) {
+
+                                counter.textContent =
+                                    "+" +
+                                    target.toLocaleString("ar");
+
+                                return;
+
+                            }
+
+
+                            counter.textContent =
+                                "+" +
+                                current.toLocaleString("ar");
+
+
+                            requestAnimationFrame(
+                                updateCounter
+                            );
+
+                        };
+
+
+                    updateCounter();
+
+                });
+
+            }
+
+        },
+        {
+            threshold: 0.4
+        }
+    );
+
+
+const statsSection =
+    document.querySelector(".stats");
+
+
+statsObserver.observe(statsSection);
+
+
+/* =========================================================
+   Header Shadow عند التمرير
+========================================================= */
+
+const header =
+    document.querySelector("header");
+
+
+window.addEventListener("scroll", function() {
+
+    if (window.scrollY > 30) {
+
+        header.style.boxShadow =
+            "0 10px 30px rgba(0,0,0,.08)";
+
+    } else {
+
+        header.style.boxShadow = "none";
+
+    }
+
+});
+
+
+</script>
+
+</body>
+</html>
