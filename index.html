@@ -1,145 +1,800 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TK2P19XK0V"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-TK2P19XK0V');
-</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>المعجم للبرمجيات — حلول برمجية ومحاسبية ذكية</title>
+  <meta name="description" content="المعجم للبرمجيات: تطوير أنظمة سطح مكتب وويب متكاملة للمحاسبة، نقاط البيع، مشاريع المياه، ووكلاء الأسماك." />
 
-    <title>المعجم للبرمجيات | أنظمة ذكية وحلول تقنية متكاملة</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- خط Cairo من Google Fonts مع خطوط نظام عربية بديلة للعمل بدون إنترنت -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="style.css">
+  <style>
+    /* ==========================================================================
+       1. المتغيرات اللونية والهوية البصرية (أبيض نقي + أسود فحمي + أحمر مسطح)
+       ========================================================================== */
+    :root {
+      --font-main: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif;
 
-                
-</head>
-<body>
+      /* الألوان الأساسية */
+      --bg-white: #ffffff;
+      --bg-surface: #f8fafc;
+      --bg-muted: #f3f4f6;
 
-<div id="particles-js"></div>
+      --black: #111827;
+      --black-hover: #030712;
+      --text-body: #374151;
+      --text-muted: #6b7280;
 
-<header>
-    <h1>معجم للبرمجيات</h1>
-    <p>نصمم الأنظمة التي تمنحك السيطرة الكاملة على تجارتك.</p>
-    <div class="hero-actions">
-        <a href="Request_demof.html" class="btn-main btn-large">اطلب استشارتك</a>
-        <a href="#services" class="btn-secondary">استكشف الخدمات</a>
-    </div>
+      --red: #dc2626;
+      --red-hover: #b91c1c;
+      --red-soft: #fef2f2;
+      --red-border: #fecaca;
 
-    <div class="hero-highlights" aria-label="مزايا الموقع">
-        <div class="highlight-card">
-            <i class="fas fa-bolt"></i>
-            <span>حلول سريعة</span>
-        </div>
-        <div class="highlight-card">
-            <i class="fas fa-shield-alt"></i>
-            <span>أمان وموثوقية</span>
-        </div>
-        <div class="highlight-card">
-            <i class="fas fa-headset"></i>
-            <span>دعم مستمر</span>
-        </div>
-    </div>
-</header>
+      --border-light: #e5e7eb;
+      --border-strong: #d1d5db;
 
-<div class="content-section" id="services">
-    <div class="service-item">
-        <div class="service-icon"><i class="fas fa-ship"></i></div>
-        <div class="service-info">
-            <h2>نظام وكيل الصياد</h2>
-            <p>الثورة الرقمية في سوق الأسماك. أدر حسابات الصيادين، المبيعات اليومية، والعمولات بدقة متناهية وسهولة مطلقة.</p>
-            <a href="https://drive.google.com/file/d/1oZLkE6ywN5etRUXi8quabTVXzBpIPZkl/view?usp=drivesdk" class="btn-main">تحميل مجاني  </a>
-        </div>
-    </div>
+      /* الأبعاد والظلال المسطحة الخفيفة */
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-pill: 999px;
 
-    <div class="service-item">
-        <div class="service-icon"><i class="fas fa-satellite-dish"></i></div>
-        <div class="service-info">
-            <h2>مكتبة smsMessages</h2>
-            <p>اربط برامجك بالعالم. مكتبة احترافية لمطوري .NET تتيح لك إرسال إشعارات SMS لعملائك بضغطة زر واحدة.</p>
-            <a href="https://drive.google.com/file/d/1v8qsx8rwtdP9-c7flUDLrVa0ZMawRZhO/view?usp=sharing" target="_blank" class="btn-main">تحميل المكون</a>
-        </div>
-    </div>
+      --shadow-xs: 0 1px 2px rgba(17, 24, 39, 0.04);
+      --shadow-sm: 0 4px 12px rgba(17, 24, 39, 0.05);
+      --shadow-md: 0 12px 28px rgba(17, 24, 39, 0.08);
 
-    <div class="service-item">
-        <div class="service-icon"><i class="fas fa-wallet"></i></div>
-        <div class="service-info">
-            <h2>نظام دكان المحاسبي</h2>
-            <p>وداعاً لدفاتر الديون المعقدة. نظام محاسبي بسيط وقوي مصمم خصيصاً للمحلات والمتاجر في اليمن.</p>
-            <a href="docan.html" class="btn-main">ابدأ الآن</a>
-        </div>
-    </div>
+      --container-max: 1160px;
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-    <div class="service-item">
-        <div class="service-icon"><i class="fab fa-whatsapp"></i></div>
-        <div class="service-info">
-            <h2>منظم رسائل واتساب</h2>
-            <p>اجعل واتساب موظف مبيعات لديك. إرسال فواتير آلية، حملات تسويقية، وتنظيم كامل لرسائل عملائك.</p>
-            <a href="whatsapp.html" class="btn-main">اكتشف المزيد</a>
-        </div>
-    </div>
-    <div class="service-item">
-        <div class="service-icon"><i class="fas fa-rocket"></i></div>
-        <div class="service-info">
-            <h2> موقع محطة مياة الضياء </h2>
-            <p>هل تحتاج لنظام مخصص لعملك؟ فريقنا جاهز لتحويل أفكارك إلى واقع برمجي ملموس يزيد من أرباحك.</p>
-            <a href="Dea.html" class="btn-main"> القي نظره </a>
-        </div>
-    </div>
+    /* ==========================================================================
+       2. إعادة الضبط والأساسيات
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <div class="service-item">
-        <div class="service-icon"><i class="fas fa-rocket"></i></div>
-        <div class="service-info">
-            <h2>ابدأ رحلة النجاح</h2>
-            <p>هل تحتاج لنظام مخصص لعملك؟ فريقنا جاهز لتحويل أفكارك إلى واقع برمجي ملموس يزيد من أرباحك.</p>
-            <a href="Request_demof.html" class="btn-main">اطلب استشارتك</a>
-        </div>
-    </div>
-</div>
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-<a href="Request_demof.html" class="floating-cta" aria-label="تواصل مع الفريق">تواصل معنا</a>
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-white);
+      color: var(--black);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
 
-<footer>
-    <div class="games-tray">
-        <a href="Memory_game.html" class="mini-game-btn">تحدي الذاكرة</a>
-        <a href="Game1.html" class="mini-game-btn">سرعة التخمين</a>
-    </div>
-    <p style="margin-top: 50px; font-size: 0.9rem; opacity: 0.6; color: var(--text-gray);">© 2026 المعجم للبرمجيات - الابتكار بلا حدود</p>
-</footer>
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
 
-<script>
-    /* تعديل لون النقاط المتحركة لتتناسب مع اللون الليموني الجديد */
-    particlesJS("particles-js", {
-    "particles": {
-        "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
-        "color": { "value": "#1e293b" }, /* لون النقاط: رمادي داكن فخم بدلاً من الأسود الحاد */
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.3, "random": false }, /* تقليل شفافية النقاط */
-        "size": { "value": 3, "random": true },
-        "line_linked": { 
-            "enable": true, 
-            "distance": 150, 
-            "color": "#1e293b", /* لون الخطوط: متناسق مع النقاط */
-            "opacity": 0.15,    /* ◄ السر هنا: شفافية منخفضة جداً تجعل الخطوط ناعمة كالعلامة المائية */
-            "width": 1 
-        },
-        "move": { "enable": true, "speed": 1.2 } /* تقليل السرعة قليلاً لحركة أكثر انسيابية */
-    },
-    "interactivity": {
-        "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }
-    },
-    "retina_detect": true
-});
+    img, svg {
+      display: block;
+      max-width: 100%;
+    }
 
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--red);
+      outline-offset: 3px;
+    }
 
-</script>
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
 
-</body>
-</html>
+    /* تنسيق رؤوس الأقسام الموحد */
+    .section {
+      padding: 4.5rem 0;
+    }
+
+    .section-surface {
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 2.75rem;
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.32rem 0.9rem;
+      border-radius: var(--radius-pill);
+      background-color: var(--red-soft);
+      color: var(--red);
+      border: 1px solid var(--red-border);
+      font-size: 0.84rem;
+      font-weight: 800;
+      margin-bottom: 0.85rem;
+    }
+
+    .section-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: var(--red);
+    }
+
+    .section-title {
+      font-size: clamp(1.65rem, 3.2vw, 2.3rem);
+      font-weight: 900;
+      color: var(--black);
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* الأزرار المسطحة الموحدة */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      min-height: 48px;
+      padding: 0.72rem 1.4rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-weight: 700;
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-red {
+      background-color: var(--red);
+      color: #ffffff;
+      border: 1.5px solid var(--red);
+    }
+
+    .btn-red:hover {
+      background-color: var(--red-hover);
+      border-color: var(--red-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(220, 38, 38, 0.22);
+    }
+
+    .btn-black {
+      background-color: var(--black);
+      color: #ffffff;
+      border: 1.5px solid var(--black);
+    }
+
+    .btn-black:hover {
+      background-color: var(--black-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(17, 24, 39, 0.18);
+    }
+
+    .btn-outline {
+      background-color: var(--bg-white);
+      color: var(--black);
+      border: 1.5px solid var(--border-strong);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--black);
+      background-color: var(--bg-surface);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       3. الشريط العلوي المثبت (Sticky Navigation Bar)
+       ========================================================================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 74px;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--black);
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+
+    .brand:hover .brand-mark {
+      border-color: var(--red);
+      transform: rotate(15deg);
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 0.35rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      padding: 0.5rem 0.9rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-body);
+      transition: color var(--transition), background-color var(--transition);
+    }
+
+    .nav-link:hover {
+      color: var(--red);
+      background-color: var(--red-soft);
+    }
+
+    /* زر مفكرة الملاحظات المميز في الهيدر */
+    .nav-note-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.48rem 1rem;
+      border-radius: var(--radius-pill);
+      background-color: var(--black);
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: 1.5px solid var(--black);
+      transition: all var(--transition);
+      margin-right: 0.5rem;
+    }
+
+    .nav-note-pill:hover {
+      background-color: var(--red);
+      border-color: var(--red);
+      transform: translateY(-1px);
+    }
+
+    .badge-new {
+      background-color: var(--red);
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.1rem 0.5rem;
+      border-radius: var(--radius-pill);
+      line-height: 1.5;
+      transition: background-color var(--transition), color var(--transition);
+    }
+
+    .nav-note-pill:hover .badge-new {
+      background-color: #ffffff;
+      color: var(--red);
+    }
+
+    /* زر القائمة للهواتف */
+    .hamburger-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-light);
+      background-color: var(--bg-white);
+      color: var(--black);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+    }
+
+    .hamburger-btn:hover {
+      border-color: var(--black);
+      background-color: var(--bg-surface);
+    }
+
+    /* قائمة الهاتف المنسدلة */
+    .mobile-menu {
+      display: none;
+      background-color: var(--bg-white);
+      border-bottom: 1px solid var(--border-light);
+      padding: 1rem 1.25rem 1.35rem;
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .mobile-menu-list .nav-link {
+      display: block;
+      padding: 0.75rem 0.9rem;
+      background-color: var(--bg-surface);
+    }
+
+    .mobile-menu-list .nav-note-pill {
+      width: 100%;
+      justify-content: center;
+      margin: 0.45rem 0 0;
+      padding: 0.75rem 1rem;
+    }
+
+    @media (min-width: 860px) {
+      .nav-links {
+        display: flex;
+      }
+      .hamburger-btn,
+      .mobile-menu {
+        display: none !important;
+      }
+    }
+
+    /* ==========================================================================
+       4. القسم الافتتاحي (Hero Section + شبكة جزيئات Canvas)
+       ========================================================================== */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background-color: var(--bg-white);
+      border-bottom: 1px solid var(--border-light);
+      padding: 5.2rem 0 5.5rem;
+    }
+
+    /* لوحة الرسم التفاعلية في الخلفية */
+    #particlesCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      border-radius: var(--radius-pill);
+      background-color: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      color: var(--black);
+      font-size: 0.86rem;
+      font-weight: 800;
+      margin-bottom: 1.35rem;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .hero-kicker span.accent-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--red);
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 4.6vw, 3.35rem);
+      font-weight: 900;
+      line-height: 1.28;
+      color: var(--black);
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.015em;
+    }
+
+    .hero-title .highlight {
+      color: var(--red);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 1.8vw, 1.18rem);
+      color: var(--text-body);
+      font-weight: 600;
+      max-width: 700px;
+      margin: 0 auto 2.2rem;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85rem;
+    }
+
+    /* شريط أرقام موجز أسفل الأزرار */
+    .hero-metrics {
+      margin-top: 3rem;
+      padding-top: 1.75rem;
+      border-top: 1px dashed var(--border-strong);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      max-width: 660px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .metric-item {
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 0.6rem;
+    }
+
+    .metric-val {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--black);
+      line-height: 1.2;
+    }
+
+    .metric-val span {
+      color: var(--red);
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    @media (max-width: 540px) {
+      .hero {
+        padding: 3.75rem 0 4rem;
+      }
+      .hero-actions .btn {
+        width: 100%;
+      }
+      .hero-metrics {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ==========================================================================
+       5. قسم الأدوات السريعة — رابط صفحة مفكرة الملاحظات (#tools)
+       (يمكن نسخ هذا القسم بالكامل ولصقه مباشرة في أي ملف index.html)
+       ========================================================================== */
+    .tools-banner {
+      background-color: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-right: 5px solid var(--red);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.75rem;
+      position: relative;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .tools-banner:hover {
+      border-color: var(--black);
+      border-right-color: var(--red);
+      box-shadow: var(--shadow-md);
+    }
+
+    .tools-content {
+      flex: 1 1 460px;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
+    .tools-icon-box {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-md);
+      background-color: var(--red-soft);
+      border: 1.5px solid var(--red-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tools-meta-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--red);
+      background-color: var(--red-soft);
+      padding: 0.18rem 0.65rem;
+      border-radius: var(--radius-pill);
+      margin-bottom: 0.45rem;
+    }
+
+    .tools-title {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--black);
+      margin-bottom: 0.45rem;
+      line-height: 1.35;
+    }
+
+    .tools-desc {
+      font-size: 0.96rem;
+      color: var(--text-body);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      max-width: 600px;
+    }
+
+    .tools-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .feature-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-pill);
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--black);
+    }
+
+    .tools-cta {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.45rem;
+    }
+
+    .tools-file-hint {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      direction: ltr;
+    }
+
+    @media (max-width: 640px) {
+      .tools-banner {
+        padding: 1.4rem;
+      }
+      .tools-content {
+        flex-direction: column;
+      }
+      .tools-cta {
+        width: 100%;
+      }
+      .tools-cta .btn {
+        width: 100%;
+      }
+    }
+
+    /* ==========================================================================
+       6. قسم شعارات العملاء (#clients) — شبكة تفاعلية + شريط متحرك لا نهائي
+       (يمكن نسخ هذا القسم بالكامل ولصقه مباشرة في أي ملف index.html)
+       ========================================================================== */
+    .clients-toolbar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .view-toggle-group {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.3rem;
+      border-radius: var(--radius-pill);
+      background-color: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      box-shadow: var(--shadow-xs);
+      gap: 0.25rem;
+    }
+
+    .view-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.48rem 1.05rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: all var(--transition);
+    }
+
+    .view-toggle-btn:hover {
+      color: var(--black);
+    }
+
+    .view-toggle-btn.active {
+      background-color: var(--black);
+      color: #ffffff;
+    }
+
+    /* حاوية العرض الشبكي (الافتراضي: 4 أعمدة على سطح المكتب، 2 تابلت، 1 جوال) */
+    .clients-stage.view-grid .clients-track {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .clients-stage.view-grid .marquee-clone {
+      display: none;
+    }
+
+    @media (max-width: 1024px) {
+      .clients-stage.view-grid .clients-track {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 580px) {
+      .clients-stage.view-grid .clients-track {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* حاوية العرض كشريط متحرك سلس (Infinite Marquee) */
+    .clients-stage.view-marquee {
+      overflow: hidden;
+      position: relative;
+      direction: ltr; /* لضمان سلاسة الحركة اللانهائية عبر جميع المتصفحات */
+      padding: 0.5rem 0 1rem;
+      mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    }
+
+    .clients-stage.view-marquee .clients-track {
+      display: flex;
+      width: max-content;
+      gap: 1.25rem;
+      animation: clientsMarquee 26s linear infinite;
+    }
+
+    .clients-stage.view-marquee:hover .clients-track {
+      animation-play-state: paused;
+    }
+
+    .clients-stage.view-marquee .client-card {
+      width: 280px;
+      flex-shrink: 0;
+      direction: rtl;
+    }
+
+    @keyframes clientsMarquee {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-50% - 0.625rem));
+      }
+    }
+
+    /* بطاقة العميل الاحترافية */
+    .client-card {
+      position: relative;
+      background-color: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 1.75rem 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: var(--shadow-xs);
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+    }
+
+    /* شريط علوي أحمر يظهر عند التحويم */
+    .client-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 4px;
+      background-color: var(--red);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.25s ease;
+    }
+
+    .client-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-md);
+    }
+
+    .client-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* مربع الشعار الموحد 88x88 بكسل */
+    .client-logo-box {
+      width: 88px;
+      height: 88px;
+      border-radius: var(--radius-md);
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem;
+      margin-bottom: 1.15rem;
+      transition: border-color var(--transition), background-color var(--transition);
+    }
+
+    .client-card:hover .client-logo-box {
+      border-color: var(--red-border);
+      background-color: var(--red-soft);
+    }
+
+    /* تنسيق جاهز عند استبدال أيقونة SVG بصورة شعار فعلية للعميل */
+    .client-logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: 
