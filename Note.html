@@ -1,0 +1,2959 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مفكرة الإنجاز السريع — إدارة الملاحظات والمهام</title>
+  <style>
+    /* ==========================================================================
+       1. Design Tokens & Theme Variables (Light & Dark Mode)
+       100% Offline-First System Fonts & Semantic Palette
+       ========================================================================== */
+    :root {
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Arabic", "Arabic UI Text", Tahoma, Arial, sans-serif;
+
+      /* Light Theme Surface & Text */
+      --bg-page: #f4f6fb;
+      --bg-card: #ffffff;
+      --bg-subtle: #f8fafc;
+      --bg-input: #f8fafc;
+      --bg-hover: #f1f5f9;
+      --bg-header: rgba(255, 255, 255, 0.88);
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+
+      /* Semantic Status Colors */
+      --open: #4f46e5;
+      --open-hover: #4338ca;
+      --open-soft: #eef2ff;
+      --open-border: #c7d2fe;
+
+      --postponed: #d97706;
+      --postponed-hover: #b45309;
+      --postponed-soft: #fffbeb;
+      --postponed-border: #fde68a;
+
+      --completed: #059669;
+      --completed-hover: #047857;
+      --completed-soft: #ecfdf5;
+      --completed-border: #a7f3d0;
+
+      --urgent: #dc2626;
+      --urgent-hover: #b91c1c;
+      --urgent-soft: #fef2f2;
+      --urgent-border: #fecaca;
+
+      /* Elevation & Radius */
+      --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.14);
+
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+
+      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg-page: #0b1120;
+      --bg-card: #131c31;
+      --bg-subtle: #19243d;
+      --bg-input: #0f172a;
+      --bg-hover: #1e293b;
+      --bg-header: rgba(19, 28, 49, 0.9);
+      --border: #23304a;
+      --border-strong: #334155;
+
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+
+      --open: #818cf8;
+      --open-hover: #6366f1;
+      --open-soft: rgba(99, 102, 241, 0.16);
+      --open-border: rgba(129, 140, 248, 0.35);
+
+      --postponed: #fbbf24;
+      --postponed-hover: #f59e0b;
+      --postponed-soft: rgba(245, 158, 11, 0.15);
+      --postponed-border: rgba(251, 191, 36, 0.35);
+
+      --completed: #34d399;
+      --completed-hover: #10b981;
+      --completed-soft: rgba(16, 185, 129, 0.15);
+      --completed-border: rgba(52, 211, 153, 0.35);
+
+      --urgent: #f87171;
+      --urgent-hover: #ef4444;
+      --urgent-soft: rgba(239, 68, 68, 0.16);
+      --urgent-border: rgba(248, 113, 113, 0.35);
+
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.28);
+      --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.55);
+    }
+
+    /* ==========================================================================
+       2. Base Reset & Typography
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color var(--transition), color var(--transition);
+      padding-bottom: 5rem;
+    }
+
+    button, input, textarea, select {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+      outline: 2px solid var(--open);
+      outline-offset: 2px;
+    }
+
+    svg {
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ==========================================================================
+       3. Layout & Sticky Header
+       ========================================================================== */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: var(--bg-header);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background-color var(--transition), border-color var(--transition);
+    }
+
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0.8rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.28);
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .offline-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: var(--completed);
+      display: inline-block;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .icon-btn {
+      min-width: 40px;
+      height: 40px;
+      padding: 0 0.65rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      transition: all var(--transition);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .icon-btn:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+    }
+
+    .icon-btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-label-desktop {
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .btn-label-desktop {
+        display: inline;
+      }
+    }
+
+    /* Dropdown Menu for Tools */
+    .menu-wrapper {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 235px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      padding: 0.4rem;
+      z-index: 60;
+      opacity: 0;
+      transform: translateY(-6px) scale(0.97);
+      pointer-events: none;
+      transition: all 0.18s ease;
+    }
+
+    .dropdown-menu.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .dropdown-item {
+      width: 100%;
+      padding: 0.68rem 0.75rem;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-align: right;
+      transition: background-color var(--transition);
+    }
+
+    .dropdown-item:hover {
+      background: var(--bg-hover);
+    }
+
+    .dropdown-item.danger {
+      color: var(--urgent);
+    }
+
+    .dropdown-item.danger:hover {
+      background: var(--urgent-soft);
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0.35rem 0.25rem;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.15rem 1rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    /* ==========================================================================
+       4. Quick Capture Section
+       ========================================================================== */
+    .capture-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      box-shadow: var(--shadow-sm);
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .capture-card:focus-within {
+      border-color: var(--open);
+      box-shadow: 0 0 0 3px var(--open-soft), var(--shadow-sm);
+    }
+
+    .capture-input-row {
+      display: flex;
+      gap: 0.55rem;
+      align-items: stretch;
+    }
+
+    .capture-input {
+      flex: 1;
+      min-width: 0;
+      padding: 0.82rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-size: 0.98rem;
+      font-weight: 500;
+      transition: border-color var(--transition), background-color var(--transition);
+    }
+
+    .capture-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .capture-input:focus {
+      outline: none;
+      border-color: var(--open);
+      background: var(--bg-card);
+    }
+
+    .btn-primary {
+      background: var(--open);
+      color: #ffffff;
+      padding: 0 1.2rem;
+      min-height: 46px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.94rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      background: var(--open-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .capture-controls {
+      margin-top: 0.85rem;
+      padding-top: 0.8rem;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+    }
+
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .chip {
+      padding: 0.4rem 0.78rem;
+      min-height: 36px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: var(--bg-subtle);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all var(--transition);
+      user-select: none;
+    }
+
+    .chip:hover {
+      border-color: var(--border-strong);
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    .chip.active {
+      background: var(--open-soft);
+      border-color: var(--open);
+      color: var(--open);
+    }
+
+    .chip.urgent-chip.active {
+      background: var(--urgent-soft);
+      border-color: var(--urgent);
+      color: var(--urgent);
+    }
+
+    .chip.postpone-chip.active {
+      background: var(--postponed-soft);
+      border-color: var(--postponed);
+      color: var(--postponed);
+    }
+
+    .capture-right-toggles {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ==========================================================================
+       5. Progress Bar & Interactive Summary Tabs
+       ========================================================================== */
+    .dashboard-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .progress-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1.05rem;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .progress-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .progress-meta {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--completed);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-hover);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(90deg, #10b981, #059669);
+      transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .progress-hint {
+      margin-top: 0.45rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.65rem;
+    }
+
+    @media (min-width: 640px) {
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .stat-tab {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.82rem 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      text-align: right;
+      box-shadow: var(--shadow-xs);
+      transition: all var(--transition);
+    }
+
+    .stat-tab:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .stat-count {
+      font-size: 1.45rem;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--text-primary);
+    }
+
+    .stat-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-tab[data-status="all"] .stat-icon {
+      background: var(--bg-hover);
+      color: var(--text-secondary);
+    }
+    .stat-tab[data-status="open"] .stat-icon {
+      background: var(--open-soft);
+      color: var(--open);
+    }
+    .stat-tab[data-status="postponed"] .stat-icon {
+      background: var(--postponed-soft);
+      color: var(--postponed);
+    }
+    .stat-tab[data-status="completed"] .stat-icon {
+      background: var(--completed-soft);
+      color: var(--completed);
+    }
+
+    /* Active State for Stat Tabs */
+    .stat-tab.active[data-status="all"] {
+      border-color: var(--text-primary);
+      background: var(--bg-subtle);
+    }
+    .stat-tab.active[data-status="open"] {
+      border-color: var(--open);
+      background: var(--open-soft);
+    }
+    .stat-tab.active[data-status="open"] .stat-label,
+    .stat-tab.active[data-status="open"] .stat-count {
+      color: var(--open);
+    }
+    .stat-tab.active[data-status="postponed"] {
+      border-color: var(--postponed);
+      background: var(--postponed-soft);
+    }
+    .stat-tab.active[data-status="postponed"] .stat-label,
+    .stat-tab.active[data-status="postponed"] .stat-count {
+      color: var(--postponed);
+    }
+    .stat-tab.active[data-status="completed"] {
+      border-color: var(--completed);
+      background: var(--completed-soft);
+    }
+    .stat-tab.active[data-status="completed"] .stat-label,
+    .stat-tab.active[data-status="completed"] .stat-count {
+      color: var(--completed);
+    }
+
+    /* ==========================================================================
+       6. Search & Tag Filter Bar
+       ========================================================================== */
+    .filter-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.8rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .search-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.65rem 2.5rem 0.65rem 2.3rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      transition: border-color var(--transition);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--open);
+      background: var(--bg-card);
+    }
+
+    .search-clear {
+      position: absolute;
+      left: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+
+    .search-clear.visible {
+      display: flex;
+    }
+
+    .search-clear:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    .filter-tags-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-reset-btn {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--open);
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      margin-right: auto;
+    }
+
+    .filter-reset-btn:hover {
+      background: var(--open-soft);
+    }
+
+    /* ==========================================================================
+       7. Notes / Tasks List & Cards
+       ========================================================================== */
+    .list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0.2rem;
+    }
+
+    .list-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .note-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-right: 4px solid var(--open);
+      border-radius: var(--radius-md);
+      padding: 0.95rem 1rem;
+      box-shadow: var(--shadow-xs);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), opacity var(--transition);
+      animation: cardSlideIn 0.24s ease;
+    }
+
+    @keyframes cardSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .note-card:hover {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .note-card.status-open {
+      border-right-color: var(--open);
+    }
+
+    .note-card.status-postponed {
+      border-right-color: var(--postponed);
+    }
+
+    .note-card.status-completed {
+      border-right-color: var(--completed);
+      opacity: 0.86;
+    }
+
+    .note-card.is-urgent:not(.status-completed) {
+      border-right-color: var(--urgent);
+    }
+
+    .note-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    /* Circular Quick Check Button */
+    .check-circle {
+      width: 26px;
+      height: 26px;
+      margin-top: 2px;
+      border-radius: 50%;
+      border: 2px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: transparent;
+      transition: all var(--transition);
+      background: var(--bg-card);
+    }
+
+    .check-circle:hover {
+      border-color: var(--completed);
+      background: var(--completed-soft);
+    }
+
+    .note-card.status-completed .check-circle {
+      background: var(--completed);
+      border-color: var(--completed);
+      color: #ffffff;
+    }
+
+    .note-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .note-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.38rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+      padding: 0.18rem 0.58rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.74rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .badge-status-open {
+      background: var(--open-soft);
+      color: var(--open);
+      border: 1px solid var(--open-border);
+    }
+
+    .badge-status-postponed {
+      background: var(--postponed-soft);
+      color: var(--postponed);
+      border: 1px solid var(--postponed-border);
+    }
+
+    .badge-status-completed {
+      background: var(--completed-soft);
+      color: var(--completed);
+      border: 1px solid var(--completed-border);
+    }
+
+    .badge-urgent {
+      background: var(--urgent-soft);
+      color: var(--urgent);
+      border: 1px solid var(--urgent-border);
+    }
+
+    .badge-cat {
+      background: var(--bg-hover);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .note-text {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      word-break: break-word;
+      white-space: pre-wrap;
+      transition: color var(--transition);
+    }
+
+    .note-card.status-completed .note-text {
+      text-decoration: line-through;
+      text-decoration-thickness: 1.8px;
+      text-decoration-color: var(--completed);
+      color: var(--text-muted);
+    }
+
+    .note-subnote {
+      margin-top: 0.5rem;
+      padding: 0.5rem 0.7rem;
+      border-radius: var(--radius-sm);
+      background: var(--bg-subtle);
+      border: 1px dashed var(--border-strong);
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    .note-footer {
+      margin-top: 0.75rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+    }
+
+    .note-timestamps {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .time-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+    }
+
+    .note-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.38rem;
+    }
+
+    .action-btn {
+      min-height: 36px;
+      padding: 0.35rem 0.68rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-subtle);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.32rem;
+      transition: all var(--transition);
+    }
+
+    .action-btn:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+
+    .action-btn.btn-complete:hover,
+    .action-btn.btn-complete.is-done {
+      background: var(--completed-soft);
+      color: var(--completed);
+      border-color: var(--completed-border);
+    }
+
+    .action-btn.btn-postpone:hover,
+    .action-btn.btn-postpone.is-postponed {
+      background: var(--postponed-soft);
+      color: var(--postponed);
+      border-color: var(--postponed-border);
+    }
+
+    .action-btn.btn-edit:hover {
+      background: var(--open-soft);
+      color: var(--open);
+      border-color: var(--open-border);
+    }
+
+    .action-btn.btn-delete:hover {
+      background: var(--urgent-soft);
+      color: var(--urgent);
+      border-color: var(--urgent-border);
+    }
+
+    /* Empty State */
+    .empty-state {
+      background: var(--bg-card);
+      border: 1.5px dashed var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 2.75rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .empty-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: var(--bg-hover);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.25rem;
+    }
+
+    .empty-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .empty-desc {
+      font-size: 0.88rem;
+      max-width: 360px;
+    }
+
+    /* ==========================================================================
+       8. Modals (Edit, Confirm, Import)
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.58);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 1.25rem;
+      transform: translateY(12px) scale(0.97);
+      transition: transform 0.22s ease;
+    }
+
+    .modal-backdrop.open .modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+
+    .modal-close:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    .form-group {
+      margin-bottom: 0.95rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.72rem 0.88rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-size: 0.94rem;
+      resize: vertical;
+      transition: border-color var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--open);
+      background: var(--bg-card);
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 480px) {
+      .form-row-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .checkbox-card {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-subtle);
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    .checkbox-card input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--urgent);
+      cursor: pointer;
+    }
+
+    .modal-footer {
+      margin-top: 1.15rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.55rem;
+    }
+
+    .btn-secondary {
+      min-height: 42px;
+      padding: 0 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all var(--transition);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-hover);
+      border-color: var(--border-strong);
+    }
+
+    .btn-danger {
+      min-height: 42px;
+      padding: 0 1.05rem;
+      border-radius: var(--radius-sm);
+      background: var(--urgent);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all var(--transition);
+    }
+
+    .btn-danger:hover {
+      background: var(--urgent-hover);
+    }
+
+    /* ==========================================================================
+       9. Bottom Toast Notification with Undo & Progress Bar
+       ========================================================================== */
+    .toast-container {
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 120;
+      width: calc(100% - 2rem);
+      max-width: 440px;
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.28s cubic-bezier(0.34, 1.4, 0.64, 1), opacity 0.25s ease;
+    }
+
+    [data-theme="dark"] .toast-container {
+      background: #1e293b;
+      border: 1px solid #334155;
+    }
+
+    .toast-container.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .toast-content {
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .toast-msg {
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toast-action-btn {
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      background: #4f46e5;
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 800;
+      white-space: nowrap;
+      transition: background-color var(--transition);
+    }
+
+    .toast-action-btn:hover {
+      background: #6366f1;
+    }
+
+    .toast-progress {
+      height: 3px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .toast-progress-bar {
+      height: 100%;
+      width: 100%;
+      background: #38bdf8;
+      transform-origin: right center;
+    }
+
+    /* ==========================================================================
+       10. Mobile Polish
+       ========================================================================== */
+    @media (max-width: 480px) {
+      .capture-input-row {
+        flex-direction: column;
+      }
+      .btn-primary {
+        width: 100%;
+      }
+      .note-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .action-btn {
+        flex: 1 1 auto;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       Top Sticky Navigation Bar
+       ======================================================================== -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">مفكرة الإنجاز السريع</h1>
+          <div class="brand-sub">
+            <span class="offline-dot" aria-hidden="true"></span>
+            <span>حفظ محلي فوري بدون إنترنت</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Quick Copy Summary -->
+        <button type="button" id="btnCopySummary" class="icon-btn" title="نسخ ملخص المهام">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span class="btn-label-desktop">نسخ الملخص</span>
+        </button>
+
+        <!-- Theme Switcher -->
+        <button type="button" id="btnThemeToggle" class="icon-btn" title="تبديل الوضع النهاري / الليلي" aria-label="تبديل المظهر">
+          <svg id="iconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg id="iconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Tools / Backup Menu -->
+        <div class="menu-wrapper">
+          <button type="button" id="btnToolsMenu" class="icon-btn" title="أدوات النسخ الاحتياطي والإدارة" aria-haspopup="true" aria-expanded="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </button>
+
+          <div id="toolsDropdown" class="dropdown-menu" role="menu">
+            <button type="button" id="btnExportJson" class="dropdown-item" role="menuitem">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>تصدير نسخة احتياطية (JSON)</span>
+            </button>
+
+            <button type="button" id="btnImportJson" class="dropdown-item" role="menuitem">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <span>استيراد نسخة احتياطية</span>
+            </button>
+
+            <div class="dropdown-divider"></div>
+
+            <button type="button" id="btnClearCompleted" class="dropdown-item danger" role="menuitem">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              <span>مسح المهام المكتملة</span>
+            </button>
+          </div>
+        </div>
+        <!-- Hidden File Input for JSON Import -->
+        <input type="file" id="importFileInput" accept=".json,application/json" class="sr-only" />
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       Main Workspace Container
+       ======================================================================== -->
+  <main class="container">
+
+    <!-- 1. Quick Capture Bar -->
+    <section class="capture-card" aria-label="تدوين ملاحظة سريعة">
+      <form id="captureForm" autocomplete="off">
+        <div class="capture-input-row">
+          <input
+            type="text"
+            id="captureInput"
+            class="capture-input"
+            placeholder="دوّن ملاحظة عابرة أو مهمة في ثوانٍ... (اضغط Enter للإضافة)"
+            aria-label="نص الملاحظة السريعة"
+          />
+          <button type="submit" class="btn-primary">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>إضافة</span>
+          </button>
+        </div>
+
+        <div class="capture-controls">
+          <!-- Category Quick Selector -->
+          <div class="chip-group" id="captureCategories" role="radiogroup" aria-label="اختر التصنيف">
+            <!-- Rendered via JS -->
+          </div>
+
+          <!-- Urgent & Initial Status Toggles -->
+          <div class="capture-right-toggles">
+            <button type="button" id="btnToggleUrgent" class="chip urgent-chip" aria-pressed="false" title="تمييز كمهمة عاجلة">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <span>عاجل</span>
+            </button>
+
+            <button type="button" id="btnToggleStartPostponed" class="chip postpone-chip" aria-pressed="false" title="حفظ مباشرة في قائمة المؤجلة">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>كمؤجلة</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- 2. Progress Bar & Interactive Status Dashboard -->
+    <section class="dashboard-panel" aria-label="ملخص الإنجاز والتصفية">
+      <div class="progress-card">
+        <div class="progress-header">
+          <div class="progress-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--completed)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>مؤشر إغلاق المهام</span>
+          </div>
+          <span class="progress-meta" id="progressPercent">0%</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-hint" id="progressHint">ابدأ بتدوين مهامك لتفريغ ذهنك ومتابعة إنجازك بهدوء.</div>
+      </div>
+
+      <div class="stats-grid" id="statusTabs" role="tablist" aria-label="تصفية حسب الحالة">
+        <button type="button" class="stat-tab active" data-status="all" role="tab" aria-selected="true">
+          <div class="stat-info">
+            <span class="stat-label">الكل</span>
+            <span class="stat-count" id="countAll">0</span>
+          </div>
+          <div class="stat-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+          </div>
+        </button>
+
+        <button type="button" class="stat-tab" data-status="open" role="tab" aria-selected="false">
+          <div class="stat-info">
+            <span class="stat-label">قيد التنفيذ</span>
+            <span class="stat-count" id="countOpen">0</span>
+          </div>
+          <div class="stat-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polygon points="10 8 16 12 10 16 10 8"></polygon>
+            </svg>
+          </div>
+        </button>
+
+        <button type="button" class="stat-tab" data-status="postponed" role="tab" aria-selected="false">
+          <div class="stat-info">
+            <span class="stat-label">مؤجلة</span>
+            <span class="stat-count" id="countPostponed">0</span>
+          </div>
+          <div class="stat-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+        </button>
+
+        <button type="button" class="stat-tab" data-status="completed" role="tab" aria-selected="false">
+          <div class="stat-info">
+            <span class="stat-label">مكتملة</span>
+            <span class="stat-count" id="countCompleted">0</span>
+          </div>
+          <div class="stat-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- 3. Instant Search & Tag Filters -->
+    <section class="filter-bar" aria-label="البحث والتصفية">
+      <div class="search-row">
+        <div class="search-box">
+          <span class="search-icon" aria-hidden="true">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="بحث فوري في الملاحظات، التفاصيل أو التصنيفات..."
+            aria-label="بحث فوري"
+          />
+          <button type="button" id="btnClearSearch" class="search-clear" title="مسح البحث" aria-label="مسح البحث">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <button type="button" id="btnFilterUrgent" class="chip urgent-chip" aria-pressed="false">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <span>العاجل فقط</span>
+        </button>
+      </div>
+
+      <div class="filter-tags-row" id="filterCategories" aria-label="تصفية حسب التصنيف">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- 4. Notes & Tasks List -->
+    <section aria-label="قائمة الملاحظات والمهام">
+      <div class="list-header">
+        <h2 class="list-title" id="listHeaderTitle">جميع الملاحظات (0)</h2>
+      </div>
+      <div id="notesList" class="notes-list" style="margin-top: 0.65rem;">
+        <!-- Cards rendered dynamically -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       Modal 1: Edit Note / Task Modal
+       ======================================================================== -->
+  <div id="editModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="editModalTitle">تعديل الملاحظة</h3>
+        <button type="button" class="modal-close" data-close-modal="editModal" aria-label="إغلاق">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="editForm">
+        <input type="hidden" id="editId" />
+
+        <div class="form-group">
+          <label class="form-label" for="editText">نص الملاحظة أو المهمة</label>
+          <textarea id="editText" class="form-control" rows="3" required placeholder="اكتب نص المهمة بوضوح..."></textarea>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="editCategory">التصنيف</label>
+            <select id="editCategory" class="form-control">
+              <!-- Populated via JS -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editStatus">الحالة</label>
+            <select id="editStatus" class="form-control">
+              <option value="open">قيد التنفيذ</option>
+              <option value="postponed">مؤجلة</option>
+              <option value="completed">مكتملة</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="editSubnote">ملاحظة فرعية / سبب التأجيل (اختياري)</label>
+          <textarea id="editSubnote" class="form-control" rows="2" placeholder="مثلاً: بانتظار رد المورد، أو مؤجلة لبداية الأسبوع..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-card">
+            <input type="checkbox" id="editUrgent" />
+            <span>تمييز هذه المهمة بأنها عاجلة</span>
+          </label>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" data-close-modal="editModal">إلغاء</button>
+          <button type="submit" class="btn-primary">حفظ التعديلات</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       Modal 2: Confirmation Modal (Clear Completed)
+       ======================================================================== -->
+  <div id="confirmModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+    <div class="modal-box" style="max-width: 420px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="confirmModalTitle">تأكيد المسح</h3>
+        <button type="button" class="modal-close" data-close-modal="confirmModal" aria-label="إغلاق">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <p id="confirmModalDesc" style="color: var(--text-secondary); font-size: 0.94rem; line-height: 1.7;"></p>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" data-close-modal="confirmModal">تراجع</button>
+        <button type="button" id="btnConfirmAction" class="btn-danger">نعم، مسح المكتمل</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       Modal 3: Import JSON Backup Choice Modal
+       ======================================================================== -->
+  <div id="importModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="importModalTitle">
+    <div class="modal-box" style="max-width: 450px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="importModalTitle">استيراد نسخة احتياطية</h3>
+        <button type="button" class="modal-close" data-close-modal="importModal" aria-label="إغلاق">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <p id="importModalDesc" style="color: var(--text-secondary); font-size: 0.93rem; line-height: 1.7;"></p>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" data-close-modal="importModal">إلغاء</button>
+        <button type="button" id="btnImportMerge" class="btn-primary">دمج مع الحالية</button>
+        <button type="button" id="btnImportReplace" class="btn-danger">استبدال الكل</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       Bottom Toast Notification Bar (Supports Undo for 5 Seconds)
+       ======================================================================== -->
+  <div id="toast" class="toast-container" role="status" aria-live="polite">
+    <div class="toast-content">
+      <div class="toast-msg" id="toastMsg"></div>
+      <button type="button" id="toastActionBtn" class="toast-action-btn" style="display: none;"></button>
+    </div>
+    <div class="toast-progress" id="toastProgressWrap" style="display: none;">
+      <div class="toast-progress-bar" id="toastProgressBar"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       Application Logic (Offline-First Vanilla JS + localStorage)
+       ======================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ----------------------------------------------------------------------
+         Constants & Configuration
+         ---------------------------------------------------------------------- */
+      const STORAGE_KEY = 'quick_notes_pro_items_v1';
+      const INIT_KEY = 'quick_notes_pro_initialized_v1';
+      const THEME_KEY = 'quick_notes_pro_theme_v1';
+
+      const CATEGORIES = ['عام', 'ديون', 'فواتير', 'عمل', 'برمجة', 'شخصي'];
+
+      const STATUS_LABELS = {
+        open: 'قيد التنفيذ',
+        postponed: 'مؤجلة',
+        completed: 'مكتملة'
+      };
+
+      /* ----------------------------------------------------------------------
+         Application State
+         ---------------------------------------------------------------------- */
+      const state = {
+        items: [],
+        captureCategory: 'عام',
+        captureUrgent: false,
+        captureStartPostponed: false,
+        filterStatus: 'all',       // 'all' | 'open' | 'postponed' | 'completed'
+        filterCategory: 'الكل',    // 'الكل' or one of CATEGORIES
+        filterUrgentOnly: false,
+        searchQuery: '',
+        pendingImportItems: null,
+        lastDeleted: null,         // { item, index }
+        toastTimer: null,
+        storageAvailable: true
+      };
+
+      /* ----------------------------------------------------------------------
+         DOM Element References
+         ---------------------------------------------------------------------- */
+      const els = {
+        // Header & Menu
+        btnCopySummary: document.getElementById('btnCopySummary'),
+        btnThemeToggle: document.getElementById('btnThemeToggle'),
+        iconSun: document.getElementById('iconSun'),
+        iconMoon: document.getElementById('iconMoon'),
+        btnToolsMenu: document.getElementById('btnToolsMenu'),
+        toolsDropdown: document.getElementById('toolsDropdown'),
+        btnExportJson: document.getElementById('btnExportJson'),
+        btnImportJson: document.getElementById('btnImportJson'),
+        btnClearCompleted: document.getElementById('btnClearCompleted'),
+        importFileInput: document.getElementById('importFileInput'),
+
+        // Quick Capture
+        captureForm: document.getElementById('captureForm'),
+        captureInput: document.getElementById('captureInput'),
+        captureCategories: document.getElementById('captureCategories'),
+        btnToggleUrgent: document.getElementById('btnToggleUrgent'),
+        btnToggleStartPostponed: document.getElementById('btnToggleStartPostponed'),
+
+        // Dashboard
+        progressPercent: document.getElementById('progressPercent'),
+        progressTrack: document.getElementById('progressTrack'),
+        progressFill: document.getElementById('progressFill'),
+        progressHint: document.getElementById('progressHint'),
+        statusTabs: document.getElementById('statusTabs'),
+        countAll: document.getElementById('countAll'),
+        countOpen: document.getElementById('countOpen'),
+        countPostponed: document.getElementById('countPostponed'),
+        countCompleted: document.getElementById('countCompleted'),
+
+        // Search & Filter
+        searchInput: document.getElementById('searchInput'),
+        btnClearSearch: document.getElementById('btnClearSearch'),
+        btnFilterUrgent: document.getElementById('btnFilterUrgent'),
+        filterCategories: document.getElementById('filterCategories'),
+
+        // List
+        listHeaderTitle: document.getElementById('listHeaderTitle'),
+        notesList: document.getElementById('notesList'),
+
+        // Edit Modal
+        editModal: document.getElementById('editModal'),
+        editForm: document.getElementById('editForm'),
+        editId: document.getElementById('editId'),
+        editText: document.getElementById('editText'),
+        editCategory: document.getElementById('editCategory'),
+        editStatus: document.getElementById('editStatus'),
+        editSubnote: document.getElementById('editSubnote'),
+        editUrgent: document.getElementById('editUrgent'),
+
+        // Confirm Modal
+        confirmModal: document.getElementById('confirmModal'),
+        confirmModalDesc: document.getElementById('confirmModalDesc'),
+        btnConfirmAction: document.getElementById('btnConfirmAction'),
+
+        // Import Modal
+        importModal: document.getElementById('importModal'),
+        importModalDesc: document.getElementById('importModalDesc'),
+        btnImportMerge: document.getElementById('btnImportMerge'),
+        btnImportReplace: document.getElementById('btnImportReplace'),
+
+        // Toast
+        toast: document.getElementById('toast'),
+        toastMsg: document.getElementById('toastMsg'),
+        toastActionBtn: document.getElementById('toastActionBtn'),
+        toastProgressWrap: document.getElementById('toastProgressWrap'),
+        toastProgressBar: document.getElementById('toastProgressBar')
+      };
+
+      /* ----------------------------------------------------------------------
+         Utility Functions
+         ---------------------------------------------------------------------- */
+      function generateId() {
+        return 'n_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7);
+      }
+
+      function escapeHtml(str) {
+        if (typeof str !== 'string') return '';
+        return str
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      /**
+       * Formats timestamp into clean, readable Arabic date & time (offline safe).
+       * Examples: "اليوم، 03:25 م", "أمس، 09:10 ص", "15 نوفمبر، 04:40 م"
+       */
+      function formatArabicDateTime(ts) {
+        if (!ts) return '';
+        const date = new Date(ts);
+        if (isNaN(date.getTime())) return '';
+
+        const now = new Date();
+        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+        const targetStart = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+        const diffDays = Math.round((todayStart - targetStart) / 86400000);
+
+        const months = [
+          'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+          'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+        ];
+
+        let hours = date.getHours();
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const period = hours >= 12 ? 'م' : 'ص';
+        hours = hours % 12;
+        if (hours === 0) hours = 12;
+        const timeStr = `${hours}:${minutes} ${period}`;
+
+        if (diffDays === 0) return `اليوم، ${timeStr}`;
+        if (diffDays === 1) return `أمس، ${timeStr}`;
+
+        const dayPart = `${date.getDate()} ${months[date.getMonth()]}`;
+        const yearPart = date.getFullYear() !== now.getFullYear() ? ` ${date.getFullYear()}` : '';
+        return `${dayPart}${yearPart}، ${timeStr}`;
+      }
+
+      /**
+       * Safe localStorage wrappers with try/catch fallback.
+       */
+      function safeGetStorage(key) {
+        try {
+          return window.localStorage.getItem(key);
+        } catch (err) {
+          state.storageAvailable = false;
+          return null;
+        }
+      }
+
+      function safeSetStorage(key, value) {
+        try {
+          window.localStorage.setItem(key, value);
+          return true;
+        } catch (err) {
+          state.storageAvailable = false;
+          return false;
+        }
+      }
+
+      function saveItems() {
+        safeSetStorage(STORAGE_KEY, JSON.stringify(state.items));
+        safeSetStorage(INIT_KEY, '1');
+      }
+
+      /**
+       * Builds 3 realistic Arabic demo tasks shown ONLY on very first launch.
+       */
+      function getInitialDemoItems() {
+        const now = Date.now();
+        return [
+          {
+            id: generateId() + '1',
+            text: 'تسجيل فواتير المشتريات المستلمة اليوم ومراجعة إجمالي المبالغ قبل نهاية الدوام',
+            note: 'موجودة في الملف الأحمر على المكتب — تحتاج 15 دقيقة فقط.',
+            category: 'فواتير',
+            status: 'open',
+            urgent: true,
+            createdAt: now - 1000 * 60 * 35,
+            updatedAt: now - 1000 * 60 * 35,
+            postponedAt: null,
+            completedAt: null
+          },
+          {
+            id: generateId() + '2',
+            text: 'تصميم شاشة بحث سريعة في دوت نت لعرض رصيد الزبون بمجرد كتابة أول حرفين من اسمه',
+            note: 'مؤجلة ليوم الإجازة حتى يكون الذهن صافياً بعيداً عن زحام الزبائن.',
+            category: 'برمجة',
+            status: 'postponed',
+            urgent: false,
+            createdAt: now - 1000 * 60 * 60 * 5,
+            updatedAt: now - 1000 * 60 * 60 * 3,
+            postponedAt: now - 1000 * 60 * 60 * 3,
+            completedAt: null
+          },
+          {
+            id: generateId() + '3',
+            text: 'ترحيل رصيد الزبون أبو محمد من الدفتر الصغير إلى السجل الموحد وشطب الصفحة القديمة',
+            note: '',
+            category: 'ديون',
+            status: 'completed',
+            urgent: false,
+            createdAt: now - 1000 * 60 * 60 * 22,
+            updatedAt: now - 1000 * 60 * 90,
+            postponedAt: null,
+            completedAt: now - 1000 * 60 * 90
+          }
+        ];
+      }
+
+      /**
+       * Sanitizes and normalizes any note item (loaded from storage or JSON import).
+       */
+      function normalizeItem(raw) {
+        if (!raw || typeof raw !== 'object') return null;
+        const text = typeof raw.text === 'string' ? raw.text.trim() : '';
+        if (!text) return null;
+
+        const validStatuses = ['open', 'postponed', 'completed'];
+        const status = validStatuses.includes(raw.status) ? raw.status : 'open';
+        const category = CATEGORIES.includes(raw.category) ? raw.category : 'عام';
+        const now = Date.now();
+
+        return {
+          id: typeof raw.id === 'string' && raw.id.trim() ? raw.id.trim() : generateId(),
+          text,
+          note: typeof raw.note === 'string' ? raw.note.trim() : '',
+          category,
+          status,
+          urgent: Boolean(raw.urgent),
+          createdAt: typeof raw.createdAt === 'number' ? raw.createdAt : now,
+          updatedAt: typeof raw.updatedAt === 'number' ? raw.updatedAt : now,
+          postponedAt: status === 'postponed' ? (typeof raw.postponedAt === 'number' ? raw.postponedAt : now) : null,
+          completedAt: status === 'completed' ? (typeof raw.completedAt === 'number' ? raw.completedAt : now) : null
+        };
+      }
+
+      function loadItems() {
+        const raw = safeGetStorage(STORAGE_KEY);
+        const initialized = safeGetStorage(INIT_KEY);
+
+        if (raw !== null) {
+          try {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) {
+              state.items = parsed.map(normalizeItem).filter(Boolean);
+              return;
+            }
+          } catch (err) {
+            // Corrupted storage falls back gracefully
+          }
+        }
+
+        if (!initialized) {
+          state.items = getInitialDemoItems();
+          saveItems();
+        } else {
+          state.items = [];
+        }
+      }
+
+      /* ----------------------------------------------------------------------
+         Theme Management (Dark / Light Mode)
+         ---------------------------------------------------------------------- */
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const isDark = theme === 'dark';
+        els.iconSun.style.display = isDark ? 'inline-block' : 'none';
+        els.iconMoon.style.display = isDark ? 'none' : 'inline-block';
+        safeSetStorage(THEME_KEY, theme);
+      }
+
+      function initTheme() {
+        const saved = safeGetStorage(THEME_KEY);
+        if (saved === 'dark' || saved === 'light') {
+          applyTheme(saved);
+        } else {
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          applyTheme(prefersDark ? 'dark' : 'light');
+        }
+      }
+
+      /* ----------------------------------------------------------------------
+         Toast Notification System (With Optional Undo / Action & 5s Timer)
+         ---------------------------------------------------------------------- */
+      function hideToast() {
+        els.toast.classList.remove('show');
+        if (state.toastTimer) {
+          clearTimeout(state.toastTimer);
+          state.toastTimer = null;
+        }
+      }
+
+      function showToast(message, options = {}) {
+        const {
+          actionLabel = null,
+          onAction = null,
+          duration = 3200,
+          showProgress = false
+        } = options;
+
+        if (state.toastTimer) {
+          clearTimeout(state.toastTimer);
+          state.toastTimer = null;
+        }
+
+        els.toastMsg.textContent = message;
+
+        if (actionLabel && typeof onAction === 'function') {
+          els.toastActionBtn.textContent = actionLabel;
+          els.toastActionBtn.style.display = 'inline-block';
+          els.toastActionBtn.onclick = function () {
+            hideToast();
+            onAction();
+          };
+        } else {
+          els.toastActionBtn.style.display = 'none';
+          els.toastActionBtn.onclick = null;
+        }
+
+        if (showProgress) {
+          els.toastProgressWrap.style.display = 'block';
+          els.toastProgressBar.style.transition = 'none';
+          els.toastProgressBar.style.transform = 'scaleX(1)';
+          // Force reflow so CSS transition restarts cleanly
+          void els.toastProgressBar.offsetWidth;
+          els.toastProgressBar.style.transition = `transform ${duration}ms linear`;
+          els.toastProgressBar.style.transform = 'scaleX(0)';
+        } else {
+          els.toastProgressWrap.style.display = 'none';
+        }
+
+        els.toast.classList.add('show');
+
+        state.toastTimer = setTimeout(() => {
+          hideToast();
+          if (showProgress) {
+            state.lastDeleted = null;
+          }
+        }, duration);
+      }
+
+      /* ----------------------------------------------------------------------
+         Modal Helpers
+         ---------------------------------------------------------------------- */
+      function openModal(modalEl) {
+        modalEl.classList.add('open');
+      }
+
+      function closeModal(modalEl) {
+        modalEl.classList.remove('open');
+      }
+
+      function closeAllModals() {
+        closeModal(els.editModal);
+        closeModal(els.confirmModal);
+        closeModal(els.importModal);
+      }
+
+      /* ----------------------------------------------------------------------
+         Core CRUD & Quick Actions
+         ---------------------------------------------------------------------- */
+      function addNote(text) {
+        const cleanText = text.trim();
+        if (!cleanText) {
+          els.captureInput.focus();
+          return;
+        }
+
+        const now = Date.now();
+        const initialStatus = state.captureStartPostponed ? 'postponed' : 'open';
+
+        const newItem = {
+          id: generateId(),
+          text: cleanText,
+          note: '',
+          category: state.captureCategory,
+          status: initialStatus,
+          urgent: state.captureUrgent,
+          createdAt: now,
+          updatedAt: now,
+          postponedAt: initialStatus === 'postponed' ? now : null,
+          completedAt: null
+        };
+
+        state.items.unshift(newItem);
+        saveItems();
+
+        // Reset input and one-shot toggles for smooth next entry
+        els.captureInput.value = '';
+        state.captureUrgent = false;
+        state.captureStartPostponed = false;
+        updateCaptureToggleUI();
+
+        // If user is currently viewing "completed", switch to the newly added item's tab so they see it immediately
+        if (state.filterStatus === 'completed') {
+          state.filterStatus = initialStatus;
+        }
+
+        renderAll();
+        els.captureInput.focus();
+        showToast(initialStatus === 'postponed' ? 'تم حفظ الملاحظة في قائمة المؤجلة' : 'تمت إضافة الملاحظة بنجاح');
+      }
+
+      function toggleComplete(id) {
+        const item = state.items.find(i => i.id === id);
+        if (!item) return;
+
+        const now = Date.now();
+        if (item.status === 'completed') {
+          item.status = 'open';
+          item.completedAt = null;
+          item.updatedAt = now;
+          showToast('تمت إعادة فتح المهمة');
+        } else {
+          item.status = 'completed';
+          item.completedAt = now;
+          item.updatedAt = now;
+          showToast('أحسنت! تم إغلاق المهمة كمكتملة');
+        }
+
+        saveItems();
+        renderAll();
+      }
+
+      function togglePostpone(id) {
+        const item = state.items.find(i => i.id === id);
+        if (!item) return;
+
+        const now = Date.now();
+        if (item.status === 'postponed') {
+          item.status = 'open';
+          item.postponedAt = null;
+          item.updatedAt = now;
+          saveItems();
+          renderAll();
+          showToast('تم تفعيل المهمة ونقلها لقيد التنفيذ');
+        } else {
+          item.status = 'postponed';
+          item.postponedAt = now;
+          item.completedAt = null;
+          item.updatedAt = now;
+          saveItems();
+          renderAll();
+          showToast('تم تأجيل المهمة بنجاح', {
+            actionLabel: 'إضافة سبب',
+            onAction: () => openEditModal(id),
+            duration: 4200
+          });
+        }
+      }
+
+      function deleteNote(id) {
+        const index = state.items.findIndex(i => i.id === id);
+        if (index === -1) return;
+
+        const [removed] = state.items.splice(index, 1);
+        state.lastDeleted = { item: removed, index };
+        saveItems();
+        renderAll();
+
+        showToast('تم حذف الملاحظة', {
+          actionLabel: 'تراجع',
+          duration: 5000,
+          showProgress: true,
+          onAction: () => {
+            if (!state.lastDeleted) return;
+            const { item, index: restoreIdx } = state.lastDeleted;
+            const safeIdx = Math.min(restoreIdx, state.items.length);
+            state.items.splice(safeIdx, 0, item);
+            state.lastDeleted = null;
+            saveItems();
+            renderAll();
+            showToast('تمت استعادة الملاحظة بنجاح');
+          }
+        });
+      }
+
+      function openEditModal(id) {
+        const item = state.items.find(i => i.id === id);
+        if (!item) return;
+
+        els.editId.value = item.id;
+        els.editText.value = item.text;
+        els.editCategory.value = item.category;
+        els.editStatus.value = item.status;
+        els.editSubnote.value = item.note || '';
+        els.editUrgent.checked = Boolean(item.urgent);
+
+        openModal(els.editModal);
+        setTimeout(() => els.editText.focus(), 100);
+      }
+
+      function saveEditForm(e) {
+        e.preventDefault();
+        const id = els.editId.value;
+        const item = state.items.find(i => i.id === id);
+        if (!item) return;
+
+        const newText = els.editText.value.trim();
+        if (!newText) {
+          els.editText.focus();
+          return;
+        }
+
+        const now = Date.now();
+        const newStatus = els.editStatus.value;
+
+        item.text = newText;
+        item.category = els.editCategory.value;
+        item.note = els.editSubnote.value.trim();
+        item.urgent = els.editUrgent.checked;
+        item.updatedAt = now;
+
+        if (item.status !== newStatus) {
+          item.status = newStatus;
+          if (newStatus === 'completed') {
+            item.completedAt = now;
+          } else if (newStatus === 'postponed') {
+            item.postponedAt = now;
+            item.completedAt = null;
+          } else {
+            item.completedAt = null;
+            item.postponedAt = null;
+          }
+        }
+
+        saveItems();
+        closeModal(els.editModal);
+        renderAll();
+        showToast('تم حفظ التعديلات بنجاح');
+      }
+
+      /* ----------------------------------------------------------------------
+         Summary Copy, JSON Export/Import & Clear Completed
+         ---------------------------------------------------------------------- */
+      function copyTextReliable(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.top = '-9999px';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, text.length);
+
+        let copied = false;
+        try {
+          copied = document.execCommand('copy');
+        } catch (err) {
+          copied = false;
+        }
+        document.body.removeChild(textarea);
+        return copied;
+      }
+
+      function handleCopySummary() {
+        if (state.items.length === 0) {
+          showToast('لا توجد ملاحظات لنسخ ملخصها حالياً');
+          return;
+        }
+
+        const openItems = state.items.filter(i => i.status === 'open');
+        const postponedItems = state.items.filter(i => i.status === 'postponed');
+        const completedItems = state.items.filter(i => i.status === 'completed');
+        const percent = Math.round((completedItems.length / state.items.length) * 100);
+
+        const lines = [];
+        lines.push(`📋 ملخص المهام والملاحظات — ${formatArabicDateTime(Date.now())}`);
+        lines.push(`📊 الإنجاز: ${completedItems.length} من ${state.items.length} (${percent}%)`);
+        lines.push('');
+
+        if (openItems.length > 0) {
+          lines.push(`🔵 قيد التنفيذ (${openItems.length}):`);
+          openItems.forEach((item, idx) => {
+            const urgentMark = item.urgent ? ' [عاجل]' : '';
+            lines.push(`${idx + 1}. [${item.category}]${urgentMark} ${item.text}`);
+            if (item.note) lines.push(`   ↳ ملاحظة: ${item.note}`);
+          });
+          lines.push('');
+        }
+
+        if (postponedItems.length > 0) {
+          lines.push(`🟠 مؤجلة (${postponedItems.length}):`);
+          postponedItems.forEach((item, idx) => {
+            const urgentMark = item.urgent ? ' [عاجل]' : '';
+            lines.push(`${idx + 1}. [${item.category}]${urgentMark} ${item.text}`);
+            if (item.note) lines.push(`   ↳ سبب التأجيل: ${item.note}`);
+          });
+          lines.push('');
+        }
+
+        if (completedItems.length > 0) {
+          lines.push(`🟢 مكتملة (${completedItems.length}):`);
+          completedItems.forEach((item, idx) => {
+            lines.push(`${idx + 1}. ✅ [${item.category}] ${item.text}`);
+          });
+        }
+
+        const ok = copyTextReliable(lines.join('\n').trim());
+        showToast(ok ? 'تم نسخ ملخص المهام الجاهز للمشاركة' : 'تعذر النسخ التلقائي على هذا المتصفح');
+      }
+
+      function handleExportJson() {
+        closeToolsMenu();
+        const payload = {
+          app: 'QuickNotesTasksPro',
+          version: 1,
+          exportedAt: new Date().toISOString(),
+          items: state.items
+        };
+
+        try {
+          const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          const d = new Date();
+          const dateTag = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+          a.href = url;
+          a.download = `quick-notes-backup-${dateTag}.json`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+          showToast('تم تنزيل ملف النسخة الاحتياطية (JSON)');
+        } catch (err) {
+          showToast('حدث خطأ أثناء تصدير النسخة الاحتياطية');
+        }
+      }
+
+      function handleImportFileSelected(e) {
+        const file = e.target.files && e.target.files[0];
+        e.target.value = ''; // Reset input so same file can be chosen again
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (ev) {
+          try {
+            const parsed = JSON.parse(ev.target.result);
+            const rawList = Array.isArray(parsed) ? parsed : (parsed && Array.isArray(parsed.items) ? parsed.items : null);
+            if (!rawList) {
+              showToast('صيغة الملف غير صالحة للاستيراد');
+              return;
+            }
+
+            const validItems = rawList.map(normalizeItem).filter(Boolean);
+            if (validItems.length === 0) {
+              showToast('لم يتم العثور على ملاحظات صالحة داخل الملف');
+              return;
+            }
+
+            state.pendingImportItems = validItems;
+            els.importModalDesc.textContent = `تم العثور على ${validItems.length} ملاحظة في ملف النسخة الاحتياطية. هل تفضل دمجها مع ملاحظاتك الحالية أم استبدال القائمة بالكامل؟`;
+            openModal(els.importModal);
+          } catch (err) {
+            showToast('تعذر قراءة الملف — تأكد أنه ملف JSON صحيح');
+          }
+        };
+        reader.readAsText(file, 'utf-8');
+      }
+
+      function executeImport(mode) {
+        if (!Array.isArray(state.pendingImportItems)) return;
+
+        if (mode === 'replace') {
+          state.items = state.pendingImportItems;
+          showToast(`تم استبدال القائمة واستيراد ${state.items.length} ملاحظة`);
+        } else {
+          // Merge without duplicating identical IDs
+          const existingIds = new Set(state.items.map(i => i.id));
+          let addedCount = 0;
+          state.pendingImportItems.forEach(item => {
+            if (!existingIds.has(item.id)) {
+              state.items.push(item);
+              existingIds.add(item.id);
+              addedCount++;
+            }
+          });
+          showToast(`تم دمج ${addedCount} ملاحظة جديدة بنجاح`);
+        }
+
+        state.pendingImportItems = null;
+        saveItems();
+        closeModal(els.importModal);
+        renderAll();
+      }
+
+      function requestClearCompleted() {
+        closeToolsMenu();
+        const completedCount = state.items.filter(i => i.status === 'completed').length;
+        if (completedCount === 0) {
+          showToast('لا توجد مهام مكتملة لمسحها');
+          return;
+        }
+
+        els.confirmModalDesc.textContent = `هل تريد مسح جميع المهام المكتملة وعددها (${completedCount}) لتنظيف القائمة؟ ستبقى المهام المفتوحة والمؤجلة كما هي.`;
+        openModal(els.confirmModal);
+      }
+
+      function executeClearCompleted() {
+        const before = state.items.length;
+        state.items = state.items.filter(i => i.status !== 'completed');
+        const removed = before - state.items.length;
+        saveItems();
+        closeModal(els.confirmModal);
+        renderAll();
+        showToast(`تم تنظيف ${removed} مهمة مكتملة بنجاح`);
+      }
+
+      /* ----------------------------------------------------------------------
+         Filtering & Smart Ordering
+         ---------------------------------------------------------------------- */
+      function getFilteredItems() {
+        const q = state.searchQuery.trim().toLowerCase();
+
+        const filtered = state.items.filter(item => {
+          if (state.filterStatus !== 'all' && item.status !== state.filterStatus) {
+            return false;
+          }
+          if (state.filterCategory !== 'الكل' && item.category !== state.filterCategory) {
+            return false;
+          }
+          if (state.filterUrgentOnly && !item.urgent) {
+            return false;
+          }
+          if (q) {
+            const haystack = `${item.text} ${item.note || ''} ${item.category}`.toLowerCase();
+            if (!haystack.includes(q)) return false;
+          }
+          return true;
+        });
+
+        // Smart Priority Ordering:
+        // Open (urgent first, newest first) -> Postponed (urgent first, newest first) -> Completed (recently completed first)
+        const statusRank = { open: 0, postponed: 1, completed: 2 };
+        return filtered.sort((a, b) => {
+          if (statusRank[a.status] !== statusRank[b.status]) {
+            return statusRank[a.status] - statusRank[b.status];
+          }
+          if (a.status !== 'completed' && a.urgent !== b.urgent) {
+            return a.urgent ? -1 : 1;
+          }
+          const timeA = a.status === 'completed' ? (a.completedAt || a.updatedAt) : a.createdAt;
+          const timeB = b.status === 'completed' ? (b.completedAt || b.updatedAt) : b.createdAt;
+          return timeB - timeA;
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         Rendering UI Components
+         ---------------------------------------------------------------------- */
+      function renderCaptureCategories() {
+        els.captureCategories.innerHTML = CATEGORIES.map(cat => {
+          const isActive = state.captureCategory === cat;
+          return `
+            <button
+              type="button"
+              class="chip ${isActive ? 'active' : ''}"
+              data-capture-cat="${escapeHtml(cat)}"
+              role="radio"
+              aria-checked="${isActive}"
+            >
+              ${escapeHtml(cat)}
+            </button>
+          `;
+        }).join('');
+      }
+
+      function updateCaptureToggleUI() {
+        els.btnToggleUrgent.classList.toggle('active', state.captureUrgent);
+        els.btnToggleUrgent.setAttribute('aria-pressed', String(state.captureUrgent));
+        els.btnToggleStartPostponed.classList.toggle('active', state.captureStartPostponed);
+        els.btnToggleStartPostponed.setAttribute('aria-pressed', String(state.captureStartPostponed));
+      }
+
+      function renderFilterCategories() {
+        const allCats = ['الكل', ...CATEGORIES];
+        const hasActiveExtraFilters = state.filterCategory !== 'الكل' || state.filterUrgentOnly || state.searchQuery.trim() !== '';
+
+        let html = allCats.map(cat => {
+          const isActive = state.filterCategory === cat;
+          return `
+            <button
+              type="button"
+              class="chip ${isActive ? 'active' : ''}"
+              data-filter-cat="${escapeHtml(cat)}"
+            >
+              ${escapeHtml(cat)}
+            </button>
+          `;
+        }).join('');
+
+        if (hasActiveExtraFilters) {
+          html += `<button type="button" id="btnResetFilters" class="filter-reset-btn">إعادة ضبط التصفية</button>`;
+        }
+
+        els.filterCategories.innerHTML = html;
+        els.btnFilterUrgent.classList.toggle('active', state.filterUrgentOnly);
+        els.btnFilterUrgent.setAttribute('aria-pressed', String(state.filterUrgentOnly));
+      }
+
+      function renderDashboard() {
+        const total = state.items.length;
+        const openCount = state.items.filter(i => i.status === 'open').length;
+        const postponedCount = state.items.filter(i => i.status === 'postponed').length;
+        const completedCount = state.items.filter(i => i.status === 'completed').length;
+
+        els.countAll.textContent = total;
+        els.countOpen.textContent = openCount;
+        els.countPostponed.textContent = postponedCount;
+        els.countCompleted.textContent = completedCount;
+
+        // Progress Bar Calculation
+        const percent = total === 0 ? 0 : Math.round((completedCount / total) * 100);
+        els.progressPercent.textContent = `${percent}% (${completedCount}/${total})`;
+        els.progressFill.style.width = `${percent}%`;
+        els.progressTrack.setAttribute('aria-valuenow', String(percent));
+
+        if (total === 0) {
+          els.progressHint.textContent = 'مساحتك صافية تماماً — دوّن أي فكرة أو مهمة عابرة في الأعلى.';
+        } else if (percent === 100) {
+          els.progressHint.textContent = 'رائع! جميع مهامك مغلقة ومكتملة بالكامل.';
+        } else if (openCount === 0 && postponedCount > 0) {
+          els.progressHint.textContent = `لا توجد مهام عالقة الآن، ولديك ${postponedCount} مؤجلة يمكنك مراجعتها لاحقاً.`;
+        } else {
+          els.progressHint.textContent = `لديك ${openCount} قيد التنفيذ و ${postponedCount} مؤجلة — أغلق واحدة تلو الأخرى بهدوء.`;
+        }
+
+        // Update Active Status Tab Styling
+        const tabs = els.statusTabs.querySelectorAll('.stat-tab');
+        tabs.forEach(tab => {
+          const isSelected = tab.dataset.status === state.filterStatus;
+          tab.classList.toggle('active', isSelected);
+          tab.setAttribute('aria-selected', String(isSelected));
+        });
+      }
+
+      function renderNotesList() {
+        const items = getFilteredItems();
+
+        const tabTitles = {
+          all: 'جميع الملاحظات',
+          open: 'المهام قيد التنفيذ',
+          postponed: 'المهام المؤجلة',
+          completed: 'المهام المكتملة'
+        };
+        els.listHeaderTitle.textContent = `${tabTitles[state.filterStatus]} (${items.length})`;
+
+        if (items.length === 0) {
+          const isFiltering = state.searchQuery.trim() || state.filterCategory !== 'الكل' || state.filterUrgentOnly || state.filterStatus !== 'all';
+          els.notesList.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="9" y1="15" x2="15" y2="15"></line>
+                </svg>
+              </div>
+              <div class="empty-title">${isFiltering ? 'لا توجد ملاحظات مطابقة للتصفية' : 'القائمة فارغة حالياً'}</div>
+              <div class="empty-desc">
+                ${isFiltering
+                  ? 'جرّب تغيير كلمة البحث أو اختيار تبويب آخر لعرض باقي ملاحظاتك.'
+                  : 'استخدم شريط الالتقاط السريع في الأعلى لتدوين أي ملاحظة أو مهمة في ثوانٍ.'}
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        els.notesList.innerHTML = items.map(item => {
+          const isDone = item.status === 'completed';
+          const isPostponed = item.status === 'postponed';
+
+          let extraTimeHtml = '';
+          if (isDone && item.completedAt) {
+            extraTimeHtml = `
+              <span class="time-item" style="color: var(--completed);">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>أُكملت: ${escapeHtml(formatArabicDateTime(item.completedAt))}</span>
+              </span>
+            `;
+          } else if (isPostponed && item.postponedAt) {
+            extraTimeHtml = `
+              <span class="time-item" style="color: var(--postponed);">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>أُجّلت: ${escapeHtml(formatArabicDateTime(item.postponedAt))}</span>
+              </span>
+            `;
+          }
+
+          const subnoteHtml = item.note
+            ? `
+              <div class="note-subnote">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:3px; color:var(--text-muted);">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <span>${escapeHtml(item.note)}</span>
+              </div>
+            `
+            : '';
+
+          return `
+            <article class="note-card status-${item.status} ${item.urgent ? 'is-urgent' : ''}" data-id="${escapeHtml(item.id)}">
+              <div class="note-top">
+                <button
+                  type="button"
+                  class="check-circle"
+                  data-action="complete"
+                  title="${isDone ? 'إعادة فتح المهمة' : 'تحديد كمكتملة'}"
+                  aria-label="${isDone ? 'إعادة فتح المهمة' : 'تحديد كمكتملة'}"
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </button>
+
+                <div class="note-body">
+                  <div class="note-badges">
+                    <span class="badge badge-status-${item.status}">${STATUS_LABELS[item.status]}</span>
+                    <span class="badge badge-cat">${escapeHtml(item.category)}</span>
+                    ${item.urgent ? `
+                      <span class="badge badge-urgent">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                          <line x1="12" y1="9" x2="12" y2="13"></line>
+                          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        عاجل
+                      </span>
+                    ` : ''}
+                  </div>
+
+                  <div class="note-text">${escapeHtml(item.text)}</div>
+                  ${subnoteHtml}
+                </div>
+              </div>
+
+              <div class="note-footer">
+                <div class="note-timestamps">
+                  <span class="time-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>أُضيفت: ${escapeHtml(formatArabicDateTime(item.createdAt))}</span>
+                  </span>
+                  ${extraTimeHtml}
+                </div>
+
+                <div class="note-actions">
+                  <button type="button" class="action-btn btn-complete ${isDone ? 'is-done' : ''}" data-action="complete">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                      ${isDone
+                        ? '<polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>'
+                        : '<polyline points="20 6 9 17 4 12"></polyline>'}
+                    </svg>
+                    <span>${isDone ? 'إعادة فتح' : 'إكمال'}</span>
+                  </button>
+
+                  <button type="button" class="action-btn btn-postpone ${isPostponed ? 'is-postponed' : ''}" data-action="postpone">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      ${isPostponed
+                        ? '<polygon points="5 3 19 12 5 21 5 3"></polygon>'
+                        : '<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>'}
+                    </svg>
+                    <span>${isPostponed ? 'تفعيل' : 'تأجيل'}</span>
+                  </button>
+
+                  <button type="button" class="action-btn btn-edit" data-action="edit" title="تعديل الملاحظة">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                    <span>تعديل</span>
+                  </button>
+
+                  <button type="button" class="action-btn btn-delete" data-action="delete" title="حذف الملاحظة">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    <span>حذف</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      function renderAll() {
+        renderDashboard();
+        renderFilterCategories();
+        renderNotesList();
+      }
+
+      /* ----------------------------------------------------------------------
+         Dropdown Menu Controls
+         ---------------------------------------------------------------------- */
+      function toggleToolsMenu() {
+        const isOpen = els.toolsDropdown.classList.toggle('open');
+        els.btnToolsMenu.setAttribute('aria-expanded', String(isOpen));
+      }
+
+      function closeToolsMenu() {
+        els.toolsDropdown.classList.remove('open');
+        els.btnToolsMenu.setAttribute('aria-expanded', 'false');
+      }
+
+      /* ----------------------------------------------------------------------
+         Event Listeners Setup
+         ---------------------------------------------------------------------- */
+      function bindEvents() {
+        // Populate Edit Category Select
+        els.editCategory.innerHTML = CATEGORIES.map(cat => `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`).join('');
+
+        // Theme Toggle
+        els.btnThemeToggle.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme');
+          applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        // Header Tools & Summary
+        els.btnCopySummary.addEventListener('click', handleCopySummary);
+        els.btnToolsMenu.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleToolsMenu();
+        });
+        els.btnExportJson.addEventListener('click', handleExportJson);
+        els.btnImportJson.addEventListener('click', () => {
+          closeToolsMenu();
+          els.importFileInput.click();
+        });
+        els.importFileInput.addEventListener('change', handleImportFileSelected);
+        els.btnClearCompleted.addEventListener('click', requestClearCompleted);
+
+        // Close Dropdown on Outside Click
+        document.addEventListener('click', (e) => {
+          if (!els.toolsDropdown.contains(e.target) && !els.btnToolsMenu.contains(e.target)) {
+            closeToolsMenu();
+          }
+        });
+
+        // Quick Capture Form Submit
+        els.captureForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          addNote(els.captureInput.value);
+        });
+
+        // Capture Category Chips
+        els.captureCategories.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-capture-cat]');
+          if (!btn) return;
+          state.captureCategory = btn.dataset.captureCat;
+          renderCaptureCategories();
+          els.captureInput.focus();
+        });
+
+        // Capture Urgent & Initial Status Toggles
+        els.btnToggleUrgent.addEventListener('click', () => {
+          state.captureUrgent = !state.captureUrgent;
+          updateCaptureToggleUI();
+        });
+
+        els.btnToggleStartPostponed.addEventListener('click', () => {
+          state.captureStartPostponed = !state.captureStartPostponed;
+          updateCaptureToggleUI();
+        });
+
+        // Dashboard Status Tabs
+        els.statusTabs.addEventListener('click', (e) => {
+          const tab = e.target.closest('.stat-tab');
+          if (!tab) return;
+          state.filterStatus = tab.dataset.status;
+          renderAll();
+        });
+
+        // Instant Search
+        els.searchInput.addEventListener('input', (e) => {
+          state.searchQuery = e.target.value;
+          els.btnClearSearch.classList.toggle('visible', state.searchQuery.length > 0);
+          renderAll();
+        });
+
+        els.btnClearSearch.addEventListener('click', () => {
+          state.searchQuery = '';
+          els.searchInput.value = '';
+          els.btnClearSearch.classList.remove('visible');
+          els.searchInput.focus();
+          renderAll();
+        });
+
+        // Urgent Only Filter
+        els.btnFilterUrgent.addEventListener('click', () => {
+          state.filterUrgentOnly = !state.filterUrgentOnly;
+          renderAll();
+        });
+
+        // Tag Filter Strip & Reset Button
+        els.filterCategories.addEventListener('click', (e) => {
+          const catBtn = e.target.closest('[data-filter-cat]');
+          if (catBtn) {
+            state.filterCategory = catBtn.dataset.filterCat;
+            renderAll();
+            return;
+          }
+          if (e.target.closest('#btnResetFilters')) {
+            state.filterCategory = 'الكل';
+            state.filterUrgentOnly = false;
+            state.searchQuery = '';
+            els.searchInput.value = '';
+            els.btnClearSearch.classList.remove('visible');
+            renderAll();
+          }
+        });
+
+        // Event Delegation for Note Card Actions
+        els.notesList.addEventListener('click', (e) => {
+          const actionBtn = e.target.closest('[data-action]');
+          if (!actionBtn) return;
+          const card = actionBtn.closest('.note-card');
+          if (!card) return;
+
+          const id = card.dataset.id;
+          const action = actionBtn.dataset.action;
+
+          if (action === 'complete') toggleComplete(id);
+          else if (action === 'postpone') togglePostpone(id);
+          else if (action === 'edit') openEditModal(id);
+          else if (action === 'delete') deleteNote(id);
+        });
+
+        // Edit Modal Submit
+        els.editForm.addEventListener('submit', saveEditForm);
+
+        // Confirm Clear Completed Action
+        els.btnConfirmAction.addEventListener('click', executeClearCompleted);
+
+        // Import Modal Choices
+        els.btnImportMerge.addEventListener('click', () => executeImport('merge'));
+        els.btnImportReplace.addEventListener('click', () => executeImport('replace'));
+
+        // Modal Close Buttons & Backdrop Click
+        document.querySelectorAll('[data-close-modal]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-close-modal');
+            const modalEl = document.getElementById(targetId);
+            if (modalEl) closeModal(modalEl);
+          });
+        });
+
+        [els.editModal, els.confirmModal, els.importModal].forEach(modalEl => {
+          modalEl.addEventListener('click', (e) => {
+            if (e.target === modalEl) closeModal(modalEl);
+          });
+        });
+
+        // Keyboard Shortcuts (Escape to close modals/menus, "/" to focus search)
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            closeAllModals();
+            closeToolsMenu();
+          } else if (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+            e.preventDefault();
+            els.searchInput.focus();
+          }
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         Bootstrap Application
+         ---------------------------------------------------------------------- */
+      function init() {
+        initTheme();
+        loadItems();
+        renderCaptureCategories();
+        updateCaptureToggleUI();
+        bindEvents();
+        renderAll();
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
